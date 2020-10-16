@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -25,21 +25,22 @@
   </script>
 
   <meta name="description" content="0x01 前言在内网环境中，掌握一些密码后，最基础，最有效获取服务器权限的方式即ipc暴破 关于ipc暴破，这类工具在网上见的不多。目前工作中见到的有直接开无数个cmd的伪bat，还有身边同事powershell写的ps1，powershell是挺好用的，但有个关键问题是目标机器必须是win7及以上，遇到老机器当然是没法用了。 因此，bat无疑是首选，因其语言较底层，不够高级，写起来比较吃力 花了">
-<meta name="keywords" content="IPC,bat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IPC暴破 - Bat">
-<meta property="og:url" content="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/index.html">
+<meta property="og:url" content="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
 <meta property="og:description" content="0x01 前言在内网环境中，掌握一些密码后，最基础，最有效获取服务器权限的方式即ipc暴破 关于ipc暴破，这类工具在网上见的不多。目前工作中见到的有直接开无数个cmd的伪bat，还有身边同事powershell写的ps1，powershell是挺好用的，但有个关键问题是目标机器必须是win7及以上，遇到老机器当然是没法用了。 因此，bat无疑是首选，因其语言较底层，不够高级，写起来比较吃力 花了">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/ipc.png">
-<meta property="og:updated_time" content="2018-12-20T07:20:22.062Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/ipc.png">
+<meta property="article:published_time" content="2018-12-20T06:53:35.000Z">
+<meta property="article:modified_time" content="2018-12-20T07:20:22.062Z">
+<meta property="article:author" content="redn3ck">
+<meta property="article:tag" content="IPC">
+<meta property="article:tag" content="bat">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IPC暴破 - Bat">
-<meta name="twitter:description" content="0x01 前言在内网环境中，掌握一些密码后，最基础，最有效获取服务器权限的方式即ipc暴破 关于ipc暴破，这类工具在网上见的不多。目前工作中见到的有直接开无数个cmd的伪bat，还有身边同事powershell写的ps1，powershell是挺好用的，但有个关键问题是目标机器必须是win7及以上，遇到老机器当然是没法用了。 因此，bat无疑是首选，因其语言较底层，不够高级，写起来比较吃力 花了">
-<meta name="twitter:image" content="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/ipc.png">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/ipc.png">
 
-<link rel="canonical" href="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/">
+<link rel="canonical" href="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/">
 
 
 <script id="page-configurations">
@@ -201,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -229,7 +230,7 @@
             </span>
 
           
-            <span id="/2018/12/20/IPC暴破-Bat/" class="post-meta-item leancloud_visitors" data-flag-title="IPC暴破 - Bat" title="阅读次数">
+            <span id="/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/" class="post-meta-item leancloud_visitors" data-flag-title="IPC暴破 - Bat" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -244,8 +245,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/12/20/IPC暴破-Bat/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/12/20/IPC暴破-Bat/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -267,6 +268,7 @@
 <div class="note info"><p>阅读本篇文章能了解到：<span class="label success">IPC</span>, <span class="label success">Bat</span></p></div>
 
 <a id="more"></a>
+
 <h2 id="0x02-Bat"><a href="#0x02-Bat" class="headerlink" title="0x02 Bat"></a>0x02 Bat</h2><p>需要提供以下两个文件</p>
 <blockquote>
 <p><code>username.txt</code>, <code>password.txt</code></p>
@@ -275,12 +277,14 @@
 <p><code>username.txt</code>：放入对应的<code>域\用户</code>，大概是<code>win2012</code>以上域时，在<code>ipc</code>连接时必须加入域，为了兼容高版本，所以直接以<code>域\用户</code>形式存入文件</p>
 <p>举个例子：</p>
 <figure class="highlight bat"><figcaption><span>username.txt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost\administrator</span><br><span class="line">red.ad\redn3ck</span><br></pre></td></tr></table></figure>
+
 <p>本来想直接在<code>bat</code>中用数组写入<code>username</code>，因为批处理中不自带数组功能，先是实现了数组，结果因为变量延迟导致密码为特殊字符时，如<code>!,^</code>等，导致这些字符无法带入命令，会被批处理吞没，花了好久时间也没搞定如何解决此问题，有解决方法的老哥还望指导</p>
 <h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p><img src="ipc.png" alt="ipc"></p>
-<div class="note warning"><p>温馨提示：程序启动会在当前目录生成<code>ip.txt</code>，即<code>-h</code>参数指定的ip段，程序结束时会自动删除并生成<code>out.txt</code>。</p></div>
+<div class="note warning"><p>温馨提示：程序启动会在当前目录生成`ip.txt`，即`-h`参数指定的ip段，程序结束时会自动删除并生成`out.txt`。</p></div>
 
-<h2 id="0x03-Code"><a href="#0x03-Code" class="headerlink" title="0x03 Code"></a>0x03 Code</h2><figure class="highlight bat"><figcaption><span>ipc.bat</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">:<span class="built_in">start</span></span><br><span class="line"><span class="keyword">if</span> "%<span class="number">1</span>"=="" <span class="keyword">goto</span> usage</span><br><span class="line"><span class="keyword">if</span> "%<span class="number">1</span>"=="-h" <span class="keyword">goto</span> ip-range</span><br><span class="line"></span><br><span class="line">:usage</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> Usage:</span><br><span class="line"><span class="built_in">echo</span> 	[-h ips]	host(ip) range, <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="built_in">echo</span> 	tips:		password.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			username.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			ipc.bat can <span class="keyword">not</span> add <span class="built_in">path</span> like 'c:\programdata\ipc.bat'.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> example:</span><br><span class="line"><span class="built_in">echo</span> 	ipc.bat -h <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="keyword">goto</span> :eof</span><br><span class="line">...</span><br><span class="line">..</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
-<h2 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h2><p><a href="https://www.t00ls.net/thread-30632-1-1.html" target="_blank" rel="noopener">https://www.t00ls.net/thread-30632-1-1.html</a></p>
+<h2 id="0x03-Code"><a href="#0x03-Code" class="headerlink" title="0x03 Code"></a>0x03 Code</h2><figure class="highlight bat"><figcaption><span>ipc.bat</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">:<span class="built_in">start</span></span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;&quot; <span class="keyword">goto</span> usage</span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;-h&quot; <span class="keyword">goto</span> ip-range</span><br><span class="line"></span><br><span class="line">:usage</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> Usage:</span><br><span class="line"><span class="built_in">echo</span> 	[-h ips]	host(ip) range, <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="built_in">echo</span> 	tips:		password.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			username.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			ipc.bat can <span class="keyword">not</span> add <span class="built_in">path</span> like &#x27;c:\programdata\ipc.bat&#x27;.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> example:</span><br><span class="line"><span class="built_in">echo</span> 	ipc.bat -h <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="keyword">goto</span> :eof</span><br><span class="line">...</span><br><span class="line">..</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.t00ls.net/thread-30632-1-1.html">https://www.t00ls.net/thread-30632-1-1.html</a></p>
 
     </div>
 
@@ -296,7 +300,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/" title="IPC暴破 - Bat">https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/</a>
+    <a href="https://redn3ck.github.io/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/" title="IPC暴破 - Bat">https://redn3ck.github.io/2018/12/20/IPC暴破-Bat/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -318,11 +322,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/08/29/Struts2-S2-057复现-CVE-2018-11776/" rel="prev" title="Struts2 - S2-057复现 (CVE-2018-11776)">
+    <a href="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/" rel="prev" title="Struts2 - S2-057复现 (CVE-2018-11776)">
       <i class="fa fa-chevron-left"></i> Struts2 - S2-057复现 (CVE-2018-11776)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/04/30/Zimbra-SSRF-Memcached-反序列化复现/" rel="next" title="Zimbra - SSRF+Memcached+反序列化复现">
+    <a href="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/" rel="next" title="Zimbra - SSRF+Memcached+反序列化复现">
       Zimbra - SSRF+Memcached+反序列化复现 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -384,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-前言"><span class="nav-text">0x01 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Bat"><span class="nav-text">0x02 Bat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#截图"><span class="nav-text">截图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-Code"><span class="nav-text">0x03 Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-参考链接"><span class="nav-text">0x04 参考链接</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E5%89%8D%E8%A8%80"><span class="nav-text">0x01 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Bat"><span class="nav-text">0x02 Bat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%AA%E5%9B%BE"><span class="nav-text">截图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-Code"><span class="nav-text">0x03 Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">0x04 参考链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,7 +404,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -414,10 +418,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -428,7 +432,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
         </li>
     </ul>
   </div>
@@ -458,7 +462,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">redn3ck</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -500,9 +504,17 @@
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -511,7 +523,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

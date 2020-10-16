@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -25,22 +25,24 @@
   </script>
 
   <meta name="description" content="效果效果如视频所示，不仅解锁灰色歌曲，甚至新发的数字专辑一样可听，虽然我很想为周董付费，然没有一个平台能满足我的需求。     如何实现的呢，使用UnblockNeteaseMusic该项目 由于作者并未详细写明使用说明，ios踩坑了好几处，花了些时间，故在此记录 完成pc，android，ios多终端使用">
-<meta name="keywords" content="奇技淫巧,黑客技术,笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲">
-<meta property="og:url" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/index.html">
+<meta property="og:url" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
 <meta property="og:description" content="效果效果如视频所示，不仅解锁灰色歌曲，甚至新发的数字专辑一样可听，虽然我很想为周董付费，然没有一个平台能满足我的需求。     如何实现的呢，使用UnblockNeteaseMusic该项目 由于作者并未详细写明使用说明，ios踩坑了好几处，花了些时间，故在此记录 完成pc，android，ios多终端使用">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/network-details.jpg">
-<meta property="og:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/filter-rule.jpg">
-<meta property="og:updated_time" content="2020-09-23T03:04:57.579Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/network-details.jpg">
+<meta property="og:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/filter-rule.jpg">
+<meta property="article:published_time" content="2020-06-23T12:43:02.000Z">
+<meta property="article:modified_time" content="2020-09-23T03:04:57.579Z">
+<meta property="article:author" content="redn3ck">
+<meta property="article:tag" content="奇技淫巧">
+<meta property="article:tag" content="黑客技术">
+<meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲">
-<meta name="twitter:description" content="效果效果如视频所示，不仅解锁灰色歌曲，甚至新发的数字专辑一样可听，虽然我很想为周董付费，然没有一个平台能满足我的需求。     如何实现的呢，使用UnblockNeteaseMusic该项目 由于作者并未详细写明使用说明，ios踩坑了好几处，花了些时间，故在此记录 完成pc，android，ios多终端使用">
-<meta name="twitter:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/network-details.jpg">
+<meta name="twitter:image" content="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/network-details.jpg">
 
-<link rel="canonical" href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/">
+<link rel="canonical" href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/">
 
 
 <script id="page-configurations">
@@ -202,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -236,7 +238,7 @@
               </span>
 
           
-            <span id="/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/" class="post-meta-item leancloud_visitors" data-flag-title="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲" title="阅读次数">
+            <span id="/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/" class="post-meta-item leancloud_visitors" data-flag-title="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -251,8 +253,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -271,17 +273,20 @@
 <iframe src="//player.bilibili.com/player.html?aid=711479057&bvid=BV16D4y1m7oZ&cid=214921022&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 
-<p>如何实现的呢，使用<a href="https://github.com/nondanee/UnblockNeteaseMusic" target="_blank" rel="noopener">UnblockNeteaseMusic</a>该项目</p>
+<p>如何实现的呢，使用<a target="_blank" rel="noopener" href="https://github.com/nondanee/UnblockNeteaseMusic">UnblockNeteaseMusic</a>该项目</p>
 <p>由于作者并未详细写明使用说明，<code>ios</code>踩坑了好几处，花了些时间，故在此记录</p>
 <p>完成<code>pc</code>，<code>android</code>，<code>ios</code>多终端使用</p>
 <a id="more"></a>
+
 <h2 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h2><p>虽然该项目可在本地运行，本地运行服务端，本地网易云代理本地，显然并不实用，多终端同时使用是必须的</p>
 <p>首先，你得有一台自己的<code>vps</code>，服务端在公网才可实现多终端</p>
 <p>安装步骤不赘述了，安装<code>nodejs</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/nondanee/UnblockNeteaseMusic.git #克隆项目仓库</span><br><span class="line">cd UnblockNeteaseMusic #进入项目根目录</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;nondanee&#x2F;UnblockNeteaseMusic.git #克隆项目仓库</span><br><span class="line">cd UnblockNeteaseMusic #进入项目根目录</span><br></pre></td></tr></table></figure>
+
 <p>关键点来了，严格模式是必须的，但开启严格模式会导致<code>ios</code>无法使用，经反复测试才找出其原因</p>
 <p>运行命令如下，注：<code>4000，80</code>端口为举例，<code>4002，81</code>可随意，转发用的</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node app.js -p <span class="number">4000</span>:<span class="number">4002</span> -e https://music.<span class="number">163</span>.com -s # IOS</span><br><span class="line">node app.js -p <span class="number">80</span>:<span class="number">81</span> -e http://music.<span class="number">163</span>.com -s # PC &amp; android</span><br></pre></td></tr></table></figure>
+
 <p>注意：<br><code>pc</code>和<code>android</code>要使用<code>http</code>，<code>IOS</code>使用<code>https</code>，反复测试测出的结果</p>
 <h2 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h2><p>其实<code>pc</code>和<code>android</code>很快就搞定了，然而<code>ios</code>特殊，步骤多，且复杂，毕竟身份尊贵</p>
 <h3 id="PC"><a href="#PC" class="headerlink" title="PC"></a>PC</h3><p>很简单，网易云客户端自带代理功能</p>
@@ -289,7 +294,7 @@
 <li>设置 -&gt; 工具 -&gt; 自定义代理</li>
 </ul>
 <p>填入<code>vps</code>地址和端口<code>port</code>即可</p>
-<h3 id="IOS"><a href="#IOS" class="headerlink" title="IOS"></a>IOS</h3><p>虽有<code>ios</code>食用指南，但按照<a href="https://github.com/nondanee/UnblockNeteaseMusic/issues/65" target="_blank" rel="noopener">iOS 食用指南</a>操作完成后你会发现<code>ios</code>提示<code>网络不给力</code>，究其原因在于<code>server</code>启动命令上，按照上述启动方式即可解决</p>
+<h3 id="IOS"><a href="#IOS" class="headerlink" title="IOS"></a>IOS</h3><p>虽有<code>ios</code>食用指南，但按照<a target="_blank" rel="noopener" href="https://github.com/nondanee/UnblockNeteaseMusic/issues/65">iOS 食用指南</a>操作完成后你会发现<code>ios</code>提示<code>网络不给力</code>，究其原因在于<code>server</code>启动命令上，按照上述启动方式即可解决</p>
 <p>取其精华，去其糟粕，把自己实际实现的过程记录下，实现按规则代理，即仅网易云走代理，不影响其他软件，<code>ios</code>使用小火箭做代理</p>
 <ul>
 <li>右上角添加 -&gt; http ip(vps) port(port) 备注：unlockNeteaseMusic </li>
@@ -300,20 +305,22 @@
 <li>user-agent,neteasemusic*,unlockNeteaseMusic</li>
 <li>domain-suffix,163.com,unlockNeteaseMusic</li>
 </ul>
-<p>添加完成后，下载安装<a href="https://raw.githubusercontent.com/nondanee/UnblockNeteaseMusic/master/ca.crt" target="_blank" rel="noopener">ca.crt</a>并信用证书，如遇无法访问，也可从我博客地址下载<a href="https://redn3ck.github.io/about/ca.crt">ca.crt</a>，照顾不会<code>fq</code>的朋友</p>
+<p>添加完成后，下载安装<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/nondanee/UnblockNeteaseMusic/master/ca.crt">ca.crt</a>并信用证书，如遇无法访问，也可从我博客地址下载<a href="https://redn3ck.github.io/about/ca.crt">ca.crt</a>，照顾不会<code>fq</code>的朋友</p>
 <p>安装完成后去手动信任</p>
 <ul>
 <li>设置 -&gt; 通用 -&gt; 关于手机 -&gt; 证书信任设置</li>
 </ul>
 <p>至此<code>ios</code>端配置完成</p>
-<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><h4 id="1-WIFI"><a href="#1-WIFI" class="headerlink" title="1. WIFI"></a>1. WIFI</h4><p><code>wifi</code>下较为方便设置，不过作者也未给出<code>pac</code>规则，使用如下规则，只需修改<code>[vps]</code>，保存为<code>proxy.pac</code>，放入你<code>vps</code> <code>web</code>端即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function FindProxyForURL(url, host) &#123;</span><br><span class="line">				if (host == &apos;music.163.com&apos; || host == &apos;interface.music.163.com&apos; || host == &apos;interface3.music.163.com&apos; || host == &apos;apm.music.163.com&apos; || host == &apos;apm3.music.163.com&apos; || host == &apos;103.126.92.133&apos; || host == &apos;103.126.92.132&apos; || host == &apos;59.111.181.38&apos; || host == &apos;59.111.181.60&apos; || host == &apos;223.252.199.66&apos; || host == &apos;223.252.199.67&apos; || host == &apos;59.111.160.195&apos; || host == &apos;59.111.160.197&apos; || host == &apos;59.111.181.35&apos;) &#123;</span><br><span class="line">					return &apos;PROXY [vps]:4000&apos;</span><br><span class="line">				&#125;</span><br><span class="line">				return &apos;DIRECT&apos;</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><h4 id="1-WIFI"><a href="#1-WIFI" class="headerlink" title="1. WIFI"></a>1. WIFI</h4><p><code>wifi</code>下较为方便设置，不过作者也未给出<code>pac</code>规则，使用如下规则，只需修改<code>[vps]</code>，保存为<code>proxy.pac</code>，放入你<code>vps</code> <code>web</code>端即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function FindProxyForURL(url, host) &#123;</span><br><span class="line">				if (host &#x3D;&#x3D; &#39;music.163.com&#39; || host &#x3D;&#x3D; &#39;interface.music.163.com&#39; || host &#x3D;&#x3D; &#39;interface3.music.163.com&#39; || host &#x3D;&#x3D; &#39;apm.music.163.com&#39; || host &#x3D;&#x3D; &#39;apm3.music.163.com&#39; || host &#x3D;&#x3D; &#39;103.126.92.133&#39; || host &#x3D;&#x3D; &#39;103.126.92.132&#39; || host &#x3D;&#x3D; &#39;59.111.181.38&#39; || host &#x3D;&#x3D; &#39;59.111.181.60&#39; || host &#x3D;&#x3D; &#39;223.252.199.66&#39; || host &#x3D;&#x3D; &#39;223.252.199.67&#39; || host &#x3D;&#x3D; &#39;59.111.160.195&#39; || host &#x3D;&#x3D; &#39;59.111.160.197&#39; || host &#x3D;&#x3D; &#39;59.111.181.35&#39;) &#123;</span><br><span class="line">					return &#39;PROXY [vps]:4000&#39;</span><br><span class="line">				&#125;</span><br><span class="line">				return &#39;DIRECT&#39;</span><br><span class="line">			&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接着长按连接的<code>wifi</code>，修改设置，正常安卓系统都有（确实存在没有自动代理的系统，如<code>vivo</code>，采用方式2）</p>
 <ul>
-<li>设置 -&gt; wlan -&gt; 修改网络 -&gt; 高级 -&gt; 自动  填入你<code>vps</code>开放的<code>web</code>端（e.g. <a href="http://redn3ck.github.io/proxy.pac）">http://redn3ck.github.io/proxy.pac）</a></li>
+<li>设置 -&gt; wlan -&gt; 修改网络 -&gt; 高级 -&gt; 自动  填入你<code>vps</code>开放的<code>web</code>端（e.g. <a href="http://redn3ck.github.io/proxy.pac%EF%BC%89">http://redn3ck.github.io/proxy.pac）</a></li>
 </ul>
 <p>该方式存在显而易见的问题，没有<code>wifi</code>时怎么办？？</p>
 <h4 id="2-流量"><a href="#2-流量" class="headerlink" title="2. 流量"></a>2. 流量</h4><p>这方面不得不说<code>ios</code>比<code>android</code>好太多，一个简单的<code>http</code>代理都没有个好用的工具，<code>google</code>半天才找到几个能用的，建议使用<code>Clash</code>，可实现同小火箭类似功能</p>
-<h5 id="Drony"><a href="#Drony" class="headerlink" title="Drony"></a>Drony</h5><p>使用软件<a href="https://play.google.com/store/apps/details?id=org.sandrob.drony" target="_blank" rel="noopener">Drony</a>实现<code>http</code>代理，设置步骤如下</p>
+<h5 id="Drony"><a href="#Drony" class="headerlink" title="Drony"></a>Drony</h5><p>使用软件<a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=org.sandrob.drony">Drony</a>实现<code>http</code>代理，设置步骤如下</p>
 <ul>
 <li>TINGS -&gt; Networks (Not Wi-Fi) -&gt; Proxy type (Manual) -&gt; Hostname(vps) -&gt; Port(port) </li>
 <li>Filter default value (选择Direct all) </li>
@@ -323,10 +330,11 @@
 <p><img src="filter-rule.jpg" alt="filter-rule"></p>
 <p>设置完毕，返回<code>LOG</code>，单击<code>off</code>开启代理，即可完成和<code>ios</code>小火箭类似功能，即仅网易云走代理，不影响其他软件</p>
 <p>该方案有个致命缺点就是网络极慢，虽然能用，但过慢非常影响体验</p>
-<h5 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h5><p>使用软件<a href="https://github.com/Kr328/ClashForAndroid/releases" target="_blank" rel="noopener">Clash</a>，<code>clash</code>的好处是无视<code>wifi</code>或者流量，完全实现<code>ios</code>小火箭的功能</p>
-<p>该<code>app</code>官方<a href="https://github.com/nondanee/UnblockNeteaseMusic/issues/162" target="_blank" rel="noopener">issue</a>也有人提，但按照其提供的规则无法使用，测试了许久发现可能是规则太旧</p>
-<p>给出最新能用的规则如下，把<code>issue</code>里题主给的<a href="https://github.com/nondanee/UnblockNeteaseMusic/issues/162#issuecomment-516840009" target="_blank" rel="noopener">yaml</a>下下来，修改<code>rule</code>为如下规则即可，其他地方，如服务器修改为自己的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Rule:</span><br><span class="line">- DOMAIN-SUFFIX,music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,interface.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,interface3.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,apm.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,apm3.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,man.netease.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,api.iplay.163.com,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,39.105.63.80/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,45.254.48.1/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,47.100.127.239/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.160.195/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.160.197/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.35/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.38/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.60/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,101.71.154.241/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,103.126.92.132/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,103.126.92.133/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,112.13.119.17/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,112.13.122.1/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,115.236.118.33/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,115.236.121.1/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,118.24.63.156/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,193.112.159.225/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,223.252.199.66/32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,223.252.199.67/32,UnblockNeteaseMusic</span><br></pre></td></tr></table></figure>
+<h5 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h5><p>使用软件<a target="_blank" rel="noopener" href="https://github.com/Kr328/ClashForAndroid/releases">Clash</a>，<code>clash</code>的好处是无视<code>wifi</code>或者流量，完全实现<code>ios</code>小火箭的功能</p>
+<p>该<code>app</code>官方<a target="_blank" rel="noopener" href="https://github.com/nondanee/UnblockNeteaseMusic/issues/162">issue</a>也有人提，但按照其提供的规则无法使用，测试了许久发现可能是规则太旧</p>
+<p>给出最新能用的规则如下，把<code>issue</code>里题主给的<a target="_blank" rel="noopener" href="https://github.com/nondanee/UnblockNeteaseMusic/issues/162#issuecomment-516840009">yaml</a>下下来，修改<code>rule</code>为如下规则即可，其他地方，如服务器修改为自己的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Rule:</span><br><span class="line">- DOMAIN-SUFFIX,music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,interface.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,interface3.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,apm.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,apm3.music.163.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,man.netease.com,UnblockNeteaseMusic</span><br><span class="line">- DOMAIN-SUFFIX,api.iplay.163.com,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,39.105.63.80&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,45.254.48.1&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,47.100.127.239&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.160.195&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.160.197&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.35&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.38&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,59.111.181.60&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,101.71.154.241&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,103.126.92.132&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,103.126.92.133&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,112.13.119.17&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,112.13.122.1&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,115.236.118.33&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,115.236.121.1&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,118.24.63.156&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,193.112.159.225&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,223.252.199.66&#x2F;32,UnblockNeteaseMusic</span><br><span class="line">- IP-CIDR,223.252.199.67&#x2F;32,UnblockNeteaseMusic</span><br></pre></td></tr></table></figure>
+
 <p>然后把该文件放到自己服务器<code>web</code>上，如：<code>http://redn3ck.github.io/unblockNeteaseMusic.yaml</code>，打开<code>clash</code>开始配置</p>
 <ul>
 <li>配置 -&gt; 新配置 -&gt; URL -&gt; 自己起个名字，<code>url</code>填入<code>yaml</code>的地址 -&gt; 右上角保存 -&gt; 选中刚才添加的配置 -&gt; 启动</li>
@@ -346,7 +354,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/" title="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲">https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/</a>
+    <a href="https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-%E8%A7%A3%E9%94%81%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/" title="UnblockNeteaseMusic - 解锁网易云音乐客户端变灰歌曲">https://redn3ck.github.io/2020/06/23/UnblockNeteaseMusic-解锁网易云音乐客户端变灰歌曲/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -358,9 +366,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/奇技淫巧/" rel="tag"><i class="fa fa-tag"></i> 奇技淫巧</a>
-              <a href="/tags/黑客技术/" rel="tag"><i class="fa fa-tag"></i> 黑客技术</a>
-              <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+              <a href="/tags/%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/" rel="tag"><i class="fa fa-tag"></i> 奇技淫巧</a>
+              <a href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" rel="tag"><i class="fa fa-tag"></i> 黑客技术</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
           </div>
 
         
@@ -425,7 +433,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server"><span class="nav-text">Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client"><span class="nav-text">Client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PC"><span class="nav-text">PC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOS"><span class="nav-text">IOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android"><span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-WIFI"><span class="nav-text">1. WIFI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-流量"><span class="nav-text">2. 流量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Drony"><span class="nav-text">Drony</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash"><span class="nav-text">Clash</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server"><span class="nav-text">Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client"><span class="nav-text">Client</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PC"><span class="nav-text">PC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOS"><span class="nav-text">IOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android"><span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-WIFI"><span class="nav-text">1. WIFI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%B5%81%E9%87%8F"><span class="nav-text">2. 流量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Drony"><span class="nav-text">Drony</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clash"><span class="nav-text">Clash</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -441,7 +449,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -455,10 +463,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -469,7 +477,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
         </li>
     </ul>
   </div>
@@ -499,7 +507,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">redn3ck</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -541,9 +549,17 @@
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -552,7 +568,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

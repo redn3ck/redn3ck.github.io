@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.7.1">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -25,21 +25,21 @@
   </script>
 
   <meta name="description" content="前言旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。 UEFI先恶补一波BIOS，MBR，UEFI，GPT  还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！ EFI、UEFI、MBR、GPT的区别 UEFI+GPT与BIOS+">
-<meta name="keywords" content="系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="双系统安装 - win7下安装kali2.0">
-<meta property="og:url" content="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/index.html">
+<meta property="og:url" content="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
 <meta property="og:description" content="前言旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。 UEFI先恶补一波BIOS，MBR，UEFI，GPT  还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！ EFI、UEFI、MBR、GPT的区别 UEFI+GPT与BIOS+">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/finish-install_reboot_in_progress_0.png">
-<meta property="og:updated_time" content="2018-04-23T16:14:13.647Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/finish-install_reboot_in_progress_0.png">
+<meta property="article:published_time" content="2018-04-18T16:33:09.000Z">
+<meta property="article:modified_time" content="2018-04-23T16:14:13.647Z">
+<meta property="article:author" content="redn3ck">
+<meta property="article:tag" content="系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="双系统安装 - win7下安装kali2.0">
-<meta name="twitter:description" content="前言旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。 UEFI先恶补一波BIOS，MBR，UEFI，GPT  还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！ EFI、UEFI、MBR、GPT的区别 UEFI+GPT与BIOS+">
-<meta name="twitter:image" content="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/finish-install_reboot_in_progress_0.png">
+<meta name="twitter:image" content="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/finish-install_reboot_in_progress_0.png">
 
-<link rel="canonical" href="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/">
+<link rel="canonical" href="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/">
 
 
 <script id="page-configurations">
@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/blogAvatar2.jpg">
@@ -235,7 +235,7 @@
               </span>
 
           
-            <span id="/2018/04/19/双系统安装-win7下安装kali2-0/" class="post-meta-item leancloud_visitors" data-flag-title="双系统安装 - win7下安装kali2.0" title="阅读次数">
+            <span id="/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/" class="post-meta-item leancloud_visitors" data-flag-title="双系统安装 - win7下安装kali2.0" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -257,9 +257,9 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。</p>
 <h1 id="UEFI"><a href="#UEFI" class="headerlink" title="UEFI"></a>UEFI</h1><p>先恶补一波BIOS，MBR，UEFI，GPT</p>
 <blockquote>
-<p><a href="http://baijiahao.baidu.com/s?id=1571449106519556&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！</a></p>
-<p><a href="https://blog.csdn.net/mao0514/article/details/51162915" target="_blank" rel="noopener">EFI、UEFI、MBR、GPT的区别</a></p>
-<p><a href="https://www.zhihu.com/question/28471913" target="_blank" rel="noopener">UEFI+GPT与BIOS+MBR各自有什么优缺点？</a></p>
+<p><a target="_blank" rel="noopener" href="http://baijiahao.baidu.com/s?id=1571449106519556&wfr=spider&for=pc">还没弄明白BIOS+MBR和UEFI+GPT？看这一篇讲解就足够了！</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mao0514/article/details/51162915">EFI、UEFI、MBR、GPT的区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28471913">UEFI+GPT与BIOS+MBR各自有什么优缺点？</a></p>
 </blockquote>
 <p>看了这些应该有了一定的认识，一般组合为：</p>
 <ul>
@@ -268,30 +268,31 @@
 </ul>
 <p>我2012年买的华硕，已经默认是UEFI+GPT，当时还因为这个原因导致无法重装系统，现在装双系统，又碰到该问题，简直头皮发麻，不管怎么说，目的得先达到——安装双系统win+kali2.0。</p>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><a id="more"></a>
-<p>几乎翻遍了百度所有<strong><em>双系统</em></strong> 词条，都无法让我成功安装，除了 <em>rEFInd</em>，这个我没有尝试，因为界面实在太丑了。在尝试了将近3天的方法后，依然无果，甚至把win10换到了win7，还是不能成功。当我成功完成双系统的安装后，真的是心里mmp，脸上笑嘻嘻。总结如下：</p>
+<p>几乎翻遍了百度所有**<em>双系统**</em> 词条，都无法让我成功安装，除了 <em>rEFInd</em>，这个我没有尝试，因为界面实在太丑了。在尝试了将近3天的方法后，依然无果，甚至把win10换到了win7，还是不能成功。当我成功完成双系统的安装后，真的是心里mmp，脸上笑嘻嘻。总结如下：</p>
 <p>技术问题查google！</p>
 <p>技术问题查google！</p>
 <p>技术问题查google！</p>
 <p>三遍，你懂我意思。</p>
 <blockquote>
-<p><a href="http://linuxbsdos.com/2016/11/05/dual-boot-kali-linux-rolling-2016-2-windows-10-on-a-pc-with-uefi-firmware/" target="_blank" rel="noopener">Dual-boot Kali Linux Rolling 2016.2, Windows 10 on a PC with UEFI firmware</a></p>
-<p><a href="https://link.zhihu.com/?target=https%3A//www.youtube.com/watch%3Fv%3Dx7pDldI7tBY" target="_blank" rel="noopener">视频操作</a></p>
+<p><a target="_blank" rel="noopener" href="http://linuxbsdos.com/2016/11/05/dual-boot-kali-linux-rolling-2016-2-windows-10-on-a-pc-with-uefi-firmware/">Dual-boot Kali Linux Rolling 2016.2, Windows 10 on a PC with UEFI firmware</a></p>
+<p><a href="https://link.zhihu.com/?target=https://www.youtube.com/watch?v=x7pDldI7tBY">视频操作</a></p>
 </blockquote>
 <h2 id="1-分区"><a href="#1-分区" class="headerlink" title="1. 分区"></a>1. 分区</h2><p>压缩出50g，否则安装失败，由此在知乎上回答了该问题</p>
-<p><a href="https://www.zhihu.com/question/39731926/answer/360816217" target="_blank" rel="noopener">物理机安装kali linux时安装步骤失败？何解?</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/39731926/answer/360816217">物理机安装kali linux时安装步骤失败？何解?</a></p>
 <p>究其原因：</p>
 <p>“/ 根目录” 要分10G以上(否则安装失败,x32和x64位的系统在两台电脑上面共尝试安装了10次左右没有成功,后来成功后总结出已知原因两点1,须选图形化安装2,手工分区,而且根目录足够大,此版本解压出来/根目录就7GB以上了)</p>
 <h2 id="2-刻录"><a href="#2-刻录" class="headerlink" title="2. 刻录"></a>2. 刻录</h2><ul>
 <li><strong><em>UltraISO</em></strong> ：刻录kali2.0后安装会出错</li>
 <li><strong><em>Win32DiskImager</em></strong> ：可用，但是U盘会变成奇怪的格式，电脑无法打开，会提示格式化，失去了U盘的意义</li>
 </ul>
-<p>选用<strong><em>Rufus</em></strong> ，kali2.0可安装且U盘可用</p>
+<p>选用**<em>Rufus**</em> ，kali2.0可安装且U盘可用</p>
 <h2 id="3-安装"><a href="#3-安装" class="headerlink" title="3. 安装"></a>3. 安装</h2><p>一路往下走，分区时注意，选择<code>Guided - use the largest continuous free space</code> ，切忌不要使用手动分区，百度中所有安装kali的教程均选择手动</p>
 <p>确认EFI系统分区后就可以done了</p>
 <p>等待10分钟后，安装成功，否则失败参考第一步分区，<code>GNU GRUB</code>会被默认自动安装</p>
 <p>重启后，bios设置启动项，默认进入win7，如需进入kali2.0，开机时<code>ESC</code>选择kali2.0即可（根据电脑决定，华硕为esc）</p>
 <p>最后，晒张成功安装的图~</p>
-<img src="/2018/04/19/双系统安装-win7下安装kali2-0/finish-install_reboot_in_progress_0.png">
+<img src="/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/finish-install_reboot_in_progress_0.png" class="">
+
 
     </div>
 
@@ -307,7 +308,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/" title="双系统安装 - win7下安装kali2.0">https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/</a>
+    <a href="https://redn3ck.github.io/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/" title="双系统安装 - win7下安装kali2.0">https://redn3ck.github.io/2018/04/19/双系统安装-win7下安装kali2-0/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -319,7 +320,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/系统/" rel="tag"><i class="fa fa-tag"></i> 系统</a>
+              <a href="/tags/%E7%B3%BB%E7%BB%9F/" rel="tag"><i class="fa fa-tag"></i> 系统</a>
           </div>
 
         
@@ -328,11 +329,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/03/28/Mysql注入-Sqlmap之tamper编写/" rel="prev" title="Mysql注入 - Sqlmap之tamper编写">
+    <a href="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/" rel="prev" title="Mysql注入 - Sqlmap之tamper编写">
       <i class="fa fa-chevron-left"></i> Mysql注入 - Sqlmap之tamper编写
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/04/25/Oracle注入-命令执行-Shell反弹/" rel="next" title="Oracle注入 - 命令执行&Shell反弹">
+    <a href="/2018/04/25/Oracle%E6%B3%A8%E5%85%A5-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C-Shell%E5%8F%8D%E5%BC%B9/" rel="next" title="Oracle注入 - 命令执行&Shell反弹">
       Oracle注入 - 命令执行&Shell反弹 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -393,7 +394,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UEFI"><span class="nav-text">UEFI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-分区"><span class="nav-text">1. 分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-刻录"><span class="nav-text">2. 刻录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-安装"><span class="nav-text">3. 安装</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UEFI"><span class="nav-text">UEFI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%86%E5%8C%BA"><span class="nav-text">1. 分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%BB%E5%BD%95"><span class="nav-text">2. 刻录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%89%E8%A3%85"><span class="nav-text">3. 安装</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -409,7 +410,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -423,10 +424,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/redn3ck" title="GitHub → https://github.com/redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ==" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
@@ -437,7 +438,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="http://blog.qinqinyo.com" title="http://blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
         </li>
     </ul>
   </div>
@@ -467,7 +468,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">redn3ck</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -509,9 +510,17 @@
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
@@ -520,7 +529,9 @@
 
 
 
-  <script src="/js/local-search.js"></script>
+  
+<script src="/js/local-search.js"></script>
+
 
 
 

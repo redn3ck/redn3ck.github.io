@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CVE-2017-11882 POC</title>
-    <url>/2017/11/21/CVE-2017-11882-POC/</url>
-    <content><![CDATA[<h1>POC</h1>
-<p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
-<p>如何使用，作者github里写的很清楚</p>
-<p>附上自测gif</p>
-<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
-<h1>BTW</h1>
-<p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
-<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
-]]></content>
-      <tags>
-        <tag>CVE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>0708 - CVE-2019-0708 复现</title>
     <url>/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/</url>
     <content><![CDATA[<h2 id="0x01-准备环境"><a class="header-anchor" href="#0x01-准备环境">¶</a>0x01 准备环境</h2>
@@ -68,6 +52,22 @@
         <tag>CVE</tag>
         <tag>复现</tag>
         <tag>msf</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2017-11882 POC</title>
+    <url>/2017/11/21/CVE-2017-11882-POC/</url>
+    <content><![CDATA[<h1>POC</h1>
+<p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
+<p>如何使用，作者github里写的很清楚</p>
+<p>附上自测gif</p>
+<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
+<h1>BTW</h1>
+<p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
+<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
+]]></content>
+      <tags>
+        <tag>CVE</tag>
       </tags>
   </entry>
   <entry>
@@ -627,7 +627,7 @@ Windows 10 Version 1809 for 32-bit Systems</p>
 <p>我在<code>/console/css/cmd.jsp</code>目录下执行，所以<code>/console/css/?pwd=redn3ck&amp;cmd=id</code></p>
 <p><img src="cmd_ok.png" alt="cmd_ok"></p>
 <h2 id="内存webshell实现"><a class="header-anchor" href="#内存webshell实现">¶</a>内存<code>webshell</code>实现</h2>
-<p>原理一样，编译作者改好的冰蝎马，加载并注册即可编译</p>
+<p>原理一样，编译作者改好的冰蝎马，加载并注册即可</p>
 <p>编译时<code>weblogic.servlet.internal.ServletRequestImpl</code>变红，没有这个库，去环境中把相关jar全部拿回</p>
 <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">find</span> / -name weblogic.jar</span><br><span class="line">cp /var/lib/docker/overlay2/d13f05c242a61c2ec44aea486b84d94793ad7026d83a52be9d990378d22453ff/merged/u01/oracle/wlserver/server/lib/*.jar /tmp/jar/</span><br><span class="line">chmod <span class="number">777</span> /tmp/jar/</span><br></pre></td></tr></table></figure>
 <p><code>vscode</code>配置<code>Configure Classpath</code>，选中所有<code>jar</code>，即可编译成功</p>
@@ -763,25 +763,6 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       </tags>
   </entry>
   <entry>
-    <title>python - 本地文件操作</title>
-    <url>/2020/09/23/python-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>拿到一个本地文件操作需求，写个<code>py</code>完成<br>
-水文，仅作笔记用途，再不水一年要过去了，蓝受。。香菇。。</p>
-<h2 id="需求"><a class="header-anchor" href="#需求">¶</a>需求</h2>
-<p>要求：解析<code>&quot;文件信息.txt&quot;</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
-例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>&quot;I_DONOT_远控&quot;</code>复制到<code>&quot;C:\I\DONOT\远控&quot;</code>下。</p>
-<h2 id="Code"><a class="header-anchor" href="#Code">¶</a>Code</h2>
-<div class="note info"><p>阅读本篇文章能了解到：python</p></div>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os,hashlib,shutil</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&#x27;文件信息.txt&#x27;</span>, encoding=<span class="string">&#x27;utf-8-sig&#x27;</span>, mode=<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> inF:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> inF:</span><br><span class="line">            temp = line.strip().split(<span class="string">&#x27;#&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;\t\t&#x27;</span>)</span><br><span class="line">            print(temp)</span><br><span class="line">            _md5 = temp[<span class="number">0</span>]</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> parent, dirnames, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;.\\&#x27;</span>,topdown=<span class="literal">False</span>):</span><br><span class="line">                <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">                    file_path = os.path.join(parent, filename)</span><br><span class="line">                    <span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileF:</span><br><span class="line">                        md5obj = hashlib.md5()</span><br><span class="line">                        md5obj.update(fileF.read())</span><br><span class="line">                        _hash = md5obj.hexdigest().upper()</span><br><span class="line">                        <span class="keyword">if</span> _md5 == _hash:</span><br><span class="line">                            flag = <span class="number">1</span></span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> flag:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            dirFile = temp[<span class="number">2</span>].strip().split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">            pathTemp = <span class="string">&#x27;c:\\&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> dirFile:</span><br><span class="line">                pathTemp += i+<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">                os.mkdir(pathTemp)</span><br><span class="line">            shutil.copy(file_path, pathTemp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>getPass - 一键批量获取远程终端凭据密码</title>
     <url>/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h1>前言</h1>
@@ -804,6 +785,25 @@ Windows 10 Version 1809 for 32-bit Systems</p>
 ]]></content>
       <tags>
         <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python - 本地文件操作</title>
+    <url>/2020/09/23/python-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>拿到一个本地文件操作需求，写个<code>py</code>完成<br>
+水文，仅作笔记用途，再不水一年要过去了，蓝受。。香菇。。</p>
+<h2 id="需求"><a class="header-anchor" href="#需求">¶</a>需求</h2>
+<p>要求：解析<code>&quot;文件信息.txt&quot;</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
+例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>&quot;I_DONOT_远控&quot;</code>复制到<code>&quot;C:\I\DONOT\远控&quot;</code>下。</p>
+<h2 id="Code"><a class="header-anchor" href="#Code">¶</a>Code</h2>
+<div class="note info"><p>阅读本篇文章能了解到：python</p></div>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os,hashlib,shutil</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&#x27;文件信息.txt&#x27;</span>, encoding=<span class="string">&#x27;utf-8-sig&#x27;</span>, mode=<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> inF:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> inF:</span><br><span class="line">            temp = line.strip().split(<span class="string">&#x27;#&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;\t\t&#x27;</span>)</span><br><span class="line">            print(temp)</span><br><span class="line">            _md5 = temp[<span class="number">0</span>]</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> parent, dirnames, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;.\\&#x27;</span>,topdown=<span class="literal">False</span>):</span><br><span class="line">                <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">                    file_path = os.path.join(parent, filename)</span><br><span class="line">                    <span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileF:</span><br><span class="line">                        md5obj = hashlib.md5()</span><br><span class="line">                        md5obj.update(fileF.read())</span><br><span class="line">                        _hash = md5obj.hexdigest().upper()</span><br><span class="line">                        <span class="keyword">if</span> _md5 == _hash:</span><br><span class="line">                            flag = <span class="number">1</span></span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> flag:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            dirFile = temp[<span class="number">2</span>].strip().split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">            pathTemp = <span class="string">&#x27;c:\\&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> dirFile:</span><br><span class="line">                pathTemp += i+<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">                os.mkdir(pathTemp)</span><br><span class="line">            shutil.copy(file_path, pathTemp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>

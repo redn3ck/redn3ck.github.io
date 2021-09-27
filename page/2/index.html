@@ -193,6 +193,111 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/" class="post-title-link" itemprop="url">Struts2 - S2-057复现 (CVE-2018-11776)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-29 18:24:22" itemprop="dateCreated datePublished" datetime="2018-08-29T18:24:22+08:00">2018-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-08-30 14:31:07" itemprop="dateModified" datetime="2018-08-30T14:31:07+08:00">2018-08-30</time>
+              </span>
+
+          
+            <span id="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/" class="post-meta-item leancloud_visitors" data-flag-title="Struts2 - S2-057复现 (CVE-2018-11776)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Struts2又出漏洞了，上一波的045好用到不行，复现参考<a target="_blank" rel="noopener" href="https://github.com/jas502n/St2-057">https://github.com/jas502n/St2-057</a></p>
+<p>写这篇文章时，vulhub还没有057的漏洞环境</p>
+<blockquote>
+<p>当Struts2的配置满足以下条件时：</p>
+<ul>
+<li>alwaysSelectFullNamespace值为true</li>
+<li>action元素未设置namespace属性，或使用了通配符</li>
+</ul>
+<p>namespace将由用户从uri传入，并作为OGNL表达式计算，最终造成任意命令执行漏洞。</p>
+</blockquote>
+<p>影响版本: 小于等于 Struts 2.3.34 与 Struts 2.5.16</p>
+<p>看这个条件就知道没那么好利用</p>
+<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">vulhub</span>, <span class="label success">docker</span></p></div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/29/Struts2-S2-057%E5%A4%8D%E7%8E%B0-CVE-2018-11776/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/07/22/%E5%AE%89%E5%85%A8%E7%8B%97%E7%BB%95%E8%BF%87-%E6%9C%AC%E5%9C%B0%E4%B8%AD%E8%BD%ACbypass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,14 +1150,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

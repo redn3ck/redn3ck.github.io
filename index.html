@@ -193,6 +193,101 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">Frp改造 - 参数版+AES加密</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-11 17:40:11 / 修改时间：17:56:05" itemprop="dateCreated datePublished" datetime="2022-01-11T17:40:11+08:00">2022-01-11</time>
+            </span>
+
+          
+            <span id="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" class="post-meta-item leancloud_visitors" data-flag-title="Frp改造 - 参数版+AES加密" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
+<p>基于<code>uknowsec</code>大佬的文章 <a target="_blank" rel="noopener" href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
+<blockquote>
+<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
+</blockquote>
+<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
+<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
+<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,10 +311,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-11 17:12:27 / 修改时间：17:27:30" itemprop="dateCreated datePublished" datetime="2021-12-11T17:12:27+08:00">2021-12-11</time>
+              <time title="创建时间：2021-12-11 17:12:27" itemprop="dateCreated datePublished" datetime="2021-12-11T17:12:27+08:00">2021-12-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-11 15:28:00" itemprop="dateModified" datetime="2022-01-11T15:28:00+08:00">2022-01-11</time>
+              </span>
 
           
             <span id="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Apache - Log4j2 RCE复现" title="阅读次数">
@@ -1081,110 +1182,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/" class="post-title-link" itemprop="url">Zimbra - SSRF+Memcached+反序列化复现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-04-30 16:24:37" itemprop="dateCreated datePublished" datetime="2019-04-30T16:24:37+08:00">2019-04-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:22:18" itemprop="dateModified" datetime="2021-09-27T10:22:18+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Zimbra - SSRF+Memcached+反序列化复现" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
-<p>我就不搭建了，其实我按照作者给的搭建过程也没搭建成功，我直接使用一个现成环境测试。</p>
-<h2 id="利用条件"><a class="header-anchor" href="#利用条件">¶</a>利用条件</h2>
-<p>需要获取到3个变量</p>
-<blockquote>
-<p>zmImap:[accountId]:[folderNo]:[modseq]:[uidvalidity]</p>
-</blockquote>
-<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">Zimbra</span>, <span class="label success">反序列化</span></p></div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1252,14 +1253,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1304,7 +1305,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

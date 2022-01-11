@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"redn3ck.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="¶前言 参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点go语言 😅 基于uknowsec大佬的文章 FRP改造计划，实现作者说的：  所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。  另外，个人觉得只加密ip不够隐蔽，所以连同port一起进行AES加密 ¶改造 只需要修改cmd&#x2F;frpc&#x2F;su">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frp改造 - 参数版+AES加密">
+<meta property="og:url" content="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="redn3ck&#39;s blog">
+<meta property="og:description" content="¶前言 参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点go语言 😅 基于uknowsec大佬的文章 FRP改造计划，实现作者说的：  所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。  另外，个人觉得只加密ip不够隐蔽，所以连同port一起进行AES加密 ¶改造 只需要修改cmd&#x2F;frpc&#x2F;su">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/frpc.png">
+<meta property="article:published_time" content="2022-01-11T09:40:11.000Z">
+<meta property="article:modified_time" content="2022-01-11T09:56:05.316Z">
+<meta property="article:author" content="redn3ck">
+<meta property="article:tag" content="frp">
+<meta property="article:tag" content="go">
+<meta property="article:tag" content="AES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/frpc.png">
+
+<link rel="canonical" href="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Frp改造 - 参数版+AES加密 | redn3ck's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">redn3ck's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人不会飞就努力学走</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-read">
+
+    <a href="/read/" rel="section"><i class="fa fa-book fa-fw"></i>读书</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Frp改造 - 参数版+AES加密
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-11 17:40:11 / 修改时间：17:56:05" itemprop="dateCreated datePublished" datetime="2022-01-11T17:40:11+08:00">2022-01-11</time>
+            </span>
+
+          
+            <span id="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" class="post-meta-item leancloud_visitors" data-flag-title="Frp改造 - 参数版+AES加密" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
+<p>基于<code>uknowsec</code>大佬的文章 <a target="_blank" rel="noopener" href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
+<blockquote>
+<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
+</blockquote>
+<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
+<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
+<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
+<a id="more"></a>
+<h3 id="1-创建AES函数"><a class="header-anchor" href="#1-创建AES函数">¶</a>1. 创建<code>AES</code>函数</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7Padding</span><span class="params">(ciphertext []<span class="keyword">byte</span>, blockSize <span class="keyword">int</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	padding := blockSize - <span class="built_in">len</span>(ciphertext)%blockSize</span><br><span class="line">	padtext := bytes.Repeat([]<span class="keyword">byte</span>&#123;<span class="keyword">byte</span>(padding)&#125;, padding)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">append</span>(ciphertext, padtext...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7UnPadding</span><span class="params">(origData []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	length := <span class="built_in">len</span>(origData)</span><br><span class="line">	unpadding := <span class="keyword">int</span>(origData[length<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">return</span> origData[:(length - unpadding)]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesEncrypt</span><span class="params">(origData, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	origData = PKCS7Padding(origData, blockSize)</span><br><span class="line">	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br><span class="line">	crypted := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(origData))</span><br><span class="line">	blockMode.CryptBlocks(crypted, origData)</span><br><span class="line">	<span class="keyword">return</span> crypted, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesDecrypt</span><span class="params">(crypted, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])</span><br><span class="line">	origData := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(crypted))</span><br><span class="line">	blockMode.CryptBlocks(origData, crypted)</span><br><span class="line">	origData = PKCS7UnPadding(origData)</span><br><span class="line">	<span class="keyword">return</span> origData, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-初始化中定义传参"><a class="header-anchor" href="#2-初始化中定义传参">¶</a>2. 初始化中定义传参</h3>
+<p>只需传一个参数，里面包含<code>ip</code>和<code>port</code>即可</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func init() &#123;</span><br><span class="line">	rootCmd.PersistentFlags().StringVarP(&amp;cfgFile, &quot;config&quot;, &quot;c&quot;, &quot;./frpc.ini&quot;, &quot;config file of frpc&quot;)</span><br><span class="line">	rootCmd.PersistentFlags().BoolVarP(&amp;showVersion, &quot;version&quot;, &quot;v&quot;, false, &quot;version of frpc&quot;)</span><br><span class="line"><span class="addition">+	rootCmd.PersistentFlags().StringVarP(&amp;ipPort, &quot;ipPort&quot;, &quot;t&quot;, &quot;&quot;, &quot;ip port&quot;)</span></span><br><span class="line">	kcpDoneCh = make(chan struct&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-新增函数"><a class="header-anchor" href="#3-新增函数">¶</a>3. 新增函数</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getFileContent</span><span class="params">(ipPort <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	AesKey := []<span class="keyword">byte</span>(<span class="string">&quot;1qaz2wsx3edc4rfv&quot;</span>)  <span class="comment">// 对称秘钥长度必须是16的倍数</span></span><br><span class="line">	encrypted, _ := base64.StdEncoding.DecodeString(ipPort)</span><br><span class="line">	origin, err := AesDecrypt(encrypted, AesKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	arr := strings.Fields(<span class="keyword">string</span>(origin))</span><br><span class="line">	ip := arr[<span class="number">0</span>]</span><br><span class="line">	port := arr[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">var</span> content <span class="keyword">string</span> = <span class="string">`[common]</span></span><br><span class="line"><span class="string">    server_addr = `</span> + ip + <span class="string">`</span></span><br><span class="line"><span class="string">    server_port = `</span> + port + <span class="string">`</span></span><br><span class="line"><span class="string">	tls_enable = true</span></span><br><span class="line"><span class="string">    token = socks</span></span><br><span class="line"><span class="string">	[socks]</span></span><br><span class="line"><span class="string">	type = tcp</span></span><br><span class="line"><span class="string">	remote_port = 1800</span></span><br><span class="line"><span class="string">	plugin = socks5</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">	fileContent = content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-修改runClient函数"><a class="header-anchor" href="#4-修改runClient函数">¶</a>4. 修改<code>runClient</code>函数</h3>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="addition">+ func runClient(cfgFilePath string, ipPort string) (err error) &#123;</span></span><br><span class="line">	var content string</span><br><span class="line"><span class="addition">+	getFileContent(ipPort)</span></span><br><span class="line"><span class="addition">+	// content, err = config.GetRenderedConfFromFile(cfgFilePath)</span></span><br><span class="line"><span class="addition">+	content, err = fileContent, nil</span></span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cfg, err := parseClientCommonCfg(CfgFileTypeIni, content)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pxyCfgs, visitorCfgs, err := config.LoadAllConfFromIni(cfg.User, content, cfg.Start)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	err = startService(cfg, pxyCfgs, visitorCfgs, cfgFilePath)</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-调用runClient"><a class="header-anchor" href="#5-调用runClient">¶</a>5. 调用<code>runClient()</code></h3>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var rootCmd = &amp;cobra.Command&#123;</span><br><span class="line">	Use:   &quot;frpc&quot;,</span><br><span class="line">	Short: &quot;frpc is the client of frp (https://github.com/fatedier/frp)&quot;,</span><br><span class="line">	RunE: func(cmd *cobra.Command, args []string) error &#123;</span><br><span class="line">		if showVersion &#123;</span><br><span class="line">			fmt.Println(version.Full())</span><br><span class="line">			return nil</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// Do not show command usage here.</span><br><span class="line"><span class="addition">+		err := runClient(cfgFile, ipPort)</span></span><br><span class="line">		if err != nil &#123;</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			os.Exit(1)</span><br><span class="line">		&#125;</span><br><span class="line">		return nil</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-编译"><a class="header-anchor" href="#6-编译">¶</a>6. 编译</h3>
+<p>修改根目录<code>package.sh</code>，实现直接生成编译文件而不打包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># compile for version</span></span><br><span class="line">make</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;make error&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">frp_version=`./bin/frps --version`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;build version: <span class="variable">$frp_version</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cross_compiles</span></span><br><span class="line">make -f ./Makefile.cross-compiles</span><br><span class="line"></span><br><span class="line">rm -rf ./release/packages</span><br><span class="line">mkdir -p ./release/packages</span><br><span class="line"></span><br><span class="line">os_all=<span class="string">&#x27;linux windows darwin freebsd&#x27;</span></span><br><span class="line">arch_all=<span class="string">&#x27;386 amd64 arm arm64 mips64 mips64le mips mipsle&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./release</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> os <span class="keyword">in</span> <span class="variable">$os_all</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> arch <span class="keyword">in</span> <span class="variable">$arch_all</span>; <span class="keyword">do</span></span><br><span class="line">        frp_dir_name=<span class="string">&quot;frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        frp_path=<span class="string">&quot;./packages/frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        rm -rf <span class="variable">$&#123;frp_path&#125;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></table></figure>
+<p>编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash package.sh</span><br></pre></td></tr></table></figure>
+<h2 id="效果"><a class="header-anchor" href="#效果">¶</a>效果</h2>
+<p><img src="frpc.png" alt="frpc"></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">https://uknowsec.cn/posts/notes/FRP改造计划.html</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>redn3ck
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://redn3ck.github.io/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/" title="Frp改造 - 参数版+AES加密">https://redn3ck.github.io/2022/01/11/Frp改造-参数版-AES加密/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/frp/" rel="tag"><i class="fa fa-tag"></i> frp</a>
+              <a href="/tags/go/" rel="tag"><i class="fa fa-tag"></i> go</a>
+              <a href="/tags/AES/" rel="tag"><i class="fa fa-tag"></i> AES</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/" rel="prev" title="Apache - Log4j2 RCE复现">
+      <i class="fa fa-chevron-left"></i> Apache - Log4j2 RCE复现
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E9%80%A0"><span class="nav-text">改造</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BAAES%E5%87%BD%E6%95%B0"><span class="nav-text">1. 创建AES函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%AD%E5%AE%9A%E4%B9%89%E4%BC%A0%E5%8F%82"><span class="nav-text">2. 初始化中定义传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%96%B0%E5%A2%9E%E5%87%BD%E6%95%B0"><span class="nav-text">3. 新增函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BF%AE%E6%94%B9runClient%E5%87%BD%E6%95%B0"><span class="nav-text">4. 修改runClient函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%B0%83%E7%94%A8runClient"><span class="nav-text">5. 调用runClient()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%BC%96%E8%AF%91"><span class="nav-text">6. 编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="redn3ck"
+      src="/images/blogAvatar2.jpg">
+  <p class="site-author-name" itemprop="name">redn3ck</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/redn3ck" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;redn3ck" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:NjMwOTM2MTkxQHFxLmNvbQ==" title="E-Mail → mailto:NjMwOTM2MTkxQHFxLmNvbQ&#x3D;&#x3D;" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.qinqinyo.com/" title="http:&#x2F;&#x2F;blog.qinqinyo.com" rel="noopener" target="_blank">Biglao</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">redn3ck</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+	var requiredFields = 'nick,mail';
+	requiredFields  = requiredFields.split(',');
+	
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va',
+      appKey     : '34qnzvkVKBvjy44KTH7uurgw',
+      placeholder: "整点？不需要注册！想说啥直接说吧！填写邮箱可收到回复通知哦～",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : '',
+	  requiredFields: requiredFields,
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -193,6 +193,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/" class="post-title-link" itemprop="url">0708 - CVE-2019-0708 复现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-12 15:51:46" itemprop="dateCreated datePublished" datetime="2019-10-12T15:51:46+08:00">2019-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-27 10:16:18" itemprop="dateModified" datetime="2021-09-27T10:16:18+08:00">2021-09-27</time>
+              </span>
+
+          
+            <span id="/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="0708 - CVE-2019-0708 复现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0x01-准备环境"><a class="header-anchor" href="#0x01-准备环境">¶</a>0x01 准备环境</h2>
+<p>2019年9月7日晚上凌晨1点，github上发布了0708的漏洞利用程序，看了别人的复现和讨论，感觉不太好用，懒得复现，这两天闲了，复现出来发发博客，好久没发了，主要是没啥新东西可以发，不方便发</p>
+<h3 id="下载攻击套件"><a class="header-anchor" href="#下载攻击套件">¶</a>下载攻击套件</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/rapid7/metasploit-framework/edb7e20221e2088497d1f61132db3a56f81b8ce9/lib/msf/core/exploit/rdp.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/rdp_scanner.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/exploits/windows/rdp/cve_2019_0708_bluekeep_rce.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/cve_2019_0708_bluekeep.rb</span><br></pre></td></tr></table></figure>
+<p>拷贝到<code>metasploit</code>对应目录下，我这里是<code>kali</code>自带的目录</p>
+<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">0708</span>, <span class="label success">msf</span></p></div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1096,99 +1194,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2017/11/21/CVE-2017-11882-POC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/11/21/CVE-2017-11882-POC/" class="post-title-link" itemprop="url">CVE-2017-11882 POC</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-11-21 16:01:00" itemprop="dateCreated datePublished" datetime="2017-11-21T16:01:00+08:00">2017-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:16:40" itemprop="dateModified" datetime="2021-09-27T10:16:40+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2017/11/21/CVE-2017-11882-POC/" class="post-meta-item leancloud_visitors" data-flag-title="CVE-2017-11882 POC" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/11/21/CVE-2017-11882-POC/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/11/21/CVE-2017-11882-POC/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>POC</h1>
-<p><a target="_blank" rel="noopener" href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
-<p>如何使用，作者github里写的很清楚</p>
-<p>附上自测gif</p>
-<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
-<h1>BTW</h1>
-<p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
-<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1260,14 +1265,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1416,7 +1421,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
       notify     : false,
       appId      : 'EIDP7CTzy2rVnpTjoahW31sf-9Nh9j0Va',
       appKey     : '34qnzvkVKBvjy44KTH7uurgw',
-      placeholder: "整点？不需要注册！想说啥直接说吧！填写邮箱可收到回复通知哦～",
+      placeholder: "不用注册~填写邮箱可收到回复通知哦～ wakuwaku~",
       avatar     : 'mm',
       meta       : guest,
       pageSize   : '10' || 10,

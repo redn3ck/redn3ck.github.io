@@ -193,6 +193,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">Apk抓包 - 抓不到解决方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-02 20:29:53 / 修改时间：20:35:30" itemprop="dateCreated datePublished" datetime="2022-11-02T20:29:53+08:00">2022-11-02</time>
+            </span>
+
+          
+            <span id="/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-meta-item leancloud_visitors" data-flag-title="Apk抓包 - 抓不到解决方案" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
+<p>很多 <code>apk</code> 设置代理后，抓包都会出现没有包的情况，一部分原因就是使用 <code>so</code> 文件 <code>https</code></p>
+<p>经过大佬的一通研究后，用了意想不到的解决方案突破了该问题，高，实在是高，学习并记录</p>
+<h2 id="0x02-解决方案"><a class="header-anchor" href="#0x02-解决方案">¶</a>0x02 解决方案</h2>
+<p>正常抓包，模拟器配置好代理和 <code>fiddler</code> ，我这用的夜神，<code>magisk+LSP+justTrustme</code> 后开始按照正常流程抓包，可见无任何流量</p>
+<h3 id="1-查找域名"><a class="header-anchor" href="#1-查找域名">¶</a>1. 查找域名</h3>
+<p><code>winrar</code> 解包 <code>apk</code> ，使用 <code>npp</code> 搜索相关域名，搜出3处 <code>so</code> 文件，在其中搜索 <code>https</code> 包含大量请求</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2022/08/09/CS%E5%85%8D%E6%9D%80-bypass-defender/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1088,104 +1181,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" class="post-title-link" itemprop="url">Phpstudy - RCE 复现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-12 16:15:58" itemprop="dateCreated datePublished" datetime="2019-10-12T16:15:58+08:00">2019-10-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:21:41" itemprop="dateModified" datetime="2021-09-27T10:21:41+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="Phpstudy - RCE 复现" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="check"><a class="header-anchor" href="#check">¶</a>check</h2>
-<p>9月26号就写好了，一下子就到这个时候了，严重拖延症</p>
-<p>先用公开的脚本check一下自己机器上常用的，<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dIDfgFxHlqenKRUSW7Oqkw">phpstudy后门文件分析以及检测脚本</a></p>
-<img src="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/check.jpg" class="">
-<p>呵呵，中招，一直在使用<code>phpstudy2016</code>版，上图是2018测试的（我的2016一样中招，被我修复了，没截图），也就是说做肉鸡三年了(微笑)，不过好在我只在用的时候开启<code>apache</code>。</p>
-<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">phpstudy</span>, <span class="label success">RCE</span></p></div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1257,14 +1252,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

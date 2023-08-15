@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -97,6 +97,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -289,10 +291,10 @@
 <p>访问之，<code>302</code>跳转到<code>User_Status</code></p>
 <img src="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/user_status.png" class="">
 <div class="note info"><p>阅读本篇文章能了解到：<span class="label success">上传</span>, <span class="label success">getshell</span></p></div>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="0x02-猜测参数"><a class="header-anchor" href="#0x02-猜测参数">¶</a>0x02 猜测参数</h2>
 <p>没有任何功能点，显然是需要猜参数了，与其说是猜测不如说是构造，使用通用表单上传参数</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=--------1036030574</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;Filedata&quot;; filename=&quot;pic.jpg&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">123</span><br><span class="line"></span><br><span class="line">----------1036030574--</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=--------1036030574</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="Filedata"; filename="pic.jpg"</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">123</span><br><span class="line"></span><br><span class="line">----------1036030574--</span><br></pre></td></tr></tbody></table></figure>
 <p><img src="oneForm.png" alt="oneForm"></p>
 <p>显然<code>response</code>并无变化，也没有上传成功的提示，更换几个常用的<code>name</code>，<code>filename</code>后一样无果<br>
 无头苍蝇般的猜测显然不行，查看源码找找有用信息<br>
@@ -303,7 +305,7 @@
 <p>直接访问<code>/UpLoad/UpLoadPic.aspx</code>，一样<code>302</code>跳转到<code>User_Status</code></p>
 <p><img src="uploadPic302.png" alt="uploadPic302"></p>
 <p>尝试把函数中的参数全部构造成表单提交</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;ObjNM&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;FilePath&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">pic.jpg</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;UpLoadBtnNM&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;DeleteBtnNM&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;MaxFileSize&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;MaxSize&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name=&quot;IsCover&quot;; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">----------1036030574--</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="ObjNM"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="FilePath"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">pic.jpg</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="UpLoadBtnNM"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="DeleteBtnNM"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="MaxFileSize"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="MaxSize"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">----------1036030574</span><br><span class="line">Content-Disposition: form-data; name="IsCover"; </span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">----------1036030574--</span><br></pre></td></tr></tbody></table></figure>
 <p>上传页面出现了</p>
 <p><img src="uploadPic-post.png" alt="uploadPic-post"></p>
 <p>果断上传<code>asp</code>，提示白名单</p>
@@ -447,14 +449,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -499,7 +501,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

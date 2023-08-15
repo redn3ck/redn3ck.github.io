@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -88,6 +88,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -275,23 +277,23 @@
 <p>具体介绍就不赘述了，看 <code>README</code> 就好</p>
 <h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
 <p>现在 <code>go</code> 日趋火热，不学点真的跟不上了，这款工具也是 <code>go</code> 开发的</p>
-<a id="more"></a>
+<span id="more"></span>
 <h3 id="go"><a class="header-anchor" href="#go">¶</a>go</h3>
 <p>不赘述，我这里安装的是新版 <code>go1.18.3</code>，所以导致跑他的程序有很多问题，但又不想降级，所以就一步步排查，解决问题，死磕</p>
 <h3 id="run"><a class="header-anchor" href="#run">¶</a>run</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ShellcodeFrameWork_windows_amd64.exe -shellcodepath mimikatz.exe -o rc4.exe -key wing -encrypt  rc4 -loadermethod uuid</span><br></pre></td></tr></table></figure>
-<p>直接跑提示 <code>ERROR:exec: &quot;bin/go&quot;: file does not exist</code></p>
-<p>看来环境变量没写好，所以把程序放到 <code>go</code> 目录 <code>C:\Program Files\Go</code> 再次运行，提示 <code>STDERR: UUID_agent.go:33:2: cannot find package &quot;github.com/google/uuid&quot; in any of:</code></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ShellcodeFrameWork_windows_amd64.exe -shellcodepath mimikatz.exe -o rc4.exe -key wing -encrypt  rc4 -loadermethod uuid</span><br></pre></td></tr></tbody></table></figure>
+<p>直接跑提示 <code>ERROR:exec: "bin/go": file does not exist</code></p>
+<p>看来环境变量没写好，所以把程序放到 <code>go</code> 目录 <code>C:\Program Files\Go</code> 再次运行，提示 <code>STDERR: UUID_agent.go:33:2: cannot find package "github.com/google/uuid" in any of:</code></p>
 <p>使用 <code>go get github.com/google/uuid </code> 报错，按提示改为 <code>go install github.com/google/uuid@latest</code> 报错 <code>package github.com/google/uuid is not a main package</code> ，查了一圈折腾了很久</p>
 <p><strong>解决方案</strong></p>
 <p>在目录 <code>C:\Program Files\Go\src\</code> 下手动创建 <code>github.com/google/</code> ，之后 <code>git clone https://github.com/google/uuid.git</code>，解决该问题</p>
 <p>剩下的报错同理解决</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;golang&#x2F;crypto.git</span><br><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;golang&#x2F;sys.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/crypto.git</span><br><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/sys.git</span><br></pre></td></tr></tbody></table></figure>
 <p>至此，程序跑起来，解决高版本 <code>go</code> 运行问题</p>
 <h2 id="免杀效果"><a class="header-anchor" href="#免杀效果">¶</a>免杀效果</h2>
 <p>一开始我免杀<code>mmk</code>，但跑不起来，才发现该工具为 <code>shellcode</code> 免杀 😅</p>
 <p>生成一个 <code>Windows stageless Raw</code> 用 <code>aes</code> 加密一个试试看免杀效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Go&gt;x-av.exe -shellcodepath C:\Users\admin\Desktop\beacon.bin -key redn3ck -encrypt aes -loadermethod uuid -salt wakuwaku -o aes.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Go&gt;x-av.exe -shellcodepath C:\Users\admin\Desktop\beacon.bin -key redn3ck -encrypt aes -loadermethod uuid -salt wakuwaku -o aes.exe</span><br></pre></td></tr></tbody></table></figure>
 <p>我直接放到主机测试，主机是一直在更新的 <code>win10</code>， <code>defender</code> 也是最新的</p>
 <p><img src="defender.png" alt="defender"></p>
 <p>本身程序没报毒没什么，跑起来后也没报，<code>defender</code> 阵亡，免杀效果不错，另外贴上系统版本为 <code>19044.1826</code></p>
@@ -425,14 +427,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -477,7 +479,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

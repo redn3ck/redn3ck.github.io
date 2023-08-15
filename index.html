@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -76,6 +76,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -189,6 +191,98 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">ssh - 免杀socks5代理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-15 15:18:35 / 修改时间：17:03:43" itemprop="dateCreated datePublished" datetime="2023-08-15T15:18:35+08:00">2023-08-15</time>
+            </span>
+
+          
+            <span id="/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="ssh - 免杀socks5代理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>如今 <code>socks5</code> 代理非常多，<code>frp</code>,<code>iox</code> 等，但就是因为众所周知，导致被杀软杀的体无完肤</p>
+<p>之前发过一次无参数版 <code>frp</code>，在<code>linux</code>上免杀效果还不错，win <code>defender</code>都过不去</p>
+<p><code>iox</code> 自己编译能免杀一部分杀软，如卡巴个人标准版，进程类似这样 <code>avp.exe &lt;=&gt; Kaspersky</code></p>
+<p>但目前遇到卡巴服务器版，或者说是数据中心版，自编译 <code>iox</code> 还是被杀，进程类似这样 <code>kavfswp.exe &lt;=&gt; Kaspersky Security for Windows Server processes</code></p>
+<p>急需一种新型免杀 <code>socks5</code> 代理（也许并不新🤡）</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/15/ssh-%E5%85%8D%E6%9D%80socks5%E4%BB%A3%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -641,7 +735,7 @@
       
           <h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">¶</a>环境搭建</h2>
 <p>采用<code>vulhub</code>中<code>weblogic</code> <code>CVE-2020-14882</code>搭建，<code>vulhub</code>安装不赘述</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vulhub/weblogic/CVE-<span class="number">2020</span>-<span class="number">14882</span>/</span><br><span class="line">sudo docker-compose up</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vulhub/weblogic/CVE-<span class="number">2020</span>-<span class="number">14882</span>/</span><br><span class="line">sudo docker-compose up</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="内存cmd实现"><a class="header-anchor" href="#内存cmd实现">¶</a>内存<code>cmd</code>实现</h2>
 <p>原理和机制感兴趣的可以去看参考链接，比较详细，我跳过（太菜，看不懂😭）</p>
 <p>大致流程为：加载恶意类，动态注册<code>filter</code></p>
@@ -955,7 +1049,7 @@
 <a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/mimikatz/releases">https://github.com/gentilkiwi/mimikatz/releases</a></p>
 </blockquote>
 <p>python3安装最新版impacket</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> impacket-master</span><br><span class="line">pip3 install .</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> impacket-master</span><br><span class="line">pip3 install .</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="0x03-复现"><a class="header-anchor" href="#0x03-复现">¶</a>0x03 复现</h2>
 <div class="note info"><p>阅读本篇文章能了解到：Zerologon, 域渗透</p></div>
           <!--noindex-->
@@ -1054,114 +1148,13 @@
 <p>拿到一个本地文件操作需求，写个<code>py</code>完成<br>
 水文，仅作笔记用途，再不水一年要过去了，蓝受。。香菇。。</p>
 <h2 id="需求"><a class="header-anchor" href="#需求">¶</a>需求</h2>
-<p>要求：解析<code>&quot;文件信息.txt&quot;</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
-例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>&quot;I_DONOT_远控&quot;</code>复制到<code>&quot;C:\I\DONOT\远控&quot;</code>下。</p>
+<p>要求：解析<code>"文件信息.txt"</code>，根据解析出的<code>md5</code>值找到对应的文件，按照解析出的文件路径复制到相应的目录下。<br>
+例如：解析第一行，根据第一个<code>md5</code>值<code>38C45AC1A54F65732CFE56C7BCC17A87</code>遍历当前文件夹及子文件夹找到对应的文件<code>123.exe</code>，再根据解析出的路径<code>"I_DONOT_远控"</code>复制到<code>"C:\I\DONOT\远控"</code>下。</p>
 <h2 id="Code"><a class="header-anchor" href="#Code">¶</a>Code</h2>
 <div class="note info"><p>阅读本篇文章能了解到：python</p></div>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/09/23/python-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" class="post-title-link" itemprop="url">上传 - 猜测表单参数getshell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-18 15:57:45" itemprop="dateCreated datePublished" datetime="2019-10-18T15:57:45+08:00">2019-10-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:22:30" itemprop="dateModified" datetime="2021-09-27T10:22:30+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" class="post-meta-item leancloud_visitors" data-flag-title="上传 - 猜测表单参数getshell" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
-<p>大佬给了个上传点，说是这个点足够写一篇教程了，遂尝试一下，看自己得行不。<br>
-上传点如下：</p>
-<blockquote>
-<p><code>https://subdomain.target.com/UpLoad/UpLoad.aspx</code></p>
-</blockquote>
-<p>访问之，<code>302</code>跳转到<code>User_Status</code></p>
-<img src="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/user_status.png" class="">
-<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">上传</span>, <span class="label success">getshell</span></p></div>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1252,14 +1245,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1304,7 +1297,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

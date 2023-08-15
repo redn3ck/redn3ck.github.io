@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -76,6 +76,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -189,6 +191,107 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blogAvatar2.jpg">
+      <meta itemprop="name" content="redn3ck">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="redn3ck's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" class="post-title-link" itemprop="url">上传 - 猜测表单参数getshell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-18 15:57:45" itemprop="dateCreated datePublished" datetime="2019-10-18T15:57:45+08:00">2019-10-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-27 10:22:30" itemprop="dateModified" datetime="2021-09-27T10:22:30+08:00">2021-09-27</time>
+              </span>
+
+          
+            <span id="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" class="post-meta-item leancloud_visitors" data-flag-title="上传 - 猜测表单参数getshell" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
+<p>大佬给了个上传点，说是这个点足够写一篇教程了，遂尝试一下，看自己得行不。<br>
+上传点如下：</p>
+<blockquote>
+<p><code>https://subdomain.target.com/UpLoad/UpLoad.aspx</code></p>
+</blockquote>
+<p>访问之，<code>302</code>跳转到<code>User_Status</code></p>
+<img src="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/user_status.png" class="">
+<div class="note info"><p>阅读本篇文章能了解到：<span class="label success">上传</span>, <span class="label success">getshell</span></p></div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -360,7 +463,7 @@
           <h2 id="0x01-准备环境"><a class="header-anchor" href="#0x01-准备环境">¶</a>0x01 准备环境</h2>
 <p>2019年9月7日晚上凌晨1点，github上发布了0708的漏洞利用程序，看了别人的复现和讨论，感觉不太好用，懒得复现，这两天闲了，复现出来发发博客，好久没发了，主要是没啥新东西可以发，不方便发</p>
 <h3 id="下载攻击套件"><a class="header-anchor" href="#下载攻击套件">¶</a>下载攻击套件</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/rapid7/metasploit-framework/edb7e20221e2088497d1f61132db3a56f81b8ce9/lib/msf/core/exploit/rdp.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/rdp_scanner.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/exploits/windows/rdp/cve_2019_0708_bluekeep_rce.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/cve_2019_0708_bluekeep.rb</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/rapid7/metasploit-framework/edb7e20221e2088497d1f61132db3a56f81b8ce9/lib/msf/core/exploit/rdp.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/rdp_scanner.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/exploits/windows/rdp/cve_2019_0708_bluekeep_rce.rb</span><br><span class="line">wget https://github.com/rapid7/metasploit-framework/raw/edb7e20221e2088497d1f61132db3a56f81b8ce9/modules/auxiliary/scanner/rdp/cve_2019_0708_bluekeep.rb</span><br></pre></td></tr></tbody></table></figure>
 <p>拷贝到<code>metasploit</code>对应目录下，我这里是<code>kali</code>自带的目录</p>
 <div class="note info"><p>阅读本篇文章能了解到：<span class="label success">0708</span>, <span class="label success">msf</span></p></div>
           <!--noindex-->
@@ -1091,106 +1194,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://redn3ck.github.io/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blogAvatar2.jpg">
-      <meta itemprop="name" content="redn3ck">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="redn3ck's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" class="post-title-link" itemprop="url">域渗透 - 域控下发文件并执行远控</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-03-01 20:03:34" itemprop="dateCreated datePublished" datetime="2018-03-01T20:03:34+08:00">2018-03-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-27 10:22:51" itemprop="dateModified" datetime="2021-09-27T10:22:51+08:00">2021-09-27</time>
-              </span>
-
-          
-            <span id="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" class="post-meta-item leancloud_visitors" data-flag-title="域渗透 - 域控下发文件并执行远控" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>0x01 背景</h1>
-<p>内网渗透中，当控制到域控时，当然是再好不过，但如何控制成员机器或个人机呢，域管理员账号登录？太敏感，动作大；psexec,wmi…?杀软报毒，不要不信，亲身经历；</p>
-<p>想要直接推送个远控，神不知鬼不觉的搞定成员；</p>
-<p>那么问题来了，如何推送个exe？</p>
-<h1>0x02 研究</h1>
-<h2 id="方法1"><a class="header-anchor" href="#方法1">¶</a>方法1</h2>
-<p>查找大量相关资料，都没有现成的方法直接下发exe，然而吐司竟然也没有，最后，锁定了<strong>组策略开机脚本</strong></p>
-<p>域成员登录时，执行域控提前部署好的bat脚本，通过此脚本，IPC连接到域控，copy文件，在成员上执行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/03/01/%E5%9F%9F%E6%B8%97%E9%80%8F-%E5%9F%9F%E6%8E%A7%E4%B8%8B%E5%8F%91%E6%96%87%E4%BB%B6%E5%B9%B6%E6%89%A7%E8%A1%8C%E8%BF%9C%E6%8E%A7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1262,14 +1265,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1314,7 +1317,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

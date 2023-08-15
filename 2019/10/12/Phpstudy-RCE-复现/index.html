@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 6.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-pig.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-pig.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-pig.png">
@@ -86,6 +86,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -275,11 +277,11 @@
 <img src="/2019/10/12/Phpstudy-RCE-%E5%A4%8D%E7%8E%B0/check.jpg" class="">
 <p>呵呵，中招，一直在使用<code>phpstudy2016</code>版，上图是2018测试的（我的2016一样中招，被我修复了，没截图），也就是说做肉鸡三年了(微笑)，不过好在我只在用的时候开启<code>apache</code>。</p>
 <div class="note info"><p>阅读本篇文章能了解到：<span class="label success">phpstudy</span>, <span class="label success">RCE</span></p></div>
-<a id="more"></a>
+<span id="more"></span>
 <p>首发的文章说，官网下的并不会出问题，我使用的一直是官网的，上图也是2018版官网下的，一样中招，也就是phpstudy早在2016年甚至更早就被黑了。</p>
 <p><img src="phpstudy2018.jpg" alt="check"></p>
 <h2 id="复现"><a class="header-anchor" href="#复现">¶</a>复现</h2>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 192.168.2.51</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0</span><br><span class="line">Accept-Encoding: gzip,deflate</span><br><span class="line">Accept-charset: ZWNobyBzeXN0ZW0oIm5ldCB1c2VyIik7</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 192.168.2.51</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0</span><br><span class="line">Accept-Encoding: gzip,deflate</span><br><span class="line">Accept-charset: ZWNobyBzeXN0ZW0oIm5ldCB1c2VyIik7</span><br></pre></td></tr></tbody></table></figure>
 <p><img src="rce.png" alt="rce"></p>
 <p>呵呵，真好用！真香！</p>
 <p>只需要更改<code>ZWNobyBzeXN0ZW0oIm5ldCB1c2VyIik7</code>，<code>base64</code>编码的命令而已</p>
@@ -409,14 +411,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -461,7 +463,7 @@
 <div class="copyright">
   
   &copy; 2018 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

